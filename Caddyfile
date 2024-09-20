@@ -1,0 +1,7 @@
+localhost
+
+handle_path /api/* {
+	reverse_proxy :6969
+}
+
+reverse_proxy :3000
