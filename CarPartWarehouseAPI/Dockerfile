@@ -7,6 +7,6 @@ RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-azurelinux3.0-distroless-extra
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=build /app/out .
 
 ENTRYPOINT ["dotnet", "CarPartWarehouseAPI.dll"]

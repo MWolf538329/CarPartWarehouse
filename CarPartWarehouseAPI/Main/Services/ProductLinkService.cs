@@ -10,20 +10,20 @@ namespace CarPartWarehouseAPI.Services
         {
             app.MapGet("/productlinks", (DatabaseContext db, int productID) =>
             {
-                List<ProductLinkDM> productLinks = (List<ProductLinkDM>)db.ProductLinks.Where(pl => pl.Product.ID == productID);
+                //List<ProductLinkDM> productLinks = (List<ProductLinkDM>)db.ProductLinks.Where(pl => pl.Product.ID == productID);
 
-                List<ProductLinkVM> productLinkViewModels = new();
+                //List<ProductLinkVM> productLinkViewModels = new();
 
-                foreach (ProductLinkDM productlink in productLinks)
-                {
-                    ProductLinkVM productLinkViewModel = new();
+                //foreach (ProductLinkDM productlink in productLinks)
+                //{
+                //    ProductLinkVM productLinkViewModel = new();
 
-                    productLinkViewModel.ID = productlink.ID;
-                    productLinkViewModel.Url = productlink.Url;
+                //    productLinkViewModel.ID = productlink.ID;
+                //    productLinkViewModel.Url = productlink.Url;
 
-                    productLinkViewModels.Add(productLinkViewModel);
-                }
-                return productLinkViewModels;
+                //    productLinkViewModels.Add(productLinkViewModel);
+                //}
+                //return productLinkViewModels;
             })
             .WithName("GetProductLinks")
             .WithOpenApi();
