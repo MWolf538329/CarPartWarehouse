@@ -1,7 +1,7 @@
-﻿using CarPartWarehouseAPI.DataModels;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using DAL.DataModels;
 
-namespace CarPartWarehouseAPI
+namespace DAL
 {
     public class DatabaseContext : DbContext
     {
@@ -22,7 +22,7 @@ namespace CarPartWarehouseAPI
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<Item>().HasMany(i => i.OrderLines).WithOne(l => l.Item)
+            //modelBuilder.Entity<ItemDM>().HasMany(i => i.OrderLines).WithOne(l => l.Item)
             //    .OnDelete(DeleteBehavior.NoAction);
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace CarPartWarehouseAPI.DataModels
+﻿namespace DAL.DataModels
 {
     public class StockHistoryDM
     {

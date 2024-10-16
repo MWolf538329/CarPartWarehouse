@@ -33,8 +33,6 @@ app.UseHttpsRedirection();
 app.SetupCategory();
 
 
-app.SetupWeather();
-
 // --------------------------------------
 
 app.Run();
