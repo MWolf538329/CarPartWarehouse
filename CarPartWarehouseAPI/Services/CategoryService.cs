@@ -1,10 +1,10 @@
-﻿namespace CarPartWarehouseAPI
+﻿namespace CarPartWarehouseAPI.Services
 {
-    public static class Weather
+    public static class CategoryService
     {
-        public static void SetupWeather(this WebApplication app)
+        public static void SetupCategory(this WebApplication app)
         {
-            app.MapGet("/weatherforecast", (string location) =>
+            app.MapGet("/categories", (string location) =>
             {
                 var forecast = Enumerable.Range(1, 5).Select(index => {
                     var degrees = location.Length + index;
@@ -12,7 +12,7 @@
                 });
                 return forecast.ToArray();
             })
-            .WithName("GetWeatherForecast")
+            .WithName("GetCategories")
             .WithOpenApi();
         }
     }

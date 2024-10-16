@@ -6,6 +6,7 @@ import { createResource, createSignal, For } from 'solid-js';
 import { Flex } from './components/ui/flex';
 import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from './components/ui/switch';
 import { TextField, TextFieldInput, TextFieldLabel } from './components/ui/text-field';
+import Navbar from './Navbar';
 
 const App: Component = () => {
   const [weatherLocation, setWeatherLocation] = createSignal('London')
@@ -13,6 +14,17 @@ const App: Component = () => {
 
   return (
     <Flex flexDirection='col' alignItems='center' justifyContent='center' class="gap-2 my-2">
+
+      {/* ------------ Page Title on the top left and Navbar in the top middle ------------ */}
+      <Flex flexDirection='row' alignItems='center' justifyContent='start'>
+        <h1>CarPartWarehouse Dashboard</h1>
+
+        <Flex flexDirection='row' alignItems='center' justifyContent='center'>
+          <Navbar/>
+        </Flex>
+      </Flex>
+      {/* -------------------------------------------------------------------------------- */}
+
       <Switch class="flex items-center space-x-2">
         <SwitchControl>
           <SwitchThumb />
@@ -27,6 +39,7 @@ const App: Component = () => {
       <For each={weather()}>
         {(weather) => <p>{weather}</p>}
       </For>
+      
     </Flex>
   );
 };
