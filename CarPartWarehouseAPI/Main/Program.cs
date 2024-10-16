@@ -1,6 +1,9 @@
-using Backend_Example;
+using CarPartWarehouseAPI;
+using CarPartWarehouseAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DatabaseContext>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,6 +29,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Include Services for API Functionality
+app.SetupCategory();
+
+
 app.SetupWeather();
+
+// --------------------------------------
 
 app.Run();
