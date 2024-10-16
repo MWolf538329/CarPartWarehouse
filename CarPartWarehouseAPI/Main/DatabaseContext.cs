@@ -22,8 +22,8 @@ namespace CarPartWarehouseAPI
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Item>().HasMany(i => i.OrderLines).WithOne(l => l.Item)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<Item>().HasMany(i => i.OrderLines).WithOne(l => l.Item)
+            //    .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
