@@ -1,6 +1,6 @@
-﻿namespace DAL.DataModels
+﻿namespace Logic.Models
 {
-    public class ProductLinkDM
+    public class ProductLink
     {
         public int ID { get; set; }
         public string Url { get; set; }

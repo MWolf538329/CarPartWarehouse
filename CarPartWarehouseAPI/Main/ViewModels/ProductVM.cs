@@ -1,4 +1,4 @@
-﻿using CarPartWarehouseAPI.DataModels;
+﻿using Logic.Models;
 
 namespace CarPartWarehouseAPI.ViewModels
 {
@@ -9,8 +9,8 @@ namespace CarPartWarehouseAPI.ViewModels
         public string Brand { get; set; }
         public decimal Price { get; set; }
 
-        public CategoryDM Category { get; set; }
-        public SubcategoryDM Subcategory { get; set; }
-        public List<ProductLinkDM> Links { get; set; } = [];
+        public Category Category { get; set; }
+        public Subcategory Subcategory { get; set; }
+        public List<ProductLink> Links { get; set; } = [];
     }
 }

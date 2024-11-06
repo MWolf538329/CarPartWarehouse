@@ -1,6 +1,6 @@
-﻿namespace DAL.DataModels
+﻿namespace Logic.Models
 {
-    public class CategoryDM
+    public class Category
     {
         public int ID { get; set; }
         public string Name { get; set; }

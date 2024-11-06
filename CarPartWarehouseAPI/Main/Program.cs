@@ -1,4 +1,4 @@
-using CarPartWarehouseAPI;
+using DAL;
 using CarPartWarehouseAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
