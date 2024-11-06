@@ -2,7 +2,6 @@
 using Logic.Interfaces;
 using Logic.Models;
 using Logic.Services;
-using DAL;
 using DAL.DALServices;
 
 namespace CarPartWarehouseAPI.Services
@@ -11,7 +10,7 @@ namespace CarPartWarehouseAPI.Services
     {
         public static void SetupCategory(this WebApplication app)
         {
-            app.MapGet("/categories", (DatabaseContext databaseContext) =>
+            app.MapGet("/categories", (DAL.DatabaseContext databaseContext) =>
             {
                 ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
                 CategoryService categoryService = new(categoryDAL);
@@ -22,7 +21,7 @@ namespace CarPartWarehouseAPI.Services
                     CategoryVM categoryVM = new();
 
                     categoryVM.ID = category.ID;
-                    category.Name = category.Name;
+                    categoryVM.Name = category.Name;
 
                     categoryVMs.Add(categoryVM);
                 }
@@ -34,7 +33,7 @@ namespace CarPartWarehouseAPI.Services
             .WithDescription("Gets the ID and Name from all Categories");
 
 
-            app.MapPost("/addcategory", (DatabaseContext databaseContext, string name) =>
+            app.MapPost("/addcategory", (DAL.DatabaseContext databaseContext, string name) =>
             {
                 ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
                 CategoryService categoryService = new(categoryDAL);

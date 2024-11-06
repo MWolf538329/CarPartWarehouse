@@ -1,5 +1,6 @@
 using DAL;
 using CarPartWarehouseAPI.Services;
+using CarPartWarehouseAPI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,7 @@ app.UseHttpsRedirection();
 
 // Include Services for API Functionality
 app.SetupCategory();
-
-
+app.SetupSubcategory();
 // --------------------------------------
 
 app.Run();

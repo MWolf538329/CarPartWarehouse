@@ -7,7 +7,8 @@
         public string Brand { get; set; }
         public int Eurocents { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual Stock Stock { get; set; }
+        //public virtual Category Category { get; set; }
         public virtual Subcategory Subcategory { get; set; }
         public virtual List<ProductLink> Links { get; set; } = [];
     }

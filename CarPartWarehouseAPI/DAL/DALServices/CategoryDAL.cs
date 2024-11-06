@@ -7,17 +7,17 @@ namespace DAL.DALServices
     public class CategoryDAL : ICategoryDAL
     {
         private DbSet<Category> categorySet { get; set; }
+        private DatabaseContext database { get; set; }
 
         public CategoryDAL(DatabaseContext db)
         {
-            categorySet = db.Categories;
+            database = db;
+            categorySet = database.Categories;
         }
 
         public List<Category> GetCategories()
         {
-            List<Category> categories = categorySet.ToList();
-
-            return categories;
+            return categorySet.ToList();
         }
 
         public Category GetCategory(int id)
@@ -35,6 +35,7 @@ namespace DAL.DALServices
             Category newCategory = new() { Name = name };
 
             categorySet.Add(newCategory);
+            database.SaveChanges();
         }
     }
 }

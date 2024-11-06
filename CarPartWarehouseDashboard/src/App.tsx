@@ -8,9 +8,32 @@ import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from './components/ui
 import { TextField, TextFieldInput, TextFieldLabel } from './components/ui/text-field';
 import Navbar from './Navbar';
 
+import Stock from './models/Stock';
+
 const App: Component = () => {
   const [weatherLocation, setWeatherLocation] = createSignal('London')
   const [weather] = createResource(weatherLocation, (location) => fetch(`/api/weatherforecast?location=${location}`).then(res => res.json()))
+
+  const [TableData, SetTableData] = createSignal()
+  const [stockData] = createResource(() => fetch('stocks').then(result => result.json()))
+  
+
+  async function FetchStockData(params:Stock) : Promise<Stock[]> {
+    const stockItems:Stock[] = [];
+
+    try {
+      const response = await fetch('https://localhost:42069/stocks');
+      if(!response.ok){
+        throw new Error("Failed to fetch stock items");
+      }
+
+      return await response.json();
+
+    } catch (error) {
+      console.error("Error fetching stock names:", error);
+      return [];
+    }
+  }
 
   return (
     <Flex flexDirection='col' alignItems='center' justifyContent='center' class="gap-2 my-2">
@@ -25,20 +48,7 @@ const App: Component = () => {
       </Flex>
       {/* -------------------------------------------------------------------------------- */}
 
-      <Switch class="flex items-center space-x-2">
-        <SwitchControl>
-          <SwitchThumb />
-        </SwitchControl>
-        <SwitchLabel>Test switch</SwitchLabel>
-      </Switch>
-      <TextField class="grid w-full max-w-sm items-center gap-1.5">
-        <TextFieldLabel for="weatherLocation">Weather location</TextFieldLabel>
-        <TextFieldInput type="search" id="weatherLocation" placeholder={weatherLocation()} onInput={(e) => setWeatherLocation(e.currentTarget.value)} />
-      </TextField>
-      <h4>Weather in {weatherLocation()}:</h4>
-      <For each={weather()}>
-        {(weather) => <p>{weather}</p>}
-      </For>
+      <p>{stockData()}</p>
       
     </Flex>
   );

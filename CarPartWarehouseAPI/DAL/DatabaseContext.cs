@@ -12,7 +12,7 @@ namespace DAL
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        private const string con = $"Server=mssqlstud.fhict.local;Database=dbi514798_cobart;user id=dbi514798_cobart;password=SP#1;TrustServerCertificate=True;";
+        private const string con = $"data source=MSI;initial catalog=CarPartWarehouse;trusted_connection=true;TrustServerCertificate=True;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlServer(con)
@@ -22,7 +22,7 @@ namespace DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<ItemDM>().HasMany(i => i.OrderLines).WithOne(l => l.Item)
+            //modelBuilder.Entity<Item>().HasMany(i => i.OrderLines).WithOne(l => l.Item)
             //    .OnDelete(DeleteBehavior.NoAction);
         }
     }
