@@ -1,4 +1,4 @@
-﻿using CarPartWarehouseAPI.DataModels;
+﻿using DAL;
 using CarPartWarehouseAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 

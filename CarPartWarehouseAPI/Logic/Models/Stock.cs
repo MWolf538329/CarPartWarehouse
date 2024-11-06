@@ -1,6 +1,6 @@
-﻿namespace CarPartWarehouseAPI.DataModels
+﻿namespace Logic.Models
 {
-    public class StockDM
+    public class Stock
     {
         public int ID { get; set; }
         public int CurrentStock { get; set; }
