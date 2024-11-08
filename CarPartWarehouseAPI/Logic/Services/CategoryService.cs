@@ -17,6 +17,11 @@ namespace Logic.Services
             return _CategoryDAL.GetCategories();
         }
 
+        public Category GetCategory(int id)
+        {
+            return _CategoryDAL.GetCategory(id);
+        }
+
         public bool AddCategory(string name)
         {
             bool succes = false;

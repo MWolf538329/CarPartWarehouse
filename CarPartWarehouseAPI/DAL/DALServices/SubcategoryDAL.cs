@@ -37,5 +37,15 @@ namespace DAL.DALServices
         {
             return subcategorySet.Any(c => c.Name == name);
         }
+
+        public void EditSubcategory(int id, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSubcategory(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
