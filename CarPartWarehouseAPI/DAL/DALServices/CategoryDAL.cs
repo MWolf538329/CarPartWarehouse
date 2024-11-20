@@ -1,77 +1,131 @@
 ﻿using Logic.Interfaces;
 using Logic.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL.DALServices
 {
     public class CategoryDAL : ICategoryDAL
     {
-        private DbSet<Category> categorySet { get; set; }
         private DatabaseContext database { get; set; }
 
         public CategoryDAL(DatabaseContext db)
         {
             database = db;
-            categorySet = database.Categories;
         }
 
-        #region Read
+        #region Category
         public List<Category> GetCategories()
         {
-            return categorySet.ToList();
+            return database.Categories.ToList();
         }
 
-        public Category GetCategory(int id)
+        public Category? GetCategory(int id)
         {
-            if (DoesEntryExist(id))
+            if (DoesCategoryIDExist(id))
             {
-                return categorySet.Where(c => c.ID == id).FirstOrDefault()!;
+                return database.Categories.Where(c => c.ID == id).FirstOrDefault()!;
             }
 
-            return new Category();
+            return null;
         }
-        #endregion
 
-        #region Create
         public void AddCategory(string name)
         {
             Category newCategory = new() { Name = name };
 
-            categorySet.Add(newCategory);
+            database.Categories.Add(newCategory);
             database.SaveChanges();
         }
-        #endregion
 
-        #region Update
-        public void EditCategory(int id, string name)
+        public void UpdateCategory(int id, string name)
         {
-            if (DoesEntryExist(id))
+            if (DoesCategoryIDExist(id))
             {
-                Category category = categorySet.Where(c => c.ID == id).FirstOrDefault()!;
+                Category category = database.Categories.Where(c => c.ID == id).FirstOrDefault()!;
                 category.Name = name;
                 database.SaveChanges();
             }
         }
-        #endregion
 
-        #region Delete
         public void DeleteCategory(int id)
         {
-            if (DoesEntryExist(id))
+            if (DoesCategoryIDExist(id))
             {
-                categorySet.Remove(categorySet.Where(c => c.ID == id).FirstOrDefault()!);
+                database.Categories.Remove(database.Categories.Where(c => c.ID == id).FirstOrDefault()!);
             }
         }
-        #endregion
 
         public bool DoesCategoryAlreadyExist(string name)
         {
-            return categorySet.Any(c => c.Name == name);
+            return database.Categories.Any(c => c.Name == name);
         }
 
-        private bool DoesEntryExist(int id)
+        public bool DoesCategoryIDExist(int categoryID)
         {
-            return categorySet.Any(c => c.ID == id);
+            return database.Categories.Any(c => c.ID == categoryID);
         }
+        #endregion
+
+        #region Subcategory
+        public List<Subcategory> GetSubcategories()
+        {
+            return database.Subcategories.ToList();
+        }
+        
+        public List<Subcategory> GetSubcategoriesFromCategory(int categoryID)
+        {
+            return database.Subcategories.Where(sc => sc.Category.ID == categoryID).ToList();
+        }
+
+        public Subcategory? GetSubcategory(int subcategoryID)
+        {
+            if (DoesSubcategoryIDExist(subcategoryID))
+            {
+                return database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!;
+            }
+
+            return null;
+        }
+
+        public void AddSubcategory(int categoryID, string name)
+        {
+            if (DoesCategoryIDExist(categoryID))
+            {
+                Category category = GetCategory(categoryID)!;
+
+                Subcategory newSubcategory = new() { Name = name, Category = category };
+
+                database.Subcategories.Add(newSubcategory);
+                database.SaveChanges();
+            }
+        }
+
+        public void UpdateSubcategory(int subcategoryID, string name)
+        {
+            if (DoesSubcategoryIDExist(subcategoryID))
+            {
+                Subcategory subcategory = database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!;
+                subcategory.Name = name;
+                database.SaveChanges();
+            }
+        }
+
+        public void DeleteSubcategory(int subcategoryID)
+        {
+            if (DoesSubcategoryIDExist(subcategoryID))
+            {
+                database.Subcategories.Remove(database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!);
+            }
+        }
+
+        public bool DoesSubcategoryAlreadyExist(string name)
+        {
+            return database.Subcategories.Any(c => c.Name == name);
+        }
+
+        public bool DoesSubcategoryIDExist(int subcategoryID)
+        {
+            return database.Subcategories.Any(sc => sc.ID == subcategoryID);
+        }
+        #endregion
     }
 }

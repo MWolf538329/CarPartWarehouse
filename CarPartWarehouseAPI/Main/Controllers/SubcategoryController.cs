@@ -10,39 +10,39 @@ namespace CarPartWarehouseAPI.Controllers
     {
         public static void SetupSubcategory(this WebApplication app)
         {
-            app.MapGet("/subcategories", (DAL.DatabaseContext databaseContext) =>
-            {
-                ISubcategoryDAL subcategoryDAL = new SubcategoryDAL(databaseContext);
-                SubcategoryService subcategoryService = new(subcategoryDAL);
-                List<SubcategoryVM> subcategoryVMs = new();
+            //app.MapGet("/subcategories", (DAL.DatabaseContext databaseContext) =>
+            //{
+            //    ISubcategoryDAL subcategoryDAL = new SubcategoryDAL(databaseContext);
+            //    SubcategoryService subcategoryService = new(subcategoryDAL);
+            //    List<SubcategoryVM> subcategoryVMs = new();
 
-                foreach (Subcategory subcategory in subcategoryService.GetSubcategories())
-                {
-                    SubcategoryVM subcategoryVM = new SubcategoryVM();
+            //    foreach (Subcategory subcategory in subcategoryService.GetSubcategories())
+            //    {
+            //        SubcategoryVM subcategoryVM = new SubcategoryVM();
 
-                    subcategoryVM.ID = subcategory.ID;
-                    subcategoryVM.Name = subcategory.Name;
+            //        subcategoryVM.ID = subcategory.ID;
+            //        subcategoryVM.Name = subcategory.Name;
 
-                    subcategoryVMs.Add(subcategoryVM);
-                }
+            //        subcategoryVMs.Add(subcategoryVM);
+            //    }
 
-                return subcategoryVMs;
-            })
-            .WithName("GetSubcategories")
-            .WithOpenApi()
-            .WithDescription("Gets the ID and Name from all Subcategories");
+            //    return subcategoryVMs;
+            //})
+            //.WithName("GetSubcategories")
+            //.WithOpenApi()
+            //.WithDescription("Gets the ID and Name from all Subcategories");
 
 
-            app.MapPost("/addsubcategory", (DAL.DatabaseContext databaseContext, string name) =>
-            {
-                ISubcategoryDAL subcategoryDAL = new SubcategoryDAL(databaseContext);
-                SubcategoryService subcategoryService = new(subcategoryDAL);
+            //app.MapPost("/addsubcategory", (DAL.DatabaseContext databaseContext, string name) =>
+            //{
+            //    ISubcategoryDAL subcategoryDAL = new SubcategoryDAL(databaseContext);
+            //    SubcategoryService subcategoryService = new(subcategoryDAL);
 
-                subcategoryService.AddSubcategory(name);
-            })
-            .WithName("AddSubcategory")
-            .WithOpenApi()
-            .WithDescription("Adds the new Subcategory to the Database");
+            //    subcategoryService.AddSubcategory(name);
+            //})
+            //.WithName("AddSubcategory")
+            //.WithOpenApi()
+            //.WithDescription("Adds the new Subcategory to the Database");
         }
     }
 }
