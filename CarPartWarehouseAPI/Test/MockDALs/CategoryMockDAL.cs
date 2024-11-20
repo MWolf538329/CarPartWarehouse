@@ -1,6 +1,5 @@
 ﻿using Logic.Interfaces;
 using Logic.Models;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace Test.MockDALs
 {
