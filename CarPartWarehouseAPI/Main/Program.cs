@@ -35,6 +35,10 @@ app.MapGroup("categories")
     .SetupCategory()
     .WithTags("Categories");
 
+app.MapGroup("products")
+    .SetupProduct()
+    .WithTags("Products");
+
 
 app.SetupSubcategory();
 // --------------------------------------

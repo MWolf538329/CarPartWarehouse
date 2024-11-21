@@ -52,7 +52,7 @@ namespace CarPartWarehouseAPI.Services
                     return Results.BadRequest("Category ID does not exist!");
                 }
 
-                Category category = categoryService.GetCategory(categoryid);
+                Category category = categoryService.GetCategory(categoryid)!;
 
                 CategoryVM categoryVM = new()
                 {
