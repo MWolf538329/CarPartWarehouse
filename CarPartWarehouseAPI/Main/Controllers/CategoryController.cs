@@ -213,7 +213,63 @@ namespace CarPartWarehouseAPI.Services
             // Subcategory DELETE
 
 
+            // Categories / Subcategories / Products GET
+            group.MapGet("/subcategories/products", () =>
+            {
+                List<CategoryVM> categoryVMs = new();
 
+                foreach (Category category in categoryService.GetCategoriesWithSubcategoriesWithProducts())
+                {
+                    CategoryVM categoryVM = new();
+
+                    categoryVM.ID = category.ID;
+                    categoryVM.Name = category.Name;
+
+                    categoryVM.Subcategories = new();
+
+                    if (category.Subcategories != null && category.Subcategories.Count != 0)
+                    {
+                        foreach (Subcategory subcategory in category.Subcategories)
+                        {
+                            SubcategoryVM subcategoryVM = new();
+
+                            subcategoryVM.ID = subcategory.ID;
+                            subcategoryVM.Name = subcategory.Name;
+
+                            subcategoryVM.Products = new();
+
+                            if (subcategory.Products != null && subcategory.Products.Count != 0)
+                            {
+                                foreach (Product product in subcategory.Products)
+                                {
+                                    ProductVM productVM = new();
+
+                                    productVM.ID = product.ID;
+                                    productVM.Name = product.Name;
+                                    productVM.Brand = product.Brand;
+                                    productVM.Eurocents = product.Eurocents;
+
+                                    StockVM stockVM = new();
+                                    stockVM.ID = product.Stock.ID;
+                                    stockVM.CurrentStock = product.Stock.CurrentStock;
+                                    stockVM.Min = product.Stock.Min;
+                                    stockVM.Max = product.Stock.Max;
+
+                                    productVM.Stock = stockVM;
+
+                                    subcategoryVM.Products.Add(productVM);
+                                }
+                            }
+
+                            categoryVM.Subcategories.Add(subcategoryVM);
+                        }
+                    }
+
+                    categoryVMs.Add(categoryVM);
+                }
+
+                return Results.Json(categoryVMs);
+            });
 
 
             return group;

@@ -16,6 +16,16 @@ import {
   AccordionTrigger
 } from "~/components/ui/accordion"
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "~/components/ui/card"
+import CardComponent from './CardComponent';
+
 
 
 //import Stock from './models/Stock';
@@ -23,19 +33,23 @@ import {
 interface Category{
   id: number;
   name: string;
+
+  subcategories: Subcategory[];
 }
 
 interface Subcategory{
   id: number;
   name: string;
   category: Category;
+
+  products: Product[];
 }
 
 interface Stock{
   id: number;
-  currentstock: number;
-  minstock: number;
-  maxstock: number;
+  currentStock: number;
+  min: number;
+  max: number;
 }
 
 interface Product{
@@ -52,14 +66,23 @@ const App: Component = () => {
   // const [TableData, SetTableData] = createSignal()
   // const [stockData] = createResource(() => fetch('stocks').then(result => result.json()))
 
-  const [categories] = createResource<Category[] | undefined>(() => fetch("https://localhost:42069/categories").then(body=>body.json()))
-  createEffect(() => console.log(categories()))
+  //const [categories] = createResource<Category[] | undefined>(() => fetch("https://localhost:42069/categories").then(body=>body.json()))
+  //createEffect(() => console.log(categories()))
 
-  const [subcategories] = createResource<Subcategory[] | undefined>(() => fetch("https://localhost:42069/categories/subcategories").then(body=>body.json()))
-  createEffect(() => console.log(subcategories()))
+  //const [subcategories] = createResource<Subcategory[] | undefined>(() => fetch("https://localhost:42069/categories/subcategories").then(body=>body.json()))
+  //createEffect(() => console.log(subcategories()))
 
-  const [products] = createResource<Product[] | undefined>(() => fetch("https://localhost:42069/products").then(body=>body.json()))
-  createEffect(() => console.log(products()))
+  //const [products] = createResource<Product[] | undefined>(() => fetch("https://localhost:42069/products").then(body=>body.json()))
+  //createEffect(() => console.log(products()))
+
+  const [categoriesv2] = createResource<Category[] | undefined>(() => fetch("https://localhost:42069/categories/subcategories/products").then(body=>body.json()))
+  createEffect(() => console.log(categoriesv2()))
+
+  // const cards = document.querySelectorAll("Card");
+
+  // cards.forEach(card => {
+  //   const stock = parseInt(card.getAttribute("data-stock"))
+  // });
   
 
   // async function FetchStockData(params:Stock) : Promise<Stock[]> {
@@ -79,27 +102,12 @@ const App: Component = () => {
   //   }
   // }
 
+
   return (
     <div>
-{/* <Flex flexDirection='col' alignItems='center' justifyContent='center' class="gap-2 my-2">
-
-{/* ------------ Page Title on the top left and Navbar in the top middle ------------ */}
-{/* <Flex flexDirection='row' alignItems='center' justifyContent='start'>
-  <h1>CarPartWarehouse Dashboard</h1>
-
-  <Flex flexDirection='row' alignItems='center' justifyContent='center'>
-    <Navbar/>
-  </Flex>
-</Flex>
-</Flex> */}
-{/* -------------------------------------------------------------------------------- */}
-
-{/* <p>{stockData()}</p> */}
-
-
-      {/* Accordion with Stock Data */}
+      {/* Category Accordion */}
       <div>
-        <For each ={categories()}>
+        <For each ={categoriesv2()}>
           {category => 
           <div>
             <Accordion multiple={false} collapsible>
@@ -109,15 +117,39 @@ const App: Component = () => {
                   Yes. Display Subcategories!
                   
                   {/* Subcategory Accordion */}
-                  <For each ={subcategories()}>
-                    {subcategory =>                       
+                  <For each ={category.subcategories}>
+                    {subcategory =>
                       <div>
-                        
+                        <Accordion multiple={false} collapsible>
+                          <AccordionItem value="item-1">
+                            <AccordionTrigger> {subcategory.name} </AccordionTrigger>
+                            <AccordionContent>
+                              {/* Product Cards */}
+                              <For each ={subcategory.products}>
+                                {product => 
+                                  <div>
+                                    <CardComponent product={product} />
+
+                                    {/* <Card>
+                                      <CardHeader>
+                                        <CardTitle>{product.name}</CardTitle>
+                                      </CardHeader>
+                                      <CardContent>
+                                        <p>Current: {product.stock.currentStock} - Min: {product.stock.min} - Max: {product.stock.max}</p>
+                                      </CardContent>
+                                    </Card> */}
+                                  </div>
+                                }
+                              </For>
+                              {/* -------------------------------------------------------------------------------- */}
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
                       </div>
                     }
                   </For>
-
-                  </AccordionContent>
+                  {/* -------------------------------------------------------------------------------- */}
+                </AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
@@ -125,7 +157,6 @@ const App: Component = () => {
         </For>
       </div>
       {/* -------------------------------------------------------------------------------- */}
-
     </div>
   );
 };

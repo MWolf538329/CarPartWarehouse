@@ -7,7 +7,9 @@ namespace CarPartWarehouseAPI.ViewModels
         public int ID { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
-        public decimal Price { get; set; }
+        public int Eurocents { get; set; }
+
+        public StockVM Stock { get; set; }
 
         public Category Category { get; set; }
         public Subcategory Subcategory { get; set; }

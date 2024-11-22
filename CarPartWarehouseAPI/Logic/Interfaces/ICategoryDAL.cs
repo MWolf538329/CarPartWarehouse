@@ -7,6 +7,7 @@ namespace Logic.Interfaces
         // Category
         public List<Category> GetCategories();
         public Category? GetCategory(int categoryID);
+        public List<Category> GetCategoriesWithSubcategoriesWithProducts();
         public void AddCategory(string name);
         public void UpdateCategory(int categoryID, string name);
         public void DeleteCategory(int categoryID);

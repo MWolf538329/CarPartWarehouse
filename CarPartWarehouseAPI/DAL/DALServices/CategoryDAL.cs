@@ -28,6 +28,11 @@ namespace DAL.DALServices
             return null;
         }
 
+        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
+        {
+            return database.Categories.ToList();
+        }
+
         public void AddCategory(string name)
         {
             Category newCategory = new() { Name = name };

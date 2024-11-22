@@ -23,6 +23,11 @@ namespace Logic.Services
             return _CategoryDAL.GetCategory(id);
         }
 
+        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
+        {
+            return _CategoryDAL.GetCategoriesWithSubcategoriesWithProducts();
+        }
+
         public void AddCategory(string name)
         {
             if (!_CategoryDAL.DoesCategoryAlreadyExist(name))
