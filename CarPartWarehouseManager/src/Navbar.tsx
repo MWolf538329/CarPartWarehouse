@@ -28,7 +28,11 @@ const Navbar: Component = () => {
         <NavigationMenuItem>
 
           <NavigationMenuTrigger>
-            Overview
+            Categories
+          </NavigationMenuTrigger>
+
+          <NavigationMenuTrigger>
+            Subcategories
           </NavigationMenuTrigger>
           
         </NavigationMenuItem>
