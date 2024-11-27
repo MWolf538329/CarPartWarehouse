@@ -11,8 +11,8 @@ namespace CarPartWarehouseAPI.ViewModels
 
         public StockVM Stock { get; set; }
 
-        public Category Category { get; set; }
-        public Subcategory Subcategory { get; set; }
+        //public Category Category { get; set; }
+        public SubcategoryVM Subcategory { get; set; }
         public List<ProductLink> Links { get; set; } = [];
     }
 }

@@ -8,7 +8,7 @@ namespace Logic.Interfaces
         public List<Category> GetCategories();
         public Category? GetCategory(int categoryID);
         public List<Category> GetCategoriesWithSubcategoriesWithProducts();
-        public void AddCategory(string name);
+        public void CreateCategory(string name);
         public void UpdateCategory(int categoryID, string name);
         public void DeleteCategory(int categoryID);
 
@@ -17,9 +17,9 @@ namespace Logic.Interfaces
 
         // Subcategory
         public List<Subcategory> GetSubcategories();
-        public List<Subcategory> GetSubcategoriesFromCategory(int categoryID);
+        public List<Subcategory> GetSubcategories(int categoryID);
         public Subcategory? GetSubcategory(int subcategoryID);
-        public void AddSubcategory(int categoryID, string name);
+        public void CreateSubcategory(int categoryID, string name);
         public void UpdateSubcategory(int subcategoryID, string name);
         public void DeleteSubcategory(int subcategory);
 

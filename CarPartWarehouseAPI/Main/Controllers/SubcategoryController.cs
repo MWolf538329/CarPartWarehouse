@@ -38,9 +38,9 @@ namespace CarPartWarehouseAPI.Controllers
             //    ISubcategoryDAL subcategoryDAL = new SubcategoryDAL(databaseContext);
             //    SubcategoryService subcategoryService = new(subcategoryDAL);
 
-            //    subcategoryService.AddSubcategory(name);
+            //    subcategoryService.CreateSubcategory(name);
             //})
-            //.WithName("AddSubcategory")
+            //.WithName("CreateSubcategory")
             //.WithOpenApi()
             //.WithDescription("Adds the new Subcategory to the Database");
         }

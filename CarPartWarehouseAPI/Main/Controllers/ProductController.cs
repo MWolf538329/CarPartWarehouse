@@ -34,7 +34,26 @@ namespace CarPartWarehouseAPI.Controllers
                     productVM.ID = product.ID;
                     productVM.Name = product.Name;
                     productVM.Brand = product.Brand;
-                    productVM.Subcategory = product.Subcategory;
+                    productVM.Eurocents = product.Eurocents;
+
+                    productVM.Subcategory = new()
+                    {
+                        ID = product.Subcategory.ID,
+                        Name = product.Subcategory.Name,
+                        Category = new()
+                        {
+                            ID = product.Subcategory.Category.ID,
+                            Name = product.Subcategory.Category.Name
+                        }
+                    };
+
+                    productVM.Stock = new()
+                    {
+                        ID = product.Stock.ID,
+                        CurrentStock = product.Stock.CurrentStock,
+                        Min = product.Stock.Min,
+                        Max = product.Stock.Max
+                    };
 
                     productVMs.Add(productVM);
                 }
@@ -43,8 +62,33 @@ namespace CarPartWarehouseAPI.Controllers
             })
             .WithName("GetProducts")
             .WithOpenApi()
-            .WithDescription("Gets the ID, Name, Brand, Subcategory ID and Name, Category ID and Name and Stock  from all Categories")
-            .WithSummary("Gets the ID and Name from all Categories");
+            .WithDescription("Gets the ID, Name, Brand, Subcategory ID and Name, Category ID and Name and Stock from all Products")
+            .WithSummary("Gets the ID, Name, Brand, Subcategory ID and Name, Category ID and Name and Stock from all Products");
+
+
+            // Create Product
+            group.MapGet("/", 
+            (
+                string productName, string productBrand, int productEurocents, 
+                int subcategoryID, 
+                int currentStock, int minStock, int maxStock
+            ) => 
+            {
+                if (!string.IsNullOrEmpty(productName))
+                    return Results.BadRequest("Product Name can not be empty!");
+
+                if (!string.IsNullOrEmpty(productBrand))
+                    return Results.BadRequest("Product Brand can not be empty!");
+
+                if (productEurocents == 0)
+                    return Results.BadRequest("Product Eurocents can not be 0!");
+
+                if (subcategoryID == 0)
+                    return Results.BadRequest("Subcategory can not be empty!");
+
+                //productService.CreateProduct();
+                return Results.Ok("Product succesfully Created!");
+            });
 
             return group;
         }

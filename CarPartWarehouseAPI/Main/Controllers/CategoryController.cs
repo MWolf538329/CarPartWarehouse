@@ -67,6 +67,7 @@ namespace CarPartWarehouseAPI.Services
             .WithDescription("Gets the ID and Name from a specific Category")
             .WithSummary("Gets the ID and Name from a specific Category");
 
+
             // Create Category
             group.MapPost("/", (string name) =>
             {
@@ -108,7 +109,7 @@ namespace CarPartWarehouseAPI.Services
                     return Results.BadRequest("Category already exists!");
                 }
 
-                //categoryService.UpdateCategory(categoryID, name);
+                categoryService.UpdateCategory(categoryid, name);
                 return Results.Ok("Category succesfully Updated!");
             })
             .WithName("UpdateCategory")
@@ -116,7 +117,22 @@ namespace CarPartWarehouseAPI.Services
             .WithSummary("Update an existing Category")
             .WithOpenApi();
 
+
             // Delete Category
+            group.MapDelete("/{categoryid}", (int categoryid) =>
+            {
+                if (categoryid == 0)
+                {
+                    return Results.BadRequest("Category ID can not be 0!");
+                }
+                if (!categoryService.DoesCategoryIDExist(categoryid))
+                {
+                    return Results.BadRequest("Category ID does not exist!");
+                }
+
+                categoryService.DeleteCategory(categoryid);
+                return Results.Ok("Category succesfully Deleted!");
+            });
 
 
             // Gets All Subcategories
@@ -141,17 +157,6 @@ namespace CarPartWarehouseAPI.Services
             .WithDescription("Gets the ID and Name from all Subcategories")
             .WithSummary("Gets the ID and Name from all Subcategories");
 
-            // Gets All Subcategories from Category
-            //group.MapGet("/{categoryid}/subcategories", (int categoryid) =>
-            //{
-
-            //});
-
-            // Gets a specific Subcategory from Category
-            //group.MapGet("/{categoryid}/subcategories/{subcategoryid}", (int categoryid, int subcategoryid) =>
-            //{
-
-            //});
 
             // Subcategory POST
             group.MapPost("/{categoryid}/", (int categoryid, string name) =>
@@ -210,7 +215,26 @@ namespace CarPartWarehouseAPI.Services
             .WithSummary("Update an existing Subcategory")
             .WithOpenApi();
 
+
             // Subcategory DELETE
+            group.MapDelete("/subcategory/{subcategoryid}", (int subcategoryid) =>
+            {
+                if (subcategoryid == 0)
+                {
+                    return Results.BadRequest("Subcategory ID can not be 0!");
+                }
+                if (categoryService.DoesSubcategoryIDExist(subcategoryid))
+                {
+                    return Results.BadRequest("Subcategory ID does not exist!");
+                }
+
+                categoryService.DeleteSubcategory(subcategoryid);
+                return Results.Ok("Subcategory succesfully Deleted!");
+            })
+            .WithName("DeleteSubcategory")
+            .WithDescription("Delete an existing Subcategory")
+            .WithSummary("Delete an existing Subcategory")
+            .WithOpenApi();
 
 
             // Categories / Subcategories / Products GET
@@ -269,8 +293,11 @@ namespace CarPartWarehouseAPI.Services
                 }
 
                 return Results.Json(categoryVMs);
-            });
-
+            })
+            .WithName("GetCategoriesSubcategoriesProducts")
+            .WithDescription("Gets all Categories with Subcategories with Products")
+            .WithSummary("Gets all Categories with Subcategories with Products")
+            .WithOpenApi();
 
             return group;
         }

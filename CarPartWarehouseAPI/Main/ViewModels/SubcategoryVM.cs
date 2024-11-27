@@ -5,6 +5,8 @@
         public int ID { get; set; }
         public string Name { get; set; }
 
-        public List<ProductVM>? Products { get; set; }
+
+        public virtual CategoryVM Category { get; set; }
+        public virtual List<ProductVM>? Products { get; set; }
     }
 }

@@ -2,6 +2,7 @@ api.localhost {
 	reverse_proxy :8080
 }
 
+
 manager.localhost {
 	reverse_proxy :3001
 }

@@ -27,62 +27,38 @@ import {
 import CardComponent from './CardComponent';
 
 
+// interface Category{
+//   id: number;
+//   name: string;
 
-//import Stock from './models/Stock';
+//   subcategories: Subcategory[];
+// }
 
-interface Category{
-  id: number;
-  name: string;
+// interface Subcategory{
+//   id: number;
+//   name: string;
+//   category: Category;
 
-  subcategories: Subcategory[];
-}
+//   products: Product[];
+// }
 
-interface Subcategory{
-  id: number;
-  name: string;
-  category: Category;
+// interface Stock{
+//   id: number;
+//   currentStock: number;
+//   min: number;
+//   max: number;
+// }
 
-  products: Product[];
-}
-
-interface Stock{
-  id: number;
-  currentStock: number;
-  min: number;
-  max: number;
-}
-
-interface Product{
-  id: number;
-  name: string;
-  stock: Stock;
-  subcategory: Subcategory;
-}
+// interface Product{
+//   id: number;
+//   name: string;
+//   stock: Stock;
+//   subcategory: Subcategory;
+// }
 
 const App: Component = () => {
-  //const [weatherLocation, setWeatherLocation] = createSignal('London')
-  //const [weather] = createResource(weatherLocation, (location) => fetch(`/api/weatherforecast?location=${location}`).then(res => res.json()))
-
-  // const [TableData, SetTableData] = createSignal()
-  // const [stockData] = createResource(() => fetch('stocks').then(result => result.json()))
-
-  //const [categories] = createResource<Category[] | undefined>(() => fetch("https://localhost:42069/categories").then(body=>body.json()))
-  //createEffect(() => console.log(categories()))
-
-  //const [subcategories] = createResource<Subcategory[] | undefined>(() => fetch("https://localhost:42069/categories/subcategories").then(body=>body.json()))
-  //createEffect(() => console.log(subcategories()))
-
-  //const [products] = createResource<Product[] | undefined>(() => fetch("https://localhost:42069/products").then(body=>body.json()))
-  //createEffect(() => console.log(products()))
-
   const [categoriesv2] = createResource<Category[] | undefined>(() => fetch("https://api.localhost/categories/subcategories/products").then(body=>body.json()))
   createEffect(() => console.log(categoriesv2()))
-
-  // const cards = document.querySelectorAll("Card");
-
-  // cards.forEach(card => {
-  //   const stock = parseInt(card.getAttribute("data-stock"))
-  // });
   
 
   // async function FetchStockData(params:Stock) : Promise<Stock[]> {
@@ -129,15 +105,6 @@ const App: Component = () => {
                                 {product => 
                                   <div>
                                     <CardComponent product={product} />
-
-                                    {/* <Card>
-                                      <CardHeader>
-                                        <CardTitle>{product.name}</CardTitle>
-                                      </CardHeader>
-                                      <CardContent>
-                                        <p>Current: {product.stock.currentStock} - Min: {product.stock.min} - Max: {product.stock.max}</p>
-                                      </CardContent>
-                                    </Card> */}
                                   </div>
                                 }
                               </For>

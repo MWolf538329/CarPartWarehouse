@@ -18,26 +18,32 @@ import {
 } from "~/components/ui/navigation-menu"
 import { Flex } from './components/ui/flex';
 
+import "./style.css";
+
 const Navbar: Component = () => {
-  const [weatherLocation, setWeatherLocation] = createSignal('London')
-  const [weather] = createResource(weatherLocation, (location) => fetch(`/api/weatherforecast?location=${location}`).then(res => res.json()))
-
   return (
-    <div class="flex flex-col items-center space-y-4">
-      <NavigationMenu>
-        <NavigationMenuItem>
+    <div>
+      <div class="flex">
+        <div>CarPartWarehouse</div>
 
-          <NavigationMenuTrigger>
-            Categories
-          </NavigationMenuTrigger>
+        <div>
+          <NavigationMenu>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger as='a' href='/'>
+                Categories
+              </NavigationMenuTrigger>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger as='a' href='/SubcategoryPage'>
+                Subcategories
+              </NavigationMenuTrigger>
+            </NavigationMenuItem>
+          </NavigationMenu>
+        </div>
+      </div>
 
-          <NavigationMenuTrigger>
-            Subcategories
-          </NavigationMenuTrigger>
-          
-        </NavigationMenuItem>
-      </NavigationMenu>
     </div>
+    
   )
 }
 

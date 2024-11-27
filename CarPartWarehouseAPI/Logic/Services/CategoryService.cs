@@ -32,7 +32,7 @@ namespace Logic.Services
         {
             if (!_CategoryDAL.DoesCategoryAlreadyExist(name))
             {
-                _CategoryDAL.AddCategory(name);
+                _CategoryDAL.CreateCategory(name);
             }
         }
 
@@ -46,7 +46,7 @@ namespace Logic.Services
 
         public void DeleteCategory(int categoryID)
         {
-            if (categoryID != 0)
+            if (categoryID != 0 && DoesCategoryIDExist(categoryID))
             {
                 _CategoryDAL.DeleteCategory(categoryID);
             }
@@ -70,7 +70,7 @@ namespace Logic.Services
 
         public List<Subcategory> GetSubcategoriesFromCategory(int categoryID)
         {
-            return _CategoryDAL.GetSubcategoriesFromCategory(categoryID);
+            return _CategoryDAL.GetSubcategories(categoryID);
         }
 
         public Subcategory? GetSubcategory(int subcategoryID)
@@ -82,7 +82,7 @@ namespace Logic.Services
         {
             if (!_CategoryDAL.DoesSubcategoryAlreadyExist(name))
             {
-                _CategoryDAL.AddSubcategory(categoryID, name);
+                _CategoryDAL.CreateSubcategory(categoryID, name);
             }
         }
 

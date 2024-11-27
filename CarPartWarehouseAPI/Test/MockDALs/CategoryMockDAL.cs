@@ -41,7 +41,7 @@ namespace Test.MockDALs
         #endregion
 
         #region Create
-        public void AddCategory(string name)
+        public void CreateCategory(string name)
         {
             IsUsed = true;
 

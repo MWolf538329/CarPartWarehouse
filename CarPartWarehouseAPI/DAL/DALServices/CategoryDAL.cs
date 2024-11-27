@@ -33,7 +33,7 @@ namespace DAL.DALServices
             return database.Categories.ToList();
         }
 
-        public void AddCategory(string name)
+        public void CreateCategory(string name)
         {
             Category newCategory = new() { Name = name };
 
@@ -56,6 +56,7 @@ namespace DAL.DALServices
             if (DoesCategoryIDExist(id))
             {
                 database.Categories.Remove(database.Categories.Where(c => c.ID == id).FirstOrDefault()!);
+                database.SaveChanges();
             }
         }
 
@@ -76,7 +77,7 @@ namespace DAL.DALServices
             return database.Subcategories.ToList();
         }
         
-        public List<Subcategory> GetSubcategoriesFromCategory(int categoryID)
+        public List<Subcategory> GetSubcategories(int categoryID)
         {
             return database.Subcategories.Where(sc => sc.Category.ID == categoryID).ToList();
         }
@@ -91,22 +92,25 @@ namespace DAL.DALServices
             return null;
         }
 
-        public void AddSubcategory(int categoryID, string name)
+        public void CreateSubcategory(int categoryID, string name)
         {
             if (DoesCategoryIDExist(categoryID))
             {
-                Category category = GetCategory(categoryID)!;
+                if (!string.IsNullOrEmpty(name) && !DoesSubcategoryAlreadyExist(name))
+                {
+                    Category category = GetCategory(categoryID)!;
 
-                Subcategory newSubcategory = new() { Name = name, Category = category };
+                    Subcategory newSubcategory = new() { Name = name, Category = category };
 
-                database.Subcategories.Add(newSubcategory);
-                database.SaveChanges();
+                    database.Subcategories.Add(newSubcategory);
+                    database.SaveChanges();
+                }
             }
         }
 
         public void UpdateSubcategory(int subcategoryID, string name)
         {
-            if (DoesSubcategoryIDExist(subcategoryID))
+            if (DoesSubcategoryIDExist(subcategoryID) && !string.IsNullOrEmpty(name))
             {
                 Subcategory subcategory = database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!;
                 subcategory.Name = name;
@@ -116,9 +120,10 @@ namespace DAL.DALServices
 
         public void DeleteSubcategory(int subcategoryID)
         {
-            if (DoesSubcategoryIDExist(subcategoryID))
+            if (subcategoryID != 0 && DoesSubcategoryIDExist(subcategoryID))
             {
                 database.Subcategories.Remove(database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!);
+                database.SaveChanges();
             }
         }
 
