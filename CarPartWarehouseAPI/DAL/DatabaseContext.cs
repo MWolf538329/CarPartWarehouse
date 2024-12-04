@@ -7,7 +7,6 @@ namespace DAL
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductLink> ProductLinks { get; set; }
-        public DbSet<Stock> Stocks { get; set; }
         public DbSet<StockHistory> StockHistories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Category> Categories { get; set; }

@@ -28,46 +28,43 @@ namespace DAL.DALServices
             return null;
         }
 
-        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
-        {
-            return database.Categories.ToList();
-        }
-
         public void CreateCategory(string name)
         {
-            Category newCategory = new() { Name = name };
+            if (string.IsNullOrEmpty(name) || DoesCategoryAlreadyExist(name)) return;
 
-            database.Categories.Add(newCategory);
+
+            database.Categories.Add(new() { Name = name });
             database.SaveChanges();
         }
 
         public void UpdateCategory(int id, string name)
         {
-            if (DoesCategoryIDExist(id))
-            {
-                Category category = database.Categories.Where(c => c.ID == id).FirstOrDefault()!;
-                category.Name = name;
-                database.SaveChanges();
-            }
+            if (id == 0 || !DoesCategoryIDExist(id)) return;
+
+            if (string.IsNullOrEmpty(name) || DoesCategoryAlreadyExist(name)) return;
+
+            
+            Category category = database.Categories.Where(c => c.ID == id).FirstOrDefault()!;
+            category.Name = name;
+            database.SaveChanges();
         }
 
         public void DeleteCategory(int id)
         {
-            if (DoesCategoryIDExist(id))
-            {
-                database.Categories.Remove(database.Categories.Where(c => c.ID == id).FirstOrDefault()!);
-                database.SaveChanges();
-            }
+            if (id == 0 || !DoesCategoryIDExist(id)) return;
+
+            
+            database.Categories.Remove(database.Categories.Where(c => c.ID == id).FirstOrDefault()!);
+            database.SaveChanges();
         }
 
         public bool DoesCategoryAlreadyExist(string name)
         {
             return database.Categories.Any(c => c.Name == name);
         }
-
-        public bool DoesCategoryIDExist(int categoryID)
+        public bool DoesCategoryIDExist(int id)
         {
-            return database.Categories.Any(c => c.ID == categoryID);
+            return database.Categories.Any(c => c.ID == id);
         }
         #endregion
 
@@ -94,47 +91,47 @@ namespace DAL.DALServices
 
         public void CreateSubcategory(int categoryID, string name)
         {
-            if (DoesCategoryIDExist(categoryID))
-            {
-                if (!string.IsNullOrEmpty(name) && !DoesSubcategoryAlreadyExist(name))
-                {
-                    Category category = GetCategory(categoryID)!;
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
 
-                    Subcategory newSubcategory = new() { Name = name, Category = category };
+            if (string.IsNullOrEmpty(name) || DoesSubcategoryAlreadyExist(name)) return;
 
-                    database.Subcategories.Add(newSubcategory);
-                    database.SaveChanges();
-                }
-            }
+
+            Category category = GetCategory(categoryID)!;
+            Subcategory newSubcategory = new() { Name = name, Category = category };
+            database.Subcategories.Add(newSubcategory);
+            database.SaveChanges();
         }
 
-        public void UpdateSubcategory(int subcategoryID, string name)
+        public void UpdateSubcategory(int subcategoryID, int categoryID, string name)
         {
-            if (DoesSubcategoryIDExist(subcategoryID) && !string.IsNullOrEmpty(name))
-            {
-                Subcategory subcategory = database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!;
-                subcategory.Name = name;
-                database.SaveChanges();
-            }
+            if (subcategoryID == 0 || !DoesSubcategoryIDExist(subcategoryID)) return;
+
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
+
+            if (string.IsNullOrEmpty(name) || DoesSubcategoryAlreadyExist(name)) return;
+
+
+            Subcategory subcategory = database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!;
+            subcategory.Name = name;
+            database.SaveChanges();
         }
 
-        public void DeleteSubcategory(int subcategoryID)
+        public void DeleteSubcategory(int id)
         {
-            if (subcategoryID != 0 && DoesSubcategoryIDExist(subcategoryID))
-            {
-                database.Subcategories.Remove(database.Subcategories.Where(sc => sc.ID == subcategoryID).FirstOrDefault()!);
-                database.SaveChanges();
-            }
+            if (id == 0 || !DoesSubcategoryIDExist(id)) return;
+
+            
+            database.Subcategories.Remove(database.Subcategories.Where(sc => sc.ID == id).FirstOrDefault()!);
+            database.SaveChanges();
         }
 
         public bool DoesSubcategoryAlreadyExist(string name)
         {
-            return database.Subcategories.Any(c => c.Name == name);
+            return database.Subcategories.Any(sc => sc.Name == name);
         }
-
-        public bool DoesSubcategoryIDExist(int subcategoryID)
+        public bool DoesSubcategoryIDExist(int id)
         {
-            return database.Subcategories.Any(sc => sc.ID == subcategoryID);
+            return database.Subcategories.Any(sc => sc.ID == id);
         }
         #endregion
     }

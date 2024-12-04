@@ -9,51 +9,19 @@ namespace CarPartWarehouseAPI.Controllers
 {
     public static class ProductController
     {
-        static DatabaseContext databaseContext;
-        static IProductDAL productDAL;
-        static ProductService productService;
-
-        static ProductController()
-        {
-            databaseContext = new();
-            productDAL = new ProductDAL(databaseContext);
-            productService = new(productDAL);
-        }
-
         public static RouteGroupBuilder SetupProduct(this RouteGroupBuilder group)
         {
-            // Get ALL Products
-            group.MapGet("/", () =>
+            group.MapGet("/", (DatabaseContext databaseContext) =>
             {
+                IProductDAL productDAL = new ProductDAL(databaseContext);
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                ProductService productService = new(productDAL, categoryDAL);
+
                 List<ProductVM> productVMs = new();
 
                 foreach (Product product in productService.GetProducts())
                 {
-                    ProductVM productVM = new();
-
-                    productVM.ID = product.ID;
-                    productVM.Name = product.Name;
-                    productVM.Brand = product.Brand;
-                    productVM.Eurocents = product.Eurocents;
-
-                    productVM.Subcategory = new()
-                    {
-                        ID = product.Subcategory.ID,
-                        Name = product.Subcategory.Name,
-                        Category = new()
-                        {
-                            ID = product.Subcategory.Category.ID,
-                            Name = product.Subcategory.Category.Name
-                        }
-                    };
-
-                    productVM.Stock = new()
-                    {
-                        ID = product.Stock.ID,
-                        CurrentStock = product.Stock.CurrentStock,
-                        Min = product.Stock.Min,
-                        Max = product.Stock.Max
-                    };
+                    ProductVM productVM = new(product);
 
                     productVMs.Add(productVM);
                 }
@@ -61,34 +29,112 @@ namespace CarPartWarehouseAPI.Controllers
                 return Results.Json(productVMs);
             })
             .WithName("GetProducts")
-            .WithOpenApi()
-            .WithDescription("Gets the ID, Name, Brand, Subcategory ID and Name, Category ID and Name and Stock from all Products")
-            .WithSummary("Gets the ID, Name, Brand, Subcategory ID and Name, Category ID and Name and Stock from all Products");
+            .WithSummary("Gets All Products")
+            .WithDescription("Gets All Products")
+            .WithOpenApi();
 
-
-            // Create Product
-            group.MapGet("/", 
-            (
-                string productName, string productBrand, int productEurocents, 
-                int subcategoryID, 
-                int currentStock, int minStock, int maxStock
-            ) => 
+            group.MapGet("/{id}", (DatabaseContext databaseContext, int id) =>
             {
-                if (!string.IsNullOrEmpty(productName))
-                    return Results.BadRequest("Product Name can not be empty!");
+                IProductDAL productDAL = new ProductDAL(databaseContext);
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                ProductService productService = new(productDAL, categoryDAL);
 
-                if (!string.IsNullOrEmpty(productBrand))
-                    return Results.BadRequest("Product Brand can not be empty!");
+                if (id == 0) return Results.BadRequest("Product ID can not be 0!");
+                if (!productService.DoesProductIDExist(id)) return Results.NotFound("Product ID does not Exist!");
 
-                if (productEurocents == 0)
-                    return Results.BadRequest("Product Eurocents can not be 0!");
+                Product product = productService.GetProduct(id)!;
+                
+                ProductWithLinkVM productVM = new(product);
+                return Results.Json(productVM);
+            })
+            .WithName("GetProduct")
+            .WithSummary("Gets a Product")
+            .WithDescription("Gets a Product")
+            .WithOpenApi();
 
-                if (subcategoryID == 0)
-                    return Results.BadRequest("Subcategory can not be empty!");
 
-                //productService.CreateProduct();
-                return Results.Ok("Product succesfully Created!");
-            });
+            group.MapPost("/", (DatabaseContext databaseContext, string name, string brand,
+                int subcategoryID, int currentStock, int minStock, int maxStock) => 
+            {
+                IProductDAL productDAL = new ProductDAL(databaseContext);
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                ProductService productService = new(productDAL, categoryDAL);
+                CategoryService categoryService = new(categoryDAL);
+
+                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Product Name can not be empty!");
+
+                if (string.IsNullOrEmpty(brand)) return Results.BadRequest("Product Brand can not be empty!");
+
+                if (subcategoryID == 0) return Results.BadRequest("Subcategory can not be empty!");
+                if (!categoryService.DoesSubcategoryIDExist(subcategoryID)) return Results.NotFound("Subcategory does not exist!");
+
+                if (currentStock < 0) return Results.BadRequest("Current Stock can not be lower than 0!");
+
+                if (minStock < 0) return Results.BadRequest("Min Stock can not be lower than 0!");
+
+                if (maxStock < 0) return Results.BadRequest("Max Stock can not be lower than 0!");
+
+
+                productService.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock);
+                return Results.Created();
+            })
+            .WithName("CreateProduct")
+            .WithSummary("Create Product")
+            .WithDescription("Create Product")
+            .WithOpenApi();
+
+
+            group.MapPut("/{id}", (DatabaseContext databaseContext, int id, string name, string brand,
+                int subcategoryID, int currentStock, int minStock, int maxStock) =>
+            {
+                IProductDAL productDAL = new ProductDAL(databaseContext);
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                ProductService productService = new(productDAL, categoryDAL);
+                CategoryService categoryService = new(categoryDAL);
+
+                if (id == 0) return Results.BadRequest("ID can not be 0!");
+                if (!productService.DoesProductIDExist(id)) return Results.NotFound("Product ID does not Exist!");
+
+                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Product Name can not be empty!");
+
+                if (string.IsNullOrEmpty(brand)) return Results.BadRequest("Product Brand can not be empty!");
+
+                if (subcategoryID == 0) return Results.BadRequest("Subcategory can not be empty!");
+                if (!categoryService.DoesSubcategoryIDExist(subcategoryID)) return Results.NotFound("Subcategory does not exist!");
+
+                if (currentStock < 0) return Results.BadRequest("Current Stock can not be lower than 0!");
+
+                if (minStock < 0) return Results.BadRequest("Min Stock can not be lower than 0!");
+
+                if (maxStock < 0) return Results.BadRequest("Max Stock can not be lower than 0!");
+
+
+                productService.UpdateProduct(id, name, brand, subcategoryID, currentStock, minStock, maxStock);
+                return Results.Created();
+            })
+            .WithName("UpdateProduct")
+            .WithSummary("Update Product")
+            .WithDescription("Update Product")
+            .WithOpenApi();
+
+
+            group.MapDelete("{id}", (DatabaseContext databaseContext, int id) =>
+            {
+                IProductDAL productDAL = new ProductDAL(databaseContext);
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                ProductService productService = new(productDAL, categoryDAL);
+
+                if (id == 0) return Results.BadRequest("ID can not be 0!");
+                if (!productService.DoesProductIDExist(id)) return Results.NotFound("Product ID does not Exist!");
+
+                productService.DeleteProduct(id);
+                return Results.Ok("Product Succesfully Deleted!");
+            })
+            .WithName("DeleteProduct")
+            .WithSummary("Delete Product")
+            .WithDescription("Delete Product")
+            .WithOpenApi();
+
 
             return group;
         }

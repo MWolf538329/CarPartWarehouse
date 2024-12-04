@@ -46,7 +46,7 @@ namespace Test.LogicTests
         public void AddCategory(string name)
         {
             // Act
-            categoryService.AddCategory(name);
+            categoryService.CreateCategory(name);
 
             // Assert
             Assert.AreEqual(true, mockDAL.IsUsed);

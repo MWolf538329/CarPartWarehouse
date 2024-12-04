@@ -31,16 +31,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Include Services for API Functionality
-app.MapGroup("categories")
+app.MapGroup("/categories")
     .SetupCategory()
     .WithTags("Categories");
 
-app.MapGroup("products")
+app.MapGroup("/products")
     .SetupProduct()
     .WithTags("Products");
-
-
-app.SetupSubcategory();
 // --------------------------------------
 
 app.Run();

@@ -71,6 +71,61 @@ namespace Test.MockDALs
         public bool DoesCategoryAlreadyExist(string name)
         {
             return Categories.Any(c => c.Name == name);
-        } 
+        }
+
+        public void UpdateCategory(int categoryID, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DoesCategoryIDExist(int categoryID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Subcategory> GetSubcategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Subcategory> GetSubcategories(int categoryID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Subcategory? GetSubcategory(int subcategoryID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateSubcategory(int categoryID, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSubcategory(int subcategoryID, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSubcategory(int subcategory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DoesSubcategoryAlreadyExist(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DoesSubcategoryIDExist(int subcategoryID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSubcategory(int subcategoryID, int categoryID, string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

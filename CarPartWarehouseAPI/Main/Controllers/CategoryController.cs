@@ -9,30 +9,19 @@ namespace CarPartWarehouseAPI.Services
 {
     public static class CategoryController
     {
-        static DatabaseContext databaseContext;
-        static ICategoryDAL categoryDAL;
-        static CategoryService categoryService;
-
-        static CategoryController()
-        {
-            databaseContext = new();
-            categoryDAL = new CategoryDAL(databaseContext);
-            categoryService = new(categoryDAL);
-        }
-
         public static RouteGroupBuilder SetupCategory(this RouteGroupBuilder group)
         {
             // Get All Categories
-            group.MapGet("/", () =>
+            group.MapGet("/", (DatabaseContext databaseContext) =>
             {
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
+
                 List<CategoryVM> categoryVMs = new();
 
                 foreach (Category category in categoryService.GetCategories())
                 {
-                    CategoryVM categoryVM = new();
-
-                    categoryVM.ID = category.ID;
-                    categoryVM.Name = category.Name;
+                    CategoryVM categoryVM = new(category);
 
                     categoryVMs.Add(categoryVM);
                 }
@@ -40,112 +29,98 @@ namespace CarPartWarehouseAPI.Services
                 return Results.Json(categoryVMs);
             })
             .WithName("GetCategories")
-            .WithOpenApi()
-            .WithDescription("Gets the ID and Name from all Categories")
-            .WithSummary("Gets the ID and Name from all Categories");
+            .WithSummary("Gets All Categories")
+            .WithDescription("Gets All Categories")
+            .WithOpenApi();
 
             // Gets a specific Category
-            group.MapGet("/{categoryid}", (int categoryid) =>
+            group.MapGet("/{id}", (DatabaseContext databaseContext, int id) =>
             {
-                if (!categoryService.DoesCategoryIDExist(categoryid))
-                {
-                    return Results.BadRequest("Category ID does not exist!");
-                }
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                Category category = categoryService.GetCategory(categoryid)!;
+                if (!categoryService.DoesCategoryIDExist(id)) return Results.NotFound("Category ID does not exist!");
 
-                CategoryVM categoryVM = new()
-                {
-                    ID = category.ID,
-                    Name = category.Name
-                };
+                Category category = categoryService.GetCategory(id)!;
+
+                CategoryWithSubcategoryVM categoryVM = new(category);
 
                 return Results.Json(categoryVM);
             })
             .WithName("GetCategory")
-            .WithOpenApi()
-            .WithDescription("Gets the ID and Name from a specific Category")
-            .WithSummary("Gets the ID and Name from a specific Category");
+            .WithSummary("Gets a Category")
+            .WithDescription("Gets a Category")
+            .WithOpenApi();
 
 
             // Create Category
-            group.MapPost("/", (string name) =>
+            group.MapPost("/", (DatabaseContext databaseContext, string name) =>
             {
-                if (string.IsNullOrEmpty(name))
-                {
-                    return Results.BadRequest("Name can not be empty!");
-                }
-                if (categoryService.DoesCategoryAlreadyExist(name))
-                {
-                    return Results.BadRequest("Category already exists!");
-                }
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                categoryService.AddCategory(name);
-                return Results.Ok("Category Added!");
+                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
+                if (categoryService.DoesCategoryAlreadyExist(name)) return Results.BadRequest("Category already exists!");
+
+                categoryService.CreateCategory(name);
+                return Results.Created();
             })
-            .WithName("AddCategory")
-            .WithDescription("Creates a new Category and adds it to the Database")
-            .WithSummary("Creates a new Category and adds it to the Database")
+            .WithName("CreateCategory")
+            .WithSummary("Create Category")
+            .WithDescription("Create Category")
             .WithOpenApi();
 
 
             // Update Category
-            group.MapPut("/{categoryid}", (int categoryid, string name) =>
+            group.MapPut("/{id}", (DatabaseContext databaseContext, int id, string name) =>
             {
-                if (categoryid == 0)
-                {
-                    return Results.BadRequest("Category ID can not be 0!");
-                }
-                if (string.IsNullOrEmpty(name))
-                {
-                    return Results.BadRequest("Name can not be empty!");
-                }
-                if (!categoryService.DoesCategoryIDExist(categoryid))
-                {
-                    return Results.BadRequest("Category ID does not exist!");
-                }
-                if (categoryService.DoesCategoryAlreadyExist(name))
-                {
-                    return Results.BadRequest("Category already exists!");
-                }
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                categoryService.UpdateCategory(categoryid, name);
-                return Results.Ok("Category succesfully Updated!");
+                if (id == 0) return Results.BadRequest("Category ID can not be 0!");
+                if (!categoryService.DoesCategoryIDExist(id)) return Results.NotFound("Category ID does not exist!");
+
+                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
+                if (categoryService.DoesCategoryAlreadyExist(name)) return Results.BadRequest("Category already exists!");
+
+                categoryService.UpdateCategory(id, name);
+                return Results.Created();
             })
             .WithName("UpdateCategory")
-            .WithDescription("Update an existing Category")
-            .WithSummary("Update an existing Category")
+            .WithSummary("Update Category")
+            .WithDescription("Update Category")
             .WithOpenApi();
 
 
             // Delete Category
-            group.MapDelete("/{categoryid}", (int categoryid) =>
+            group.MapDelete("/{id}", (DatabaseContext databaseContext, int id) =>
             {
-                if (categoryid == 0)
-                {
-                    return Results.BadRequest("Category ID can not be 0!");
-                }
-                if (!categoryService.DoesCategoryIDExist(categoryid))
-                {
-                    return Results.BadRequest("Category ID does not exist!");
-                }
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                categoryService.DeleteCategory(categoryid);
+                if (id == 0) return Results.BadRequest("Category ID can not be 0!");
+                if (!categoryService.DoesCategoryIDExist(id)) return Results.NotFound("Category ID does not exist!");
+
+                categoryService.DeleteCategory(id);
                 return Results.Ok("Category succesfully Deleted!");
-            });
+            })
+            .WithName("DeleteCategory")
+            .WithSummary("Delete Category")
+            .WithDescription("Delete Category")
+            .WithOpenApi();
 
 
             // Gets All Subcategories
-            group.MapGet("/subcategories/", () =>
+            group.MapGet("/subcategories/", (DatabaseContext databaseContext) =>
             {
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
+
                 List<SubcategoryVM> subcategoryVMs = new();
 
                 foreach (Subcategory subcategory in categoryService.GetSubcategories())
                 {
-                    SubcategoryVM subcategoryVM = new();
-
-                    subcategoryVM.ID = subcategory.ID;
-                    subcategoryVM.Name = subcategory.Name;
+                    SubcategoryVM subcategoryVM = new(subcategory);
 
                     subcategoryVMs.Add(subcategoryVM);
                 }
@@ -153,141 +128,85 @@ namespace CarPartWarehouseAPI.Services
                 return Results.Json(subcategoryVMs);
             })
             .WithName("GetSubcategories")
-            .WithOpenApi()
-            .WithDescription("Gets the ID and Name from all Subcategories")
-            .WithSummary("Gets the ID and Name from all Subcategories");
+            .WithSummary("Gets All Subcategories")
+            .WithDescription("Gets All Subcategories")
+            .WithOpenApi();
 
 
             // Subcategory POST
-            group.MapPost("/{categoryid}/", (int categoryid, string name) =>
+            group.MapPost("/{id}/subcategories/", (DatabaseContext databaseContext, int categoryID, string name) =>
             {
-                if (categoryid == 0)
-                {
-                    return Results.BadRequest("Category ID can not be 0!");
-                }
-                if (string.IsNullOrEmpty(name))
-                {
-                    return Results.BadRequest("Name can not be empty!");
-                }
-                if (!categoryService.DoesCategoryIDExist(categoryid))
-                {
-                    return Results.BadRequest("Category ID does not exist!");
-                }
-                if (categoryService.DoesSubcategoryAlreadyExist(name))
-                {
-                    return Results.BadRequest("Subcategory already exists!");
-                }
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                categoryService.AddSubcategory(categoryid, name);
-                return Results.Ok("Subcategory Added!");
+                if (categoryID == 0) return Results.BadRequest("Category ID can not be 0!");
+                if (!categoryService.DoesCategoryIDExist(categoryID)) return Results.NotFound("Category ID does not exist!");
+
+                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
+                if (categoryService.DoesSubcategoryAlreadyExist(name)) return Results.BadRequest("Subcategory already exists!");
+
+                categoryService.CreateSubcategory(categoryID, name);
+                return Results.Created();
             })
             .WithName("CreateSubcategory")
-            .WithDescription("Creates a Subcategory")
             .WithSummary("Creates a Subcategory")
+            .WithDescription("Creates a Subcategory")
             .WithOpenApi();
 
 
             // Subcategory PUT
-            group.MapPut("/subcategory/{subcategoryid}", (int subcategoryid, string name) =>
+            group.MapPut("/subcategory/{id}", (DatabaseContext databaseContext, int id, int categoryID, string name) =>
             {
-                if (subcategoryid == 0)
-                {
-                    return Results.BadRequest("Subcategory ID can not be 0!");
-                }
-                if (string.IsNullOrEmpty(name))
-                {
-                    return Results.BadRequest("Name can not be empty!");
-                }
-                if (!categoryService.DoesSubcategoryIDExist(subcategoryid))
-                {
-                    return Results.BadRequest("Subcategory ID does not exist!");
-                }
-                if (categoryService.DoesSubcategoryAlreadyExist(name))
-                {
-                    return Results.BadRequest("Subcategory already exists!");
-                }
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                categoryService.UpdateSubcategory(subcategoryid, name);
-                return Results.Ok("Subcategory Updated!");
+                if (id == 0) return Results.BadRequest("Subcategory ID can not be 0!");
+                if (!categoryService.DoesSubcategoryIDExist(id)) return Results.NotFound("Subcategory ID does not exist!");
+
+                if (categoryID == 0) return Results.BadRequest("category ID can not be 0!");
+                if (!categoryService.DoesCategoryIDExist(categoryID)) return Results.NotFound("Category ID does not exist!");
+
+                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
+                if (categoryService.DoesSubcategoryAlreadyExist(name)) return Results.BadRequest("Subcategory already exists!");
+
+                categoryService.UpdateSubcategory(id, categoryID, name);
+                return Results.Created();
             })
             .WithName("UpdateSubcategory")
-            .WithDescription("Update an existing Subcategory")
-            .WithSummary("Update an existing Subcategory")
+            .WithSummary("Update Subcategory")
+            .WithDescription("Update Subcategory")
             .WithOpenApi();
 
 
             // Subcategory DELETE
-            group.MapDelete("/subcategory/{subcategoryid}", (int subcategoryid) =>
+            group.MapDelete("/subcategory/{id}", (DatabaseContext databaseContext, int id) =>
             {
-                if (subcategoryid == 0)
-                {
-                    return Results.BadRequest("Subcategory ID can not be 0!");
-                }
-                if (categoryService.DoesSubcategoryIDExist(subcategoryid))
-                {
-                    return Results.BadRequest("Subcategory ID does not exist!");
-                }
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                categoryService.DeleteSubcategory(subcategoryid);
+                if (id == 0) return Results.BadRequest("Subcategory ID can not be 0!");
+                if (!categoryService.DoesSubcategoryIDExist(id)) return Results.BadRequest("Subcategory ID does not exist!");
+
+                categoryService.DeleteSubcategory(id);
                 return Results.Ok("Subcategory succesfully Deleted!");
             })
             .WithName("DeleteSubcategory")
-            .WithDescription("Delete an existing Subcategory")
-            .WithSummary("Delete an existing Subcategory")
+            .WithSummary("Delete Subcategory")
+            .WithDescription("Delete Subcategory")
             .WithOpenApi();
 
 
             // Categories / Subcategories / Products GET
-            group.MapGet("/subcategories/products", () =>
+            group.MapGet("/subcategories/products", (DatabaseContext databaseContext) =>
             {
-                List<CategoryVM> categoryVMs = new();
+                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                CategoryService categoryService = new(categoryDAL);
 
-                foreach (Category category in categoryService.GetCategoriesWithSubcategoriesWithProducts())
+                List<CategoryWithSubcategoryVM> categoryVMs = new();
+
+                foreach (Category category in categoryService.GetCategories())
                 {
-                    CategoryVM categoryVM = new();
-
-                    categoryVM.ID = category.ID;
-                    categoryVM.Name = category.Name;
-
-                    categoryVM.Subcategories = new();
-
-                    if (category.Subcategories != null && category.Subcategories.Count != 0)
-                    {
-                        foreach (Subcategory subcategory in category.Subcategories)
-                        {
-                            SubcategoryVM subcategoryVM = new();
-
-                            subcategoryVM.ID = subcategory.ID;
-                            subcategoryVM.Name = subcategory.Name;
-
-                            subcategoryVM.Products = new();
-
-                            if (subcategory.Products != null && subcategory.Products.Count != 0)
-                            {
-                                foreach (Product product in subcategory.Products)
-                                {
-                                    ProductVM productVM = new();
-
-                                    productVM.ID = product.ID;
-                                    productVM.Name = product.Name;
-                                    productVM.Brand = product.Brand;
-                                    productVM.Eurocents = product.Eurocents;
-
-                                    StockVM stockVM = new();
-                                    stockVM.ID = product.Stock.ID;
-                                    stockVM.CurrentStock = product.Stock.CurrentStock;
-                                    stockVM.Min = product.Stock.Min;
-                                    stockVM.Max = product.Stock.Max;
-
-                                    productVM.Stock = stockVM;
-
-                                    subcategoryVM.Products.Add(productVM);
-                                }
-                            }
-
-                            categoryVM.Subcategories.Add(subcategoryVM);
-                        }
-                    }
+                    CategoryWithSubcategoryVM categoryVM = new(category);
 
                     categoryVMs.Add(categoryVM);
                 }
@@ -295,9 +214,10 @@ namespace CarPartWarehouseAPI.Services
                 return Results.Json(categoryVMs);
             })
             .WithName("GetCategoriesSubcategoriesProducts")
-            .WithDescription("Gets all Categories with Subcategories with Products")
-            .WithSummary("Gets all Categories with Subcategories with Products")
+            .WithSummary("Gets all Categories With Subcategories With Products")
+            .WithDescription("Gets all Categories With Subcategories With Products")
             .WithOpenApi();
+
 
             return group;
         }

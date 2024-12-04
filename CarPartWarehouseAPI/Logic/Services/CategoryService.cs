@@ -23,42 +23,38 @@ namespace Logic.Services
             return _CategoryDAL.GetCategory(id);
         }
 
-        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
+        public void CreateCategory(string name)
         {
-            return _CategoryDAL.GetCategoriesWithSubcategoriesWithProducts();
-        }
+            if (string.IsNullOrEmpty(name) || DoesCategoryAlreadyExist(name)) return;
 
-        public void AddCategory(string name)
-        {
-            if (!_CategoryDAL.DoesCategoryAlreadyExist(name))
-            {
-                _CategoryDAL.CreateCategory(name);
-            }
+
+            _CategoryDAL.CreateCategory(name);
         }
 
         public void UpdateCategory(int categoryID, string name)
         {
-            if (categoryID != 0 && !string.IsNullOrEmpty(name))
-            {
-                _CategoryDAL.UpdateCategory(categoryID, name);
-            }
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
+            if (string.IsNullOrEmpty(name) || DoesCategoryAlreadyExist(name)) return;
+
+            
+            _CategoryDAL.UpdateCategory(categoryID, name);
         }
 
-        public void DeleteCategory(int categoryID)
+        public void DeleteCategory(int id)
         {
-            if (categoryID != 0 && DoesCategoryIDExist(categoryID))
-            {
-                _CategoryDAL.DeleteCategory(categoryID);
-            }
+            if (id == 0 || !DoesCategoryIDExist(id)) return;
+
+            
+            _CategoryDAL.DeleteCategory(id);
         }
 
         public bool DoesCategoryAlreadyExist(string name)
         {
             return _CategoryDAL.DoesCategoryAlreadyExist(name);
         }
-        public bool DoesCategoryIDExist(int categoryID)
+        public bool DoesCategoryIDExist(int id)
         {
-            return _CategoryDAL.DoesCategoryIDExist(categoryID);
+            return _CategoryDAL.DoesCategoryIDExist(id);
         }
         #endregion
 
@@ -78,37 +74,40 @@ namespace Logic.Services
             return _CategoryDAL.GetSubcategory(subcategoryID);
         }
 
-        public void AddSubcategory(int categoryID, string name)
+        public void CreateSubcategory(int categoryID, string name)
         {
-            if (!_CategoryDAL.DoesSubcategoryAlreadyExist(name))
-            {
-                _CategoryDAL.CreateSubcategory(categoryID, name);
-            }
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
+            if (string.IsNullOrEmpty(name) || DoesSubcategoryAlreadyExist(name)) return;
+
+
+            _CategoryDAL.CreateSubcategory(categoryID, name);
         }
 
-        public void UpdateSubcategory(int subcategoryID, string name)
+        public void UpdateSubcategory(int subcategoryID, int categoryID, string name)
         {
-            if (subcategoryID != 0 && !string.IsNullOrEmpty(name))
-            {
-                _CategoryDAL.UpdateSubcategory(subcategoryID, name);
-            }
+            if (subcategoryID == 0 || !DoesSubcategoryIDExist(subcategoryID)) return;
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
+            if (string.IsNullOrEmpty(name) || DoesSubcategoryAlreadyExist(name)) return;
+
+
+            _CategoryDAL.UpdateSubcategory(subcategoryID, categoryID, name);
         }
 
-        public void DeleteSubcategory(int subcategoryID)
+        public void DeleteSubcategory(int id)
         {
-            if (subcategoryID != 0)
-            {
-                _CategoryDAL.DeleteSubcategory(subcategoryID);
-            }
+            if (id == 0 || !DoesSubcategoryIDExist(id)) return;
+
+            
+            _CategoryDAL.DeleteSubcategory(id);
         }
 
         public bool DoesSubcategoryAlreadyExist(string name)
         {
             return _CategoryDAL.DoesSubcategoryAlreadyExist(name);
         }
-        public bool DoesSubcategoryIDExist(int subcategoryID)
+        public bool DoesSubcategoryIDExist(int id)
         {
-            return _CategoryDAL.DoesSubcategoryIDExist(subcategoryID);
+            return _CategoryDAL.DoesSubcategoryIDExist(id);
         }
         #endregion
     }
