@@ -1,8 +1,10 @@
-﻿namespace CarPartWarehouseAPI.ViewModels
+﻿using Logic.Models;
+
+namespace CarPartWarehouseAPI.ViewModels
 {
-    public class ProductLinkVM
+    public class ProductLinkVM(ProductLink productLink)
     {
-        public int ID { get; set; }
-        public string Url { get; set; }
+        public int ID { get; set; } = productLink.ID;
+        public string Url { get; set; } = productLink.Url;
     }
 }

@@ -1,46 +1,80 @@
-import type { Component } from 'solid-js';
+import { createEffect, createResource, For, Show, type Component } from 'solid-js';
 
 import logo from './logo.svg';
 import styles from './App.module.css';
-import { createResource, createSignal, For } from 'solid-js';
 import { Flex } from './components/ui/flex';
 import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from './components/ui/switch';
 import { TextField, TextFieldInput, TextFieldLabel } from './components/ui/text-field';
 import Navbar from './Navbar';
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from "~/components/ui/accordion"
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "~/components/ui/card"
+import CardComponent from './CardComponent';
+
 const App: Component = () => {
-  const [weatherLocation, setWeatherLocation] = createSignal('London')
-  const [weather] = createResource(weatherLocation, (location) => fetch(`/api/weatherforecast?location=${location}`).then(res => res.json()))
+  const [categories] = createResource<Category[] | undefined>(() => fetch("https://api.localhost/categories/subcategories/products").then(body=>body.json()))
+  createEffect(() => console.log(categories()))
+
 
   return (
-    <Flex flexDirection='col' alignItems='center' justifyContent='center' class="gap-2 my-2">
-
-      {/* ------------ Page Title on the top left and Navbar in the top middle ------------ */}
-      <Flex flexDirection='row' alignItems='center' justifyContent='start'>
-        <h1>CarPartWarehouse Dashboard</h1>
-
-        <Flex flexDirection='row' alignItems='center' justifyContent='center'>
-          <Navbar/>
-        </Flex>
-      </Flex>
+    <div>
+      {/* Category Accordion */}
+      <div>
+        <For each ={categories()}>
+          {category => 
+          <div>
+            <Accordion multiple={false} collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger> {category.name} </AccordionTrigger>
+                <AccordionContent>
+                  Yes. Display Subcategories!
+                  
+                  {/* Subcategory Accordion */}
+                  <For each ={category.subcategories}>
+                    {subcategory =>
+                      <div>
+                        <Accordion multiple={false} collapsible>
+                          <AccordionItem value="item-1">
+                            <AccordionTrigger> {subcategory.name} </AccordionTrigger>
+                            <AccordionContent>
+                              {/* Product Cards */}
+                              <For each ={subcategory.products}>
+                                {product => 
+                                  <div>
+                                    <CardComponent product={product} />
+                                  </div>
+                                }
+                              </For>
+                              {/* -------------------------------------------------------------------------------- */}
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
+                    }
+                  </For>
+                  {/* -------------------------------------------------------------------------------- */}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+          }
+        </For>
+      </div>
       {/* -------------------------------------------------------------------------------- */}
-
-      <Switch class="flex items-center space-x-2">
-        <SwitchControl>
-          <SwitchThumb />
-        </SwitchControl>
-        <SwitchLabel>Test switch</SwitchLabel>
-      </Switch>
-      <TextField class="grid w-full max-w-sm items-center gap-1.5">
-        <TextFieldLabel for="weatherLocation">Weather location</TextFieldLabel>
-        <TextFieldInput type="search" id="weatherLocation" placeholder={weatherLocation()} onInput={(e) => setWeatherLocation(e.currentTarget.value)} />
-      </TextField>
-      <h4>Weather in {weatherLocation()}:</h4>
-      <For each={weather()}>
-        {(weather) => <p>{weather}</p>}
-      </For>
-      
-    </Flex>
+    </div>
   );
 };
 

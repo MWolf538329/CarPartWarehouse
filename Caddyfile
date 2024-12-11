@@ -1,7 +1,12 @@
-localhost
-
-handle_path /api/* {
-	reverse_proxy :6969
+api.localhost {
+	reverse_proxy :8080
 }
 
-reverse_proxy :3000
+
+manager.localhost {
+	reverse_proxy :3001
+}
+
+localhost {
+	reverse_proxy :3000
+}

@@ -1,16 +1,14 @@
-﻿using CarPartWarehouseAPI.DataModels;
+﻿using Logic.Models;
 
 namespace CarPartWarehouseAPI.ViewModels
 {
-    public class ProductVM
+    public class ProductVM(Product product)
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Brand { get; set; }
-        public decimal Price { get; set; }
-
-        public CategoryDM Category { get; set; }
-        public SubcategoryDM Subcategory { get; set; }
-        public List<ProductLinkDM> Links { get; set; } = [];
+        public int ID { get; set; } = product.ID;
+        public string Name { get; set; } = product.Name;
+        public string Brand { get; set; } = product.Brand;
+        public int CurrentStock { get; set; } = product.CurrentStock;
+        public int MinStock { get; set; } = product.MinStock;
+        public int MaxStock { get; set; } = product.MaxStock;
     }
 }

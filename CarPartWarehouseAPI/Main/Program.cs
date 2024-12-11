@@ -1,5 +1,6 @@
-using CarPartWarehouseAPI;
+using DAL;
 using CarPartWarehouseAPI.Services;
+using CarPartWarehouseAPI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +31,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Include Services for API Functionality
-app.SetupCategory();
+app.MapGroup("/categories")
+    .SetupCategory()
+    .WithTags("Categories");
 
-
-app.SetupWeather();
-
+app.MapGroup("/products")
+    .SetupProduct()
+    .WithTags("Products");
 // --------------------------------------
 
 app.Run();
