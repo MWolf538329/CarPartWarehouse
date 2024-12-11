@@ -1,0 +1,29 @@
+name: CodeQualityAnalsis
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+    CQA:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Install pnpm
+              run: npm install -g pnpm
+
+            - name: Install dependencies
+              run: pnpm install -r 
+              
+            - name: Run Code quality lint tests for Dashboard App
+              working-directory: ./CarPartWarehouseDashboard
+              run: pnpm npx eslint
+
+            - name: Run Code quality lint tests for Manager App
+              working-directory: ./CarPartWarehouseManager
+              run: pnpm npx eslint
