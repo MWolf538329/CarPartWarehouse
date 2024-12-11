@@ -1,19 +1,20 @@
-﻿using Logic.Models;
+﻿using System.Text.Json.Serialization;
+using Logic.Models;
 
 namespace CarPartWarehouseAPI.ViewModels
 {
     public class ProductWithLinkVM : ProductVM
     {
-        public List<ProductLinkVM>? Links { get; set; } = new();
+        [JsonInclude]
+        public List<ProductLinkVM> Links { get; set; } = [];
 
         public ProductWithLinkVM(Product product) : base(product)
         {
-            if (product.Links != null && product.Links.Count != 0)
+            if (product.Links.Count == 0) return;
+            
+            foreach (ProductLink productLink in product.Links)
             {
-                foreach (ProductLink productLink in product.Links)
-                {
-                    Links.Add(new(productLink));
-                }
+                Links.Add(new ProductLinkVM(productLink));
             }
         }
     }

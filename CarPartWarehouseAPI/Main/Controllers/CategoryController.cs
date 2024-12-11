@@ -17,7 +17,7 @@ namespace CarPartWarehouseAPI.Services
                 ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
                 CategoryService categoryService = new(categoryDAL);
 
-                List<CategoryVM> categoryVMs = new();
+                List<CategoryVM> categoryVMs = [];
 
                 foreach (Category category in categoryService.GetCategories())
                 {
@@ -39,6 +39,7 @@ namespace CarPartWarehouseAPI.Services
                 ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
                 CategoryService categoryService = new(categoryDAL);
 
+                if (id == 0) return Results.BadRequest("Category ID can not be 0!");
                 if (!categoryService.DoesCategoryIDExist(id)) return Results.NotFound("Category ID does not exist!");
 
                 Category category = categoryService.GetCategory(id)!;
@@ -51,24 +52,30 @@ namespace CarPartWarehouseAPI.Services
             .WithSummary("Gets a Category")
             .WithDescription("Gets a Category")
             .WithOpenApi();
-
-
+            
             // Create Category
-            group.MapPost("/", (DatabaseContext databaseContext, string name) =>
-            {
-                ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
-                CategoryService categoryService = new(categoryDAL);
+            group
+                .MapPost(
+                    "/", 
+                    (DatabaseContext databaseContext, string name) =>
+                    {
+                        ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+                        CategoryService categoryService = new(categoryDAL);
 
-                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
-                if (categoryService.DoesCategoryAlreadyExist(name)) return Results.BadRequest("Category already exists!");
+                        if (string.IsNullOrWhiteSpace(name)) 
+                        {
+                            return Results.BadRequest("Name can not be empty!");
+                        }
+                        if (categoryService.DoesCategoryAlreadyExist(name)) return Results.BadRequest("Category already exists!");
 
-                categoryService.CreateCategory(name);
-                return Results.Created();
-            })
-            .WithName("CreateCategory")
-            .WithSummary("Create Category")
-            .WithDescription("Create Category")
-            .WithOpenApi();
+                        categoryService.CreateCategory(name);
+                        return Results.Created();
+                    })
+                .WithName("CreateCategory")
+                .WithSummary("Create Category")
+                .WithDescription("Create Category")
+                .WithOpenApi()
+            ;
 
 
             // Update Category
@@ -80,7 +87,7 @@ namespace CarPartWarehouseAPI.Services
                 if (id == 0) return Results.BadRequest("Category ID can not be 0!");
                 if (!categoryService.DoesCategoryIDExist(id)) return Results.NotFound("Category ID does not exist!");
 
-                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
+                if (string.IsNullOrWhiteSpace(name)) return Results.BadRequest("Name can not be empty!");
                 if (categoryService.DoesCategoryAlreadyExist(name)) return Results.BadRequest("Category already exists!");
 
                 categoryService.UpdateCategory(id, name);
@@ -102,7 +109,7 @@ namespace CarPartWarehouseAPI.Services
                 if (!categoryService.DoesCategoryIDExist(id)) return Results.NotFound("Category ID does not exist!");
 
                 categoryService.DeleteCategory(id);
-                return Results.Ok("Category succesfully Deleted!");
+                return Results.Ok("Category successfully Deleted!");
             })
             .WithName("DeleteCategory")
             .WithSummary("Delete Category")
@@ -116,7 +123,7 @@ namespace CarPartWarehouseAPI.Services
                 ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
                 CategoryService categoryService = new(categoryDAL);
 
-                List<SubcategoryVM> subcategoryVMs = new();
+                List<SubcategoryVM> subcategoryVMs = [];
 
                 foreach (Subcategory subcategory in categoryService.GetSubcategories())
                 {
@@ -142,7 +149,7 @@ namespace CarPartWarehouseAPI.Services
                 if (categoryID == 0) return Results.BadRequest("Category ID can not be 0!");
                 if (!categoryService.DoesCategoryIDExist(categoryID)) return Results.NotFound("Category ID does not exist!");
 
-                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
+                if (string.IsNullOrWhiteSpace(name)) return Results.BadRequest("Name can not be empty!");
                 if (categoryService.DoesSubcategoryAlreadyExist(name)) return Results.BadRequest("Subcategory already exists!");
 
                 categoryService.CreateSubcategory(categoryID, name);
@@ -166,7 +173,7 @@ namespace CarPartWarehouseAPI.Services
                 if (categoryID == 0) return Results.BadRequest("category ID can not be 0!");
                 if (!categoryService.DoesCategoryIDExist(categoryID)) return Results.NotFound("Category ID does not exist!");
 
-                if (string.IsNullOrEmpty(name)) return Results.BadRequest("Name can not be empty!");
+                if (string.IsNullOrWhiteSpace(name)) return Results.BadRequest("Name can not be empty!");
                 if (categoryService.DoesSubcategoryAlreadyExist(name)) return Results.BadRequest("Subcategory already exists!");
 
                 categoryService.UpdateSubcategory(id, categoryID, name);
@@ -188,7 +195,7 @@ namespace CarPartWarehouseAPI.Services
                 if (!categoryService.DoesSubcategoryIDExist(id)) return Results.BadRequest("Subcategory ID does not exist!");
 
                 categoryService.DeleteSubcategory(id);
-                return Results.Ok("Subcategory succesfully Deleted!");
+                return Results.Ok("Subcategory successfully Deleted!");
             })
             .WithName("DeleteSubcategory")
             .WithSummary("Delete Subcategory")
@@ -202,7 +209,7 @@ namespace CarPartWarehouseAPI.Services
                 ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
                 CategoryService categoryService = new(categoryDAL);
 
-                List<CategoryWithSubcategoryVM> categoryVMs = new();
+                List<CategoryWithSubcategoryVM> categoryVMs = [];
 
                 foreach (Category category in categoryService.GetCategories())
                 {

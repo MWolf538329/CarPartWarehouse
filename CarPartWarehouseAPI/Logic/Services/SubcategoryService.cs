@@ -3,27 +3,20 @@ using Logic.Models;
 
 namespace Logic.Services
 {
-    public class SubcategoryService
+    public class SubcategoryService(ISubcategoryDAL subcategoryDal)
     {
-        readonly ISubcategoryDAL _SubcategoryDAL;
-
-        public SubcategoryService(ISubcategoryDAL subcategoryDAL)
-        {
-            _SubcategoryDAL = subcategoryDAL;
-        }
-
         public List<Subcategory> GetSubcategories()
         {
-            return _SubcategoryDAL.GetSubcategories();
+            return subcategoryDal.GetSubcategories();
         }
 
         public bool AddSubcategory(string name)
         {
             bool succes = false;
 
-            if (!_SubcategoryDAL.DoesSubcategoryAlreadyExist(name))
+            if (!subcategoryDal.DoesSubcategoryAlreadyExist(name))
             {
-                _SubcategoryDAL.AddSubcategory(name);
+                subcategoryDal.AddSubcategory(name);
                 succes = true;
             }
 

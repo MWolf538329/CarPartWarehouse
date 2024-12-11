@@ -3,8 +3,8 @@
     public class Product
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Brand { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Brand { get; set; } = string.Empty;
         public int CurrentStock { get; set; }
         public int MinStock { get; set; }
         public int MaxStock { get; set; }

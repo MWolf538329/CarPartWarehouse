@@ -17,7 +17,7 @@ namespace CarPartWarehouseAPI.Controllers
                 ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
                 ProductService productService = new(productDAL, categoryDAL);
 
-                List<ProductVM> productVMs = new();
+                List<ProductVM> productVMs = [];
 
                 foreach (Product product in productService.GetProducts())
                 {
@@ -128,7 +128,7 @@ namespace CarPartWarehouseAPI.Controllers
                 if (!productService.DoesProductIDExist(id)) return Results.NotFound("Product ID does not Exist!");
 
                 productService.DeleteProduct(id);
-                return Results.Ok("Product Succesfully Deleted!");
+                return Results.Ok("Product Successfully Deleted!");
             })
             .WithName("DeleteProduct")
             .WithSummary("Delete Product")

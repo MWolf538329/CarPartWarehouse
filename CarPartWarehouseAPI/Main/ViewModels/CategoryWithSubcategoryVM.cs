@@ -1,19 +1,20 @@
-﻿using Logic.Models;
+﻿using System.Text.Json.Serialization;
+using Logic.Models;
 
 namespace CarPartWarehouseAPI.ViewModels
 {
     public class CategoryWithSubcategoryVM : CategoryVM
     {
-        public List<SubcategoryWithProductVM>? Subcategories { get; set; } = new();
+        [JsonInclude]
+        public List<SubcategoryWithProductVM> Subcategories { get; set; } = [];
 
         public CategoryWithSubcategoryVM(Category category) : base(category)
         {
-            if (category.Subcategories != null && category.Subcategories.Count != 0)
+            if (category.Subcategories == null || category.Subcategories.Count == 0) return;
+            
+            foreach (Subcategory subcategory in category.Subcategories)
             {
-                foreach (Subcategory subcategory in category.Subcategories)
-                {
-                    Subcategories.Add(new(subcategory));
-                }
+                Subcategories.Add(new SubcategoryWithProductVM(subcategory));
             }
         }
     }
