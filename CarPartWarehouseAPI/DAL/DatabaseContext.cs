@@ -11,18 +11,18 @@ namespace DAL
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        private const string con = $"data source=MSI;initial catalog=CarPartWarehouse;trusted_connection=true;TrustServerCertificate=True;";
+        private const string connection = $"data source=MSI;initial catalog=CarPartWarehouse;trusted_connection=true;TrustServerCertificate=True;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer(con)
-            .UseLazyLoadingProxies();
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<Item>().HasMany(i => i.OrderLines).WithOne(l => l.Item)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            var conn = Environment.GetEnvironmentVariable("ConnectionString");
+            
+            if (conn == null)
+            {
+                conn = connection;
+            }
+            
+            options.UseSqlServer(conn).UseLazyLoadingProxies();
         }
     }
 }

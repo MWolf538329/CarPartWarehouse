@@ -1,0 +1,17 @@
+{
+	admin off
+	debug
+	auto_https off
+}
+
+http://api.localhost {
+	reverse_proxy backend:8080
+}
+
+http://manager.localhost {
+	reverse_proxy frontend-manager:3000
+}
+
+http://localhost {
+	reverse_proxy frontend-dashboard:3000
+}
