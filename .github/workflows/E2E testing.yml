@@ -19,7 +19,7 @@ jobs:
               run: npm install -g pnpm
 
             - name: Install dependencies
-              run: pnpm install
+              run: pnpm install --no-lockfile
 
             - name: Run docker-compose
               uses: hoverkraft-tech/compose-action@v2.0.1
