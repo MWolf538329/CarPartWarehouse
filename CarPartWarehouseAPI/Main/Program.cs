@@ -1,3 +1,4 @@
+using System.Reflection;
 using DAL;
 using CarPartWarehouseAPI.Services;
 using CarPartWarehouseAPI.Controllers;
@@ -10,7 +11,14 @@ builder.Services.AddDbContext<DatabaseContext>();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
+
+builder.Services.AddControllers();
 
 // Temporary CORS policy to allow all origins
 builder.Services.AddCors(policyBuilder =>
@@ -38,9 +46,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Include Services for API Functionality
-app.MapGroup("/categories")
-    .SetupCategory()
-    .WithTags("Categories");
+// Insert new controllers with group
+app.MapControllers();
 
 app.MapGroup("/products")
     .SetupProduct()

@@ -10,16 +10,9 @@
   <component name="ChangeListManager">
     <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DatabaseContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/CarPartWarehouseAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Main/CarPartWarehouseAPI.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManagerApp/CarPartWarehouseManagerApp.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManagerApp/CarPartWarehouseManagerApp/CarPartWarehouseManagerApp.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManagerApp/CarPartWarehouseManagerApp/CarPartWarehouseManagerApp.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManagerApp/CarPartWarehouseManagerApp/CarPartWarehouseManagerApp.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManagerApp/CarPartWarehouseManagerApp/CarPartWarehouseManagerApp.csproj.user" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManagerApp/CarPartWarehouseManagerApp/CarPartWarehouseManagerApp.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManagerApp/CarPartWarehouseManagerApp/Program.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,21 +34,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.CarPartWarehouseAPI: http.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.CarPartWarehouseAPI: http.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Dev",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.CarPartWarehouseAPI: http">
     <configuration name="CarPartWarehouseAPI: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Main/CarPartWarehouseAPI.csproj" />
@@ -64,6 +57,7 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
+      <browser name="10d595ab-7eae-4d92-8ca0-afe8f8b74ec2" />
       <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
@@ -87,6 +81,10 @@
         <option name="Build" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue=".NET Launch Settings Profile.CarPartWarehouseAPI: http" />
+      <item itemvalue=".NET Launch Settings Profile.CarPartWarehouseAPI: https" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -98,6 +96,7 @@
       <updated>1733916971228</updated>
       <workItem from="1733916972893" duration="8461000" />
       <workItem from="1734080849453" duration="2702000" />
+      <workItem from="1734522604274" duration="6748000" />
     </task>
     <servers />
   </component>
