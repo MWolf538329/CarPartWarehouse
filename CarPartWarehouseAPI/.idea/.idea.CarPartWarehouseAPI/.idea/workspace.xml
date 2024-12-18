@@ -8,12 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/CarPartWarehouseAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Main/CarPartWarehouseAPI.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Program.cs" afterDir="false" />
-    </list>
+    <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,7 +91,7 @@
       <updated>1733916971228</updated>
       <workItem from="1733916972893" duration="8461000" />
       <workItem from="1734080849453" duration="2702000" />
-      <workItem from="1734522604274" duration="6748000" />
+      <workItem from="1734522604274" duration="6857000" />
     </task>
     <servers />
   </component>
