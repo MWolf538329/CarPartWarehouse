@@ -27,7 +27,7 @@ namespace Logic.Services
 
         public void CreateProduct(string name, string brand, int subcategoryID, int currentStock, int minStock, int maxStock)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(brand) || DoesProductAlreadyExist(name, brand)) return;
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand) || DoesProductAlreadyExist(name, brand)) return;
             if (subcategoryID == 0 || !_CategoryDAL.DoesSubcategoryIDExist(subcategoryID)) return;
             if (currentStock < 0) return;
             if (minStock < 0) return;
@@ -39,7 +39,7 @@ namespace Logic.Services
         public void UpdateProduct(int id, string name, string brand, int subcategoryID, int currentStock, int minStock, int maxStock)
         {
             if (id == 0 || DoesProductIDExist(id)) return;
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(brand) || DoesProductAlreadyExist(name, brand)) return;
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand) || DoesProductAlreadyExist(name, brand)) return;
             if (subcategoryID == 0 || !_CategoryDAL.DoesSubcategoryIDExist(subcategoryID)) return;
             if (currentStock < 0) return;
             if (minStock < 0) return;

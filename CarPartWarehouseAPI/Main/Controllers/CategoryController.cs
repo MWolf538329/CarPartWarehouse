@@ -50,8 +50,15 @@ namespace CarPartWarehouseAPI.Controllers
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);
 
-            if (id == 0) return BadRequest("Category ID can not be 0!");
-            if (!categoryService.DoesCategoryIDExist(id)) return NotFound("Category ID does not exist!");
+            if (id == 0)
+            {
+                return BadRequest("Category ID can not be 0!");
+            }
+
+            if (!categoryService.DoesCategoryIDExist(id))
+            {
+                return NotFound("Category ID does not exist!");
+            }
 
             Category category = categoryService.GetCategory(id)!;
 
@@ -64,7 +71,7 @@ namespace CarPartWarehouseAPI.Controllers
         /// Create Category
         /// </summary>
         /// <param name="name">Category Name</param>
-        /// <returns></returns>
+        /// <returns>HTTP response code</returns>
         /// <response code="201">Created: Category was successfully Created.</response>
         /// <response code="400">Bad Request: Category Name can not be empty.</response>
         [HttpPost("/categories")]
@@ -77,7 +84,11 @@ namespace CarPartWarehouseAPI.Controllers
             {
                 return BadRequest("Name can not be empty!");
             }
-            if (categoryService.DoesCategoryAlreadyExist(name)) return BadRequest("Category already exists!");
+
+            if (categoryService.DoesCategoryAlreadyExist(name))
+            {
+                return BadRequest("Category already exists!");
+            }
 
             categoryService.CreateCategory(name);
             return Created();
@@ -88,18 +99,34 @@ namespace CarPartWarehouseAPI.Controllers
         /// </summary>
         /// <param name="id">Category ID</param>
         /// <param name="name">Category Name</param>
-        /// <returns></returns>
+        /// <returns>HTTP response code</returns>
+        /// <response code="201">Updated: Category was successfully Updated.</response>
+        /// <response code="400">Bad Request: Category Name can not be empty.</response>
         [HttpPut("/categories/{id}")]
         public ActionResult UpdateCategory(DatabaseContext databaseContext, int id, [FromBody] string name)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);
 
-            if (id == 0) return BadRequest("Category ID can not be 0!");
-            if (!categoryService.DoesCategoryIDExist(id)) return NotFound("Category ID does not exist!");
+            if (id == 0)
+            {
+                return BadRequest("Category ID can not be 0!");
+            }
 
-            if (string.IsNullOrWhiteSpace(name)) return BadRequest("Name can not be empty!");
-            if (categoryService.DoesCategoryAlreadyExist(name)) return BadRequest("Category already exists!");
+            if (!categoryService.DoesCategoryIDExist(id))
+            {
+                return NotFound("Category ID does not exist!");
+            }
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return BadRequest("Name can not be empty!");
+            }
+
+            if (categoryService.DoesCategoryAlreadyExist(name))
+            {
+                return BadRequest("Category already exists!");
+            }
 
             categoryService.UpdateCategory(id, name);
             return Created();
@@ -110,14 +137,24 @@ namespace CarPartWarehouseAPI.Controllers
         /// </summary>
         /// <param name="id">Category ID</param>
         /// <returns></returns>
+        /// <response code="200">Deleted: Category was successfully Deleted.</response>
+        /// <response code="400">Bad Request: Category ID can not be 0.</response>
+        /// <response code="404">Not Found: Category ID does not exist.</response>
         [HttpDelete("/categories/{id}")]
         public ActionResult DeleteCategory(DatabaseContext databaseContext, int id)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);
 
-            if (id == 0) return BadRequest("Category ID can not be 0!");
-            if (!categoryService.DoesCategoryIDExist(id)) return NotFound("Category ID does not exist!");
+            if (id == 0)
+            {
+                return BadRequest("Category ID can not be 0!");
+            }
+
+            if (!categoryService.DoesCategoryIDExist(id))
+            {
+                return NotFound("Category ID does not exist!");
+            }
 
             categoryService.DeleteCategory(id);
             return Ok("Category successfully Deleted!");
@@ -128,16 +165,17 @@ namespace CarPartWarehouseAPI.Controllers
         /// <summary>
         /// Get Subcategories
         /// </summary>
+        /// <param name="categoryId"></param>
         /// <returns></returns>
-        [HttpGet("/subcategories")]
-        public ActionResult<List<SubcategoryVM>> GetSubcategories(DatabaseContext databaseContext)
+        [HttpGet("/{categoryId}/subcategories")]
+        public ActionResult<List<SubcategoryVM>> GetSubcategories(DatabaseContext databaseContext, int categoryId)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);
 
             List<SubcategoryVM> subcategoryVMs = [];
 
-            foreach (Subcategory subcategory in categoryService.GetSubcategories())
+            foreach (Subcategory subcategory in categoryService.GetSubcategories(categoryId))
             {
                 SubcategoryVM subcategoryVM = new(subcategory);
 
@@ -147,38 +185,42 @@ namespace CarPartWarehouseAPI.Controllers
             return subcategoryVMs;
         }
 
-        // /// <summary>
-        // /// Get Subcategories
-        // /// </summary>
-        // /// <param name="id"></param>
-        // /// <returns></returns>
-        // [HttpGet("/{id}/subcategories")]
-        // public ActionResult GetSubcategories(DatabaseContext databaseContext, int id)
-        // {
-        //     
-        // }
+        /// <summary>
+        /// Create Subcategory
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <response code=""></response>
+        [HttpPost("/{categoryId}/subcategories")]
+        public ActionResult CreateSubcategory(DatabaseContext databaseContext, int categoryId, string name)
+        {
+            ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+            CategoryService categoryService = new(categoryDAL);
 
-        // /// <summary>
-        // /// Create Subcategory
-        // /// </summary>
-        // /// <param name="id"></param>
-        // /// <param name="name"></param>
-        // /// <returns></returns>
-        // [HttpPost("/{id}/subcategories")]
-        // public ActionResult CreateSubcategory(DatabaseContext databaseContext, int id, [FromBody] string name)
-        // {
-        //     ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
-        //     CategoryService categoryService = new(categoryDAL);
-        //
-        //     if (categoryID == 0) return BadRequest("Category ID can not be 0!");
-        //     if (!categoryService.DoesCategoryIDExist(categoryID)) return NotFound("Category ID does not exist!");
-        //
-        //     if (string.IsNullOrWhiteSpace(name)) return BadRequest("Name can not be empty!");
-        //     if (categoryService.DoesSubcategoryAlreadyExist(name)) return BadRequest("Subcategory already exists!");
-        //
-        //     categoryService.CreateSubcategory(categoryID, name);
-        //     return Created();
-        // }
+            if (categoryId == 0)
+            {
+                return BadRequest("Category ID can not be 0!");
+            }
+
+            if (!categoryService.DoesCategoryIDExist(categoryId))
+            {
+                return NotFound("Category ID does not exist!");
+            }
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return BadRequest("Name can not be empty!");
+            }
+
+            if (categoryService.DoesSubcategoryAlreadyExist(name))
+            {
+                return BadRequest("Subcategory already exists!");
+            }
+        
+            categoryService.CreateSubcategory(categoryId, name);
+            return Created();
+        }
 
         /// <summary>
         /// Update Subcategory
@@ -193,14 +235,35 @@ namespace CarPartWarehouseAPI.Controllers
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);
 
-            if (subcategoryId == 0) return BadRequest("Subcategory ID can not be 0!");
-            if (!categoryService.DoesSubcategoryIDExist(subcategoryId)) return NotFound("Subcategory ID does not exist!");
+            if (subcategoryId == 0)
+            {
+                return BadRequest("Subcategory ID can not be 0!");
+            }
 
-            if (categoryId == 0) return BadRequest("category ID can not be 0!");
-            if (!categoryService.DoesCategoryIDExist(categoryId)) return NotFound("Category ID does not exist!");
+            if (!categoryService.DoesSubcategoryIDExist(subcategoryId))
+            {
+                return NotFound("Subcategory ID does not exist!");
+            }
 
-            if (string.IsNullOrWhiteSpace(name)) return BadRequest("Name can not be empty!");
-            if (categoryService.DoesSubcategoryAlreadyExist(name)) return BadRequest("Subcategory already exists!");
+            if (categoryId == 0)
+            {
+                return BadRequest("category ID can not be 0!");
+            }
+
+            if (!categoryService.DoesCategoryIDExist(categoryId))
+            {
+                return NotFound("Category ID does not exist!");
+            }
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return BadRequest("Name can not be empty!");
+            }
+
+            if (categoryService.DoesSubcategoryAlreadyExist(name))
+            {
+                return BadRequest("Subcategory already exists!");
+            }
 
             categoryService.UpdateSubcategory(subcategoryId, categoryId, name);
             return Created();
@@ -218,9 +281,15 @@ namespace CarPartWarehouseAPI.Controllers
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);
 
-            if (subcategoryId == 0) return BadRequest("Subcategory ID can not be 0!");
+            if (subcategoryId == 0)
+            {
+                return BadRequest("Subcategory ID can not be 0!");
+            }
+
             if (!categoryService.DoesSubcategoryIDExist(subcategoryId))
+            {
                 return BadRequest("Subcategory ID does not exist!");
+            }
 
             categoryService.DeleteSubcategory(subcategoryId);
             return Ok("Subcategory successfully Deleted!");

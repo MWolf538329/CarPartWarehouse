@@ -49,14 +49,9 @@ namespace Logic.Services
         #endregion
 
         #region Subcategory
-        public List<Subcategory> GetSubcategories()
+        public List<Subcategory> GetSubcategories(int categoryId)
         {
-            return categoryDal.GetSubcategories();
-        }
-
-        public List<Subcategory> GetSubcategoriesFromCategory(int categoryID)
-        {
-            return categoryDal.GetSubcategories(categoryID);
+            return categoryDal.GetSubcategories(categoryId);
         }
 
         public Subcategory? GetSubcategory(int subcategoryID)

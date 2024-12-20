@@ -11,6 +11,7 @@ builder.Services.AddDbContext<DatabaseContext>();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -46,12 +47,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Include Services for API Functionality
-// Insert new controllers with group
 app.MapControllers();
-
-app.MapGroup("/products")
-    .SetupProduct()
-    .WithTags("Products");
-// --------------------------------------
 
 app.Run();

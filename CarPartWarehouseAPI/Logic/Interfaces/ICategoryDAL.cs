@@ -15,7 +15,6 @@ namespace Logic.Interfaces
         public bool DoesCategoryIDExist(int id);
 
         // Subcategory
-        public List<Subcategory> GetSubcategories();
         public List<Subcategory> GetSubcategories(int categoryID);
         public Subcategory? GetSubcategory(int subcategoryID);
         public void CreateSubcategory(int categoryID, string name);
