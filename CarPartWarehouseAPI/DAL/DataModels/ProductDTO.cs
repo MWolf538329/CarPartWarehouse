@@ -9,6 +9,10 @@ namespace DAL.DataModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         
+        [ForeignKey(nameof(SubcategoryID))]
+        [Required]
+        public int SubcategoryID { get; set; }
+        
         [Required]
         [StringLength(255, ErrorMessage = "Name cannot be longer than 255 characters.")]
         public string Name { get; set; } = string.Empty;

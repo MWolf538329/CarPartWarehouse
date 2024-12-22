@@ -93,12 +93,11 @@ namespace CarPartWarehouseAPI.Controllers
             categoryService.CreateCategory(name);
             return Created();
         }
-        
+
         /// <summary>
         /// Update Category
         /// </summary>
         /// <param name="id">Category ID</param>
-        /// <param name="name">Category Name</param>
         /// <returns>HTTP response code</returns>
         /// <response code="201">Updated: Category was successfully Updated.</response>
         /// <response code="400">Bad Request: Category Name can not be empty.</response>
@@ -165,9 +164,9 @@ namespace CarPartWarehouseAPI.Controllers
         /// <summary>
         /// Get Subcategories
         /// </summary>
-        /// <param name="categoryId"></param>
+        /// <param name="categoryId">Category ID</param>
         /// <returns></returns>
-        [HttpGet("/{categoryId}/subcategories")]
+        [HttpGet("/categories/{categoryId}/subcategories")]
         public ActionResult<List<SubcategoryVM>> GetSubcategories(DatabaseContext databaseContext, int categoryId)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
@@ -188,11 +187,11 @@ namespace CarPartWarehouseAPI.Controllers
         /// <summary>
         /// Create Subcategory
         /// </summary>
-        /// <param name="categoryId"></param>
-        /// <param name="name"></param>
+        /// <param name="categoryId">Category ID</param>
+        /// <param name="name">Subcategory Name</param>
         /// <returns></returns>
-        /// <response code=""></response>
-        [HttpPost("/{categoryId}/subcategories")]
+        /// <response code="200"></response>
+        [HttpPost("/categories/{categoryId}/subcategories")]
         public ActionResult CreateSubcategory(DatabaseContext databaseContext, int categoryId, string name)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
@@ -225,11 +224,11 @@ namespace CarPartWarehouseAPI.Controllers
         /// <summary>
         /// Update Subcategory
         /// </summary>
-        /// <param name="categoryId"></param>
-        /// <param name="subcategoryId"></param>
-        /// <param name="name"></param>
+        /// <param name="categoryId">Category ID</param>
+        /// <param name="subcategoryId">Subcategory ID</param>
+        /// <param name="name">Subcategory Name</param>
         /// <returns></returns>
-        [HttpPut("/{categoryId}/subcategories/{subcategoryId}")]
+        [HttpPut("/categories/{categoryId}/subcategories/{subcategoryId}")]
         public ActionResult UpdateSubcategory(DatabaseContext databaseContext, int categoryId, int subcategoryId, [FromBody] string name)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
@@ -275,7 +274,7 @@ namespace CarPartWarehouseAPI.Controllers
         /// <param name="categoryId">Category ID</param>
         /// <param name="subcategoryId">Subcategory ID</param>
         /// <returns></returns>
-        [HttpDelete("/{categoryId}/subcategories/{subcategoryId}")]
+        [HttpDelete("/categories/{categoryId}/subcategories/{subcategoryId}")]
         public ActionResult DeleteSubcategory(DatabaseContext databaseContext, int categoryId, int subcategoryId)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
@@ -296,13 +295,12 @@ namespace CarPartWarehouseAPI.Controllers
         }
         #endregion
         
-        
         #region Product
         /// <summary>
         /// Get Categories with Subcategories with Products
         /// </summary>
         /// <returns></returns>
-        [HttpGet("/subcategories/products")]
+        [HttpGet("/categories/subcategories/products")]
         public ActionResult<List<CategoryWithSubcategoryVM>> GetProducts(DatabaseContext databaseContext)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
@@ -310,7 +308,7 @@ namespace CarPartWarehouseAPI.Controllers
 
             List<CategoryWithSubcategoryVM> categoryVMs = [];
 
-            foreach (Category category in categoryService.GetCategories())
+            foreach (Category category in categoryService.GetCategoriesWithSubcategoriesWithProducts())
             {
                 CategoryWithSubcategoryVM categoryVM = new(category);
 

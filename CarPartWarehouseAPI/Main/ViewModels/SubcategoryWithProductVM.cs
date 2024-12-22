@@ -16,7 +16,10 @@ namespace CarPartWarehouseAPI.ViewModels
 
         public SubcategoryWithProductVM(Subcategory subcategory) : base(subcategory)
         {
-            if (subcategory.Products == null || subcategory.Products.Count == 0) return;
+            if (subcategory.Products == null || subcategory.Products.Count == 0)
+            {
+                return;
+            }
             
             foreach (Product product in subcategory.Products)
             {

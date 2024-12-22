@@ -1,5 +1,4 @@
-﻿using System.Data;
-using CarPartWarehouseAPI.ViewModels;
+﻿using CarPartWarehouseAPI.ViewModels;
 using Logic.Interfaces;
 using Logic.Models;
 using Logic.Services;
@@ -76,13 +75,12 @@ namespace CarPartWarehouseAPI.Controllers
         /// <response code ="404">Not Found: The request was unsuccessful because the Subcategory ID does not exist.</response>
         [HttpPost("/products")]
         public ActionResult CreateProduct(DatabaseContext databaseContext, string name, string brand,
-            int subcategoryID, int currentStock, int minStock, int maxStock, List<ProductLinkVM> productLinkVMs)
+            int subcategoryID, int currentStock, int minStock, int maxStock, List<string>? productLinks)
         {
             IProductDAL productDAL = new ProductDAL(databaseContext);
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             ProductService productService = new(productDAL, categoryDAL);
             CategoryService categoryService = new(categoryDAL);
-            List<ProductLink> productLinks = [];
 
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -119,17 +117,17 @@ namespace CarPartWarehouseAPI.Controllers
                 return BadRequest("Max Stock can not be lower than 0!");
             }
 
-            if (productLinkVMs.Count != 0)
-            {
-                foreach (ProductLinkVM productLinkVM in productLinkVMs)
-                {
-                    productLinks.Add(new ProductLink()
-                    {
-                        ID = productLinkVM.ID,
-                        Url = productLinkVM.Url
-                    });
-                }
-            }
+            //if (productLinks.Count != 0)
+            // {
+            //     foreach (ProductLinkVM productLinkVM in productLinkVMs)
+            //     {
+            //         productLinks.Add(new ProductLink()
+            //         {
+            //             ID = productLinkVM.ID,
+            //             Url = productLinkVM.Url
+            //         });
+            //     }
+            // }
 
             productService.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
             return Created();
@@ -142,15 +140,14 @@ namespace CarPartWarehouseAPI.Controllers
         /// <response code ="200">Success: The request was successful.</response>
         /// <response code ="400">Bad Request: The request was unsuccessful.</response>
         /// <response code ="404">Not Found: The request was unsuccessful because the Product or Subcategory ID does not exist.</response>
-        [HttpPut("/products")]
+        [HttpPut("/products/{id}")]
         public ActionResult UpdateProduct(DatabaseContext databaseContext, int id, string name, string brand,
-            int subcategoryID, int currentStock, int minStock, int maxStock, List<ProductLinkVM> productLinkVMs)
+            int subcategoryID, int currentStock, int minStock, int maxStock, List<string>? productLinks)
         {
             IProductDAL productDAL = new ProductDAL(databaseContext);
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             ProductService productService = new(productDAL, categoryDAL);
             CategoryService categoryService = new(categoryDAL);
-            List<ProductLink> productLinks = [];
 
             if (id == 0)
             {
@@ -197,17 +194,17 @@ namespace CarPartWarehouseAPI.Controllers
                 return BadRequest("Max Stock can not be lower than 0!");
             }
 
-            if (productLinkVMs.Count != 0)
-            {
-                foreach (ProductLinkVM productLinkVM in productLinkVMs)
-                {
-                    productLinks.Add(new ProductLink()
-                    {
-                        ID = productLinkVM.ID,
-                        Url = productLinkVM.Url
-                    });
-                }
-            }
+            // if (productLinkVMs.Count != 0)
+            // {
+            //     foreach (ProductLinkVM productLinkVM in productLinkVMs)
+            //     {
+            //         productLinks.Add(new ProductLink()
+            //         {
+            //             ID = productLinkVM.ID,
+            //             Url = productLinkVM.Url
+            //         });
+            //     }
+            // }
 
             productService.UpdateProduct(id, name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
             return Created();

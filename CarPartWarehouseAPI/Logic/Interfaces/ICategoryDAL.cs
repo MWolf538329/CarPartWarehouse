@@ -23,5 +23,8 @@ namespace Logic.Interfaces
 
         public bool DoesSubcategoryAlreadyExist(string name);
         public bool DoesSubcategoryIDExist(int id);
+        
+        // Product
+        public List<Category> GetCategoriesWithSubcategoriesWithProducts();
     }
 }

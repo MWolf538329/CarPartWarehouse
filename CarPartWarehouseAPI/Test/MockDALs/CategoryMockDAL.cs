@@ -123,6 +123,11 @@ namespace Test.MockDALs
             throw new NotImplementedException();
         }
 
+        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateSubcategory(int subcategoryID, int categoryID, string name)
         {
             throw new NotImplementedException();

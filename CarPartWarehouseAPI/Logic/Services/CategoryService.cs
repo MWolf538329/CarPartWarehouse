@@ -18,22 +18,35 @@ namespace Logic.Services
 
         public void CreateCategory(string name)
         {
-            if (string.IsNullOrWhiteSpace(name) || DoesCategoryAlreadyExist(name)) return;
+            if (string.IsNullOrWhiteSpace(name) || DoesCategoryAlreadyExist(name))
+            {
+                return;
+            }
             
             categoryDal.CreateCategory(name);
         }
 
         public void UpdateCategory(int categoryID, string name)
         {
-            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
-            if (string.IsNullOrWhiteSpace(name) || DoesCategoryAlreadyExist(name)) return;
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID))
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(name) || DoesCategoryAlreadyExist(name))
+            {
+                return;
+            }
             
             categoryDal.UpdateCategory(categoryID, name);
         }
 
         public void DeleteCategory(int id)
         {
-            if (id == 0 || !DoesCategoryIDExist(id)) return;
+            if (id == 0 || !DoesCategoryIDExist(id))
+            {
+                return;
+            }
             
             categoryDal.DeleteCategory(id);
         }
@@ -61,24 +74,45 @@ namespace Logic.Services
 
         public void CreateSubcategory(int categoryID, string name)
         {
-            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
-            if (string.IsNullOrWhiteSpace(name) || DoesSubcategoryAlreadyExist(name)) return;
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID))
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(name) || DoesSubcategoryAlreadyExist(name))
+            {
+                return;
+            }
             
             categoryDal.CreateSubcategory(categoryID, name);
         }
 
         public void UpdateSubcategory(int subcategoryID, int categoryID, string name)
         {
-            if (subcategoryID == 0 || !DoesSubcategoryIDExist(subcategoryID)) return;
-            if (categoryID == 0 || !DoesCategoryIDExist(categoryID)) return;
-            if (string.IsNullOrWhiteSpace(name) || DoesSubcategoryAlreadyExist(name)) return;
+            if (subcategoryID == 0 || !DoesSubcategoryIDExist(subcategoryID))
+            {
+                return;
+            }
+
+            if (categoryID == 0 || !DoesCategoryIDExist(categoryID))
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(name) || DoesSubcategoryAlreadyExist(name))
+            {
+                return;
+            }
 
             categoryDal.UpdateSubcategory(subcategoryID, categoryID, name);
         }
 
         public void DeleteSubcategory(int id)
         {
-            if (id == 0 || !DoesSubcategoryIDExist(id)) return;
+            if (id == 0 || !DoesSubcategoryIDExist(id))
+            {
+                return;
+            }
             
             categoryDal.DeleteSubcategory(id);
         }
@@ -90,6 +124,14 @@ namespace Logic.Services
         public bool DoesSubcategoryIDExist(int id)
         {
             return categoryDal.DoesSubcategoryIDExist(id);
+        }
+        #endregion
+        
+        #region Product
+
+        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
+        {
+            return categoryDal.GetCategoriesWithSubcategoriesWithProducts();
         }
         #endregion
     }

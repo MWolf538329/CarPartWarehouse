@@ -1,6 +1,7 @@
 ﻿using Logic.Interfaces;
 using Logic.Models;
 using DAL.DataModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.DALServices
 {
@@ -11,7 +12,7 @@ namespace DAL.DALServices
         #region Category
         public List<Category> GetCategories()
         {
-            List<Category> categories = new();
+            List<Category> categories = [];
             List<CategoryDTO> categoryDTOs = database.Categories.ToList();
 
             foreach (CategoryDTO categoryDTO in categoryDTOs)
@@ -35,13 +36,29 @@ namespace DAL.DALServices
                 return null;
             }
             
-            CategoryDTO categoryDTO = database.Categories.FirstOrDefault(c => c.ID == id)!;
+            CategoryDTO categoryDTO = database.Categories.Include(categoryDto => categoryDto.Subcategories)
+                .FirstOrDefault(c => c.ID == id)!;
 
             Category category = new()
             {
                 ID = categoryDTO.ID,
-                Name = categoryDTO.Name
+                Name = categoryDTO.Name,
+                Subcategories = []
             };
+
+            if (categoryDTO.Subcategories.Count != 0)
+            {
+                foreach (SubcategoryDTO subcategoryDTO in categoryDTO.Subcategories)
+                {
+                    Subcategory subcategory = new()
+                    {
+                        ID = subcategoryDTO.ID,
+                        Name = subcategoryDTO.Name,
+                    };
+                    
+                    category.Subcategories.Add(subcategory);
+                }
+            }
 
             return category;
         }
@@ -139,15 +156,15 @@ namespace DAL.DALServices
                 return;
             }
             
-            Category category = GetCategory(categoryID)!;
-            CategoryDTO categoryDTO = new()
-            {
-                ID = category.ID,
-                Name = category.Name
-            };
+            // Category category = GetCategory(categoryID)!;
+            // CategoryDTO categoryDTO = new()
+            // {
+            //     ID = category.ID,
+            //     Name = category.Name
+            // };
             
-            SubcategoryDTO newSubcategoryDto = new() { Name = name, Category = categoryDTO };
-            database.Subcategories.Add(newSubcategoryDto);
+            SubcategoryDTO newSubcategoryDTO = new() { Name = name, CategoryID = categoryID};
+            database.Subcategories.Add(newSubcategoryDTO);
             database.SaveChanges();
         }
 
@@ -170,6 +187,7 @@ namespace DAL.DALServices
 
             SubcategoryDTO subcategoryDto = database.Subcategories.FirstOrDefault(sc => sc.ID == subcategoryID)!;
             subcategoryDto.Name = name;
+            subcategoryDto.CategoryID = categoryID;
             database.SaveChanges();
         }
 
@@ -191,6 +209,63 @@ namespace DAL.DALServices
         public bool DoesSubcategoryIDExist(int id)
         {
             return database.Subcategories.Any(sc => sc.ID == id);
+        }
+        #endregion
+
+        #region Product
+
+        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
+        {
+            List<Category> categories = [];
+            List<CategoryDTO> categoryDTOs = database.Categories.Include(categoryDto => categoryDto.Subcategories)
+                .ThenInclude(subcategoryDto => subcategoryDto.Products).ToList();
+
+            foreach (CategoryDTO categoryDTO in categoryDTOs)
+            {
+                Category category = new()
+                {
+                    ID = categoryDTO.ID,
+                    Name = categoryDTO.Name,
+                    Subcategories = []
+                };
+
+                if (categoryDTO.Subcategories.Count != 0)
+                {
+                    foreach (SubcategoryDTO subcategoryDTO in categoryDTO.Subcategories)
+                    {
+                        Subcategory subcategory = new()
+                        {
+                            ID = subcategoryDTO.ID,
+                            Name = subcategoryDTO.Name,
+                            Products = []
+                        };
+
+                        if (subcategoryDTO.Products.Count != 0)
+                        {
+                            foreach (ProductDTO productDTO in subcategoryDTO.Products)
+                            {
+                                Product product = new()
+                                {
+                                    ID = productDTO.ID,
+                                    Name = productDTO.Name,
+                                    Brand = productDTO.Brand,
+                                    CurrentStock = productDTO.CurrentStock,
+                                    MinStock = productDTO.MinStock,
+                                    MaxStock = productDTO.MaxStock,
+                                };
+                                
+                                subcategory.Products.Add(product);
+                            }
+                        }
+                        
+                        category.Subcategories.Add(subcategory);
+                    }
+                }
+                
+                categories.Add(category);
+            }
+
+            return categories;
         }
         #endregion
     }

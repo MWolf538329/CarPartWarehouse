@@ -9,6 +9,10 @@ namespace DAL.DataModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         
+        [ForeignKey(nameof(ProductID))]
+        [Required]
+        public int ProductID { get; set; }
+        
         public string Url { get; set; } = string.Empty;
     }
 }

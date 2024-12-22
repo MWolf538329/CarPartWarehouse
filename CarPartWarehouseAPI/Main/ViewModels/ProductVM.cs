@@ -5,7 +5,6 @@ namespace CarPartWarehouseAPI.ViewModels
     /// <summary>
     /// Represents a Product in the system
     /// </summary>
-    /// <param name="product"></param>
     public class ProductVM(Product product)
     {
         /// <summary>

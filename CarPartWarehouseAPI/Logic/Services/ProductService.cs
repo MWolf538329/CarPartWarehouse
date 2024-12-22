@@ -17,7 +17,7 @@ namespace Logic.Services
         }
 
         public void CreateProduct(string name, string brand, int subcategoryID, int currentStock, int minStock, int maxStock,
-            List<ProductLink> productLinks)
+            List<string>? productLinks)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand) ||
                 DoesProductAlreadyExist(name, brand))
@@ -39,7 +39,7 @@ namespace Logic.Services
         }
 
         public void UpdateProduct(int id, string name, string brand, int subcategoryID, int currentStock, int minStock, int maxStock,
-            List<ProductLink> productLinks)
+            List<string>? productLinks)
         {
             if (id == 0 || DoesProductIDExist(id))
             {

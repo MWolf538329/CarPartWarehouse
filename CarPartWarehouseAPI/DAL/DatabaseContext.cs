@@ -24,6 +24,7 @@ namespace DAL
             }
             
             options.UseSqlServer(conn).UseLazyLoadingProxies();
+            options.EnableSensitiveDataLogging();
         }
     }
 }

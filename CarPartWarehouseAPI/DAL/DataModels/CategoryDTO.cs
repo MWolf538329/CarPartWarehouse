@@ -13,6 +13,6 @@ namespace DAL.DataModels
         [StringLength(255, ErrorMessage = "Name cannot be longer than 255 characters.")]
         public string Name { get; set; } = string.Empty;
 
-        public virtual List<SubcategoryDTO>? Subcategories { get; init; }
+        public virtual List<SubcategoryDTO> Subcategories { get; set; } = [];
     }
 }

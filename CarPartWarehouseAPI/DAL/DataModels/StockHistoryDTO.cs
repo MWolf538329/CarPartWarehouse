@@ -9,6 +9,10 @@ namespace DAL.DataModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         
+        [ForeignKey(nameof(ProductID))]
+        [Required]
+        public int ProductID { get; set; }
+        
         public DateTime StockChangeDate { get; set; }
         
         [Required]
