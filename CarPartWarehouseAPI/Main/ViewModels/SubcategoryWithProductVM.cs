@@ -3,8 +3,14 @@ using Logic.Models;
 
 namespace CarPartWarehouseAPI.ViewModels
 {
+    /// <summary>
+    /// Represents a Subcategory with Products
+    /// </summary>
     public class SubcategoryWithProductVM : SubcategoryVM
     {
+        /// <summary>
+        /// Gets or sets the Products belonging to the Subcategory
+        /// </summary>
         [JsonInclude]
         public List<ProductVM> Products { get; set; } = [];
 

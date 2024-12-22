@@ -1,7 +1,5 @@
 using System.Reflection;
 using DAL;
-using CarPartWarehouseAPI.Services;
-using CarPartWarehouseAPI.Controllers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

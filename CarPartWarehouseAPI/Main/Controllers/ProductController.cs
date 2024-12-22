@@ -40,10 +40,10 @@ namespace CarPartWarehouseAPI.Controllers
         /// <summary>
         /// Get Product
         /// </summary>
-        /// <returns>A JSON array with Products</returns>
+        /// <returns>A JSON object of a Product</returns>
         /// <response code ="200">Success: The request was successful and the Product data is returned.</response>
         /// <response code ="400">Bad Request: The request was unsuccessful.</response>
-        /// <response code ="404">Not Found: The request was unsuccessful because the Category ID does not exist.</response>
+        /// <response code ="404">Not Found: The request was unsuccessful because the Product ID does not exist.</response>
         [HttpGet("/products/{id}")]
         public ActionResult<ProductVM> GetProduct(DatabaseContext databaseContext, int id)
         {
@@ -70,18 +70,19 @@ namespace CarPartWarehouseAPI.Controllers
         /// <summary>
         /// Create Product
         /// </summary>
-        /// <returns></returns>
-        /// <response code ="200">Success: The request was successful and the Product data is returned.</response>
+        /// <returns>HTTP response code</returns>
+        /// <response code ="201">Created: The request was successful.</response>
         /// <response code ="400">Bad Request: The request was unsuccessful.</response>
-        /// <response code ="404">Not Found: The request was unsuccessful because the Category ID does not exist.</response>
+        /// <response code ="404">Not Found: The request was unsuccessful because the Subcategory ID does not exist.</response>
         [HttpPost("/products")]
         public ActionResult CreateProduct(DatabaseContext databaseContext, string name, string brand,
-            int subcategoryID, int currentStock, int minStock, int maxStock)
+            int subcategoryID, int currentStock, int minStock, int maxStock, List<ProductLinkVM> productLinkVMs)
         {
             IProductDAL productDAL = new ProductDAL(databaseContext);
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             ProductService productService = new(productDAL, categoryDAL);
             CategoryService categoryService = new(categoryDAL);
+            List<ProductLink> productLinks = [];
 
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -95,7 +96,7 @@ namespace CarPartWarehouseAPI.Controllers
 
             if (subcategoryID == 0)
             {
-                return BadRequest("Subcategory can not be empty!");
+                return BadRequest("Subcategory can not be 0!");
             }
 
             if (!categoryService.DoesSubcategoryIDExist(subcategoryID))
@@ -118,26 +119,38 @@ namespace CarPartWarehouseAPI.Controllers
                 return BadRequest("Max Stock can not be lower than 0!");
             }
 
+            if (productLinkVMs.Count != 0)
+            {
+                foreach (ProductLinkVM productLinkVM in productLinkVMs)
+                {
+                    productLinks.Add(new ProductLink()
+                    {
+                        ID = productLinkVM.ID,
+                        Url = productLinkVM.Url
+                    });
+                }
+            }
 
-            productService.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock);
+            productService.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
             return Created();
         }
         
         /// <summary>
-        /// Get Product
+        /// Update Product
         /// </summary>
-        /// <returns>A JSON array with Products</returns>
-        /// <response code ="200">Success: The request was successful and the Product data is returned.</response>
+        /// <returns>HTTP response code</returns>
+        /// <response code ="200">Success: The request was successful.</response>
         /// <response code ="400">Bad Request: The request was unsuccessful.</response>
-        /// <response code ="404">Not Found: The request was unsuccessful because the Category ID does not exist.</response>
-        [HttpPost("/products")]
-        public ActionResult CreateProduct(DatabaseContext databaseContext, int id, string name, string brand,
-            int subcategoryID, int currentStock, int minStock, int maxStock)
+        /// <response code ="404">Not Found: The request was unsuccessful because the Product or Subcategory ID does not exist.</response>
+        [HttpPut("/products")]
+        public ActionResult UpdateProduct(DatabaseContext databaseContext, int id, string name, string brand,
+            int subcategoryID, int currentStock, int minStock, int maxStock, List<ProductLinkVM> productLinkVMs)
         {
             IProductDAL productDAL = new ProductDAL(databaseContext);
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             ProductService productService = new(productDAL, categoryDAL);
             CategoryService categoryService = new(categoryDAL);
+            List<ProductLink> productLinks = [];
 
             if (id == 0)
             {
@@ -161,7 +174,7 @@ namespace CarPartWarehouseAPI.Controllers
 
             if (subcategoryID == 0)
             {
-                return BadRequest("Subcategory can not be empty!");
+                return BadRequest("Subcategory can not be 0!");
             }
 
             if (!categoryService.DoesSubcategoryIDExist(subcategoryID))
@@ -184,15 +197,29 @@ namespace CarPartWarehouseAPI.Controllers
                 return BadRequest("Max Stock can not be lower than 0!");
             }
 
+            if (productLinkVMs.Count != 0)
+            {
+                foreach (ProductLinkVM productLinkVM in productLinkVMs)
+                {
+                    productLinks.Add(new ProductLink()
+                    {
+                        ID = productLinkVM.ID,
+                        Url = productLinkVM.Url
+                    });
+                }
+            }
 
-            productService.UpdateProduct(id, name, brand, subcategoryID, currentStock, minStock, maxStock);
+            productService.UpdateProduct(id, name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
             return Created();
         }
 
         /// <summary>
         /// Delete Product
         /// </summary>
-        /// <returns></returns>
+        /// <returns>HTTP response code</returns>
+        /// <response code ="200">Success: The request was successful.</response>
+        /// <response code ="400">Bad Request: The request was unsuccessful.</response>
+        /// <response code ="404">Not Found: The request was successful because the Product ID does not exist.</response>
         [HttpDelete("/products/{id}")]
         public ActionResult DeleteProduct(DatabaseContext databaseContext, int id)
         {

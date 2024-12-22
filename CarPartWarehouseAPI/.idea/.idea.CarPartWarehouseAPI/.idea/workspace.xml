@@ -9,14 +9,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DAL/DataModels/CategoryDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL/DataModels/ProductDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL/DataModels/ProductLinkDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL/DataModels/StockHistoryDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL/DataModels/SubcategoryDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DALServices/SubcategoryDAL.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DatabaseContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Models/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Models/Category.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logic/Services/ProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/ProductService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/Services/SubcategoryService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Controllers/ProductLinkService.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Main/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/CategoryVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/CategoryVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/CategoryWithSubcategoryVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/CategoryWithSubcategoryVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/ProductLinkVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/ProductLinkVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/ProductVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/ProductVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/ProductWithLinkVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/ProductWithLinkVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/SubcategoryVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/SubcategoryVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/SubcategoryWithProductVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/SubcategoryWithProductVM.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +117,7 @@
       <workItem from="1734080849453" duration="2702000" />
       <workItem from="1734522604274" duration="6857000" />
       <workItem from="1734684102904" duration="3735000" />
+      <workItem from="1734861269515" duration="9823000" />
     </task>
     <servers />
   </component>
