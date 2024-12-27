@@ -10,25 +10,16 @@
   <component name="ChangeListManager">
     <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarPartWarehouseAPI.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/CarPartWarehouseAPI.sln.DotSettings.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DataModels/CategoryDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/CategoryDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DataModels/ProductDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/ProductDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DataModels/ProductLinkDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/ProductLinkDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DAL/DataModels/StockHistoryDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/StockHistoryDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DataModels/SubcategoryDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/SubcategoryDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DatabaseContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/Migrations/DatabaseContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/Migrations/DatabaseContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logic/Services/ProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/ProductService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/ViewModels/CategoryWithSubcategoryVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/CategoryWithSubcategoryVM.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/ViewModels/ProductVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/ProductVM.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/ViewModels/SubcategoryWithProductVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/SubcategoryWithProductVM.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/MockDALs/CategoryMockDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Test/MockDALs/CategoryMockDAL.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +36,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/214d8520f2fd2e5eafa6f19f052e5f368a59784eaee1befcfbb8cf396ede838/MethodBase.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/351e673a8f7f56c2ab2fb665fe11e4d180701a193227715b47f95fd417dd0/EntityGraphAttacher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/394cf11a64687141fd58fb926ff8b3d5a299eba3bbadaf2de9b93928d523d4/Type.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d42d5f1712377031e2892d1c29db5c23b8c7d49b9dc632fbf463bd930a8/RuntimeHelpers.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aeae22b1c972504e8888d248c7af57e956db03461ad886a20159e93a0d118f3/ParameterExpression.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -62,7 +54,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Launch Settings Profile.CarPartWarehouseAPI: http.executor": "Run",
+    ".NET Launch Settings Profile.CarPartWarehouseAPI: http.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "Dev",
@@ -126,6 +118,7 @@
       <workItem from="1734684102904" duration="3735000" />
       <workItem from="1734861269515" duration="13480000" />
       <workItem from="1734881658204" duration="7035000" />
+      <workItem from="1735331686307" duration="4976000" />
     </task>
     <servers />
   </component>
@@ -152,19 +145,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs</url>
-          <line>35</line>
-          <properties documentPath="C:\Users\mikew\Documents\Fontys\Semester 3\Individueel project\CarPartWarehouse\CarPartWarehouseAPI\DAL\DALServices\ProductDAL.cs" containingFunctionPresentation="Method 'GetProducts'">
-            <startOffsets>
-              <option value="1231" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1283" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

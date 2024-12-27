@@ -142,7 +142,7 @@ namespace CarPartWarehouseAPI.Controllers
         /// <response code ="404">Not Found: The request was unsuccessful because the Product or Subcategory ID does not exist.</response>
         [HttpPut("/products/{id}")]
         public ActionResult UpdateProduct(DatabaseContext databaseContext, int id, string name, string brand,
-            int subcategoryID, int currentStock, int minStock, int maxStock, List<string>? productLinks)
+            int currentStock, int minStock, int maxStock, List<string>? productLinks)
         {
             IProductDAL productDAL = new ProductDAL(databaseContext);
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
@@ -167,16 +167,6 @@ namespace CarPartWarehouseAPI.Controllers
             if (string.IsNullOrWhiteSpace(brand))
             {
                 return BadRequest("Product Brand can not be empty!");
-            }
-
-            if (subcategoryID == 0)
-            {
-                return BadRequest("Subcategory can not be 0!");
-            }
-
-            if (!categoryService.DoesSubcategoryIDExist(subcategoryID))
-            {
-                return NotFound("Subcategory does not exist!");
             }
 
             if (currentStock < 0)
@@ -206,7 +196,7 @@ namespace CarPartWarehouseAPI.Controllers
             //     }
             // }
 
-            productService.UpdateProduct(id, name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
+            productService.UpdateProduct(id, name, brand, currentStock, minStock, maxStock, productLinks);
             return Created();
         }
 

@@ -135,7 +135,7 @@ namespace DAL.DALServices
             database.SaveChanges();
         }
 
-        public void UpdateProduct(int id, string name, string brand, int subcategoryID,
+        public void UpdateProduct(int id, string name, string brand,
             int currentStock, int minStock, int maxStock, List<string>? productLinks)
         {
             if (id == 0 || !DoesProductIDExist(id))
@@ -152,19 +152,12 @@ namespace DAL.DALServices
             {
                 return;
             }
-
-            CategoryDAL categoryDAL = new(database);
-            if (!categoryDAL.DoesSubcategoryIDExist(subcategoryID))
-            {
-                return;
-            }
             
             ProductDTO productDTO = database.Products.Include(productDto => productDto.Links)
                 .FirstOrDefault(p => p.ID == id)!;
             
             productDTO.Name = name;
             productDTO.Brand = brand;
-            productDTO.SubcategoryID = subcategoryID;
             productDTO.CurrentStock = currentStock;
             productDTO.MinStock = minStock;
             productDTO.MaxStock = maxStock;

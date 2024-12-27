@@ -264,7 +264,7 @@ namespace CarPartWarehouseAPI.Controllers
                 return BadRequest("Subcategory already exists!");
             }
 
-            categoryService.UpdateSubcategory(subcategoryId, categoryId, name);
+            categoryService.UpdateSubcategory(subcategoryId, name);
             return Created();
         }
 

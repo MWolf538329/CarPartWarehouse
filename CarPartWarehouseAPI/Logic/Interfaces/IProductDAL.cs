@@ -8,7 +8,7 @@ namespace Logic.Interfaces
         public Product? GetProduct(int productID);
         public void CreateProduct(string name, string brand, int subcategoryID,
             int currentStock, int minStock, int maxStock, List<string>? productLinks);
-        public void UpdateProduct(int id, string name, string brand, int subcategoryID,
+        public void UpdateProduct(int id, string name, string brand,
             int currentStock, int minStock, int maxStock, List<string>? productLinks);
         public void DeleteProduct(int id);
 

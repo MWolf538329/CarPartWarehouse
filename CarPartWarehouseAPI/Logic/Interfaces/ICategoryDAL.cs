@@ -18,7 +18,7 @@ namespace Logic.Interfaces
         public List<Subcategory> GetSubcategories(int categoryID);
         public Subcategory? GetSubcategory(int subcategoryID);
         public void CreateSubcategory(int categoryID, string name);
-        public void UpdateSubcategory(int subcategoryID, int categoryID, string name);
+        public void UpdateSubcategory(int subcategoryID, string name);
         public void DeleteSubcategory(int id);
 
         public bool DoesSubcategoryAlreadyExist(string name);

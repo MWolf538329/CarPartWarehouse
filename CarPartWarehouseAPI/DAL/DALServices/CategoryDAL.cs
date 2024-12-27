@@ -156,26 +156,14 @@ namespace DAL.DALServices
                 return;
             }
             
-            // Category category = GetCategory(categoryID)!;
-            // CategoryDTO categoryDTO = new()
-            // {
-            //     ID = category.ID,
-            //     Name = category.Name
-            // };
-            
             SubcategoryDTO newSubcategoryDTO = new() { Name = name, CategoryID = categoryID};
             database.Subcategories.Add(newSubcategoryDTO);
             database.SaveChanges();
         }
 
-        public void UpdateSubcategory(int subcategoryID, int categoryID, string name)
+        public void UpdateSubcategory(int subcategoryID, string name)
         {
             if (subcategoryID == 0 || !DoesSubcategoryIDExist(subcategoryID))
-            {
-                return;
-            }
-
-            if (categoryID == 0 || !DoesCategoryIDExist(categoryID))
             {
                 return;
             }
@@ -187,7 +175,6 @@ namespace DAL.DALServices
 
             SubcategoryDTO subcategoryDto = database.Subcategories.FirstOrDefault(sc => sc.ID == subcategoryID)!;
             subcategoryDto.Name = name;
-            subcategoryDto.CategoryID = categoryID;
             database.SaveChanges();
         }
 
@@ -213,7 +200,6 @@ namespace DAL.DALServices
         #endregion
 
         #region Product
-
         public List<Category> GetCategoriesWithSubcategoriesWithProducts()
         {
             List<Category> categories = [];

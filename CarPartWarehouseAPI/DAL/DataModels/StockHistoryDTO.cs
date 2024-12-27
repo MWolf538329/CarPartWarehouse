@@ -15,8 +15,8 @@ namespace DAL.DataModels
         
         public DateTime StockChangeDate { get; set; }
         
-        [Required]
-        public int StockWas { get; set; }
+        // [Required]
+        // public int StockWas { get; set; }
         
         [Required]
         public int StockNow { get; set; }

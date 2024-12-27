@@ -87,14 +87,9 @@ namespace Logic.Services
             categoryDal.CreateSubcategory(categoryID, name);
         }
 
-        public void UpdateSubcategory(int subcategoryID, int categoryID, string name)
+        public void UpdateSubcategory(int subcategoryID, string name)
         {
             if (subcategoryID == 0 || !DoesSubcategoryIDExist(subcategoryID))
-            {
-                return;
-            }
-
-            if (categoryID == 0 || !DoesCategoryIDExist(categoryID))
             {
                 return;
             }
@@ -104,7 +99,7 @@ namespace Logic.Services
                 return;
             }
 
-            categoryDal.UpdateSubcategory(subcategoryID, categoryID, name);
+            categoryDal.UpdateSubcategory(subcategoryID, name);
         }
 
         public void DeleteSubcategory(int id)

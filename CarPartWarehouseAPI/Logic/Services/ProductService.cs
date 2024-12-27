@@ -38,10 +38,10 @@ namespace Logic.Services
             productDal.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
         }
 
-        public void UpdateProduct(int id, string name, string brand, int subcategoryID, int currentStock, int minStock, int maxStock,
+        public void UpdateProduct(int id, string name, string brand, int currentStock, int minStock, int maxStock,
             List<string>? productLinks)
         {
-            if (id == 0 || DoesProductIDExist(id))
+            if (id == 0 || !DoesProductIDExist(id))
             {
                 return;
             }
@@ -51,18 +51,13 @@ namespace Logic.Services
             {
                 return;
             }
-
-            if (subcategoryID == 0 || !categoryDal.DoesSubcategoryIDExist(subcategoryID))
-            {
-                return;
-            }
             
             if (currentStock < 0 || minStock < 0 || maxStock < 0)
             {
                 return;
             }
 
-            productDal.UpdateProduct(id, name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
+            productDal.UpdateProduct(id, name, brand, currentStock, minStock, maxStock, productLinks);
         }
 
         public void DeleteProduct(int id)
