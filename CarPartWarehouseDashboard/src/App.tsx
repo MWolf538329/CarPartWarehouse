@@ -1,11 +1,4 @@
-import { createEffect, createResource, For, Show, type Component } from 'solid-js';
-
-import logo from './logo.svg';
-import styles from './App.module.css';
-import { Flex } from './components/ui/flex';
-import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from './components/ui/switch';
-import { TextField, TextFieldInput, TextFieldLabel } from './components/ui/text-field';
-import Navbar from './Navbar';
+import { createEffect, createResource, For, type Component } from 'solid-js';
 
 import {
   Accordion,
@@ -14,20 +7,11 @@ import {
   AccordionTrigger
 } from "~/components/ui/accordion"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "~/components/ui/card"
 import CardComponent from './CardComponent';
 
 const App: Component = () => {
   const [categories] = createResource<Category[] | undefined>(() => fetch("https://api.localhost/categories/subcategories/products").then(body=>body.json()))
   createEffect(() => console.log(categories()))
-
 
   return (
     <div>
@@ -38,17 +22,15 @@ const App: Component = () => {
           <div>
             <Accordion multiple={false} collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger> {category.name} </AccordionTrigger>
-                <AccordionContent>
-                  Yes. Display Subcategories!
-                  
+                <AccordionTrigger> {category.name} - {category.subcategories.length} subcategories </AccordionTrigger>
+                <AccordionContent>                  
                   {/* Subcategory Accordion */}
                   <For each ={category.subcategories}>
                     {subcategory =>
                       <div>
                         <Accordion multiple={false} collapsible>
                           <AccordionItem value="item-1">
-                            <AccordionTrigger> {subcategory.name} </AccordionTrigger>
+                            <AccordionTrigger> {subcategory.name} - {subcategory.products.length} products </AccordionTrigger>
                             <AccordionContent>
                               {/* Product Cards */}
                               <For each ={subcategory.products}>

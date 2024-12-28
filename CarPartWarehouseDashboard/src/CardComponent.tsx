@@ -2,43 +2,36 @@ import { Component, createEffect, createSignal } from "solid-js";
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
+    // CardDescription,
+    // CardFooter,
+    // CardHeader,
+    // CardTitle
   } from "~/components/ui/card"
   
-  interface Stock{
-    id: number;
-    currentStock: number;
-    min: number;
-    max: number;
-  }
-
   interface Product{
     id: number;
     name: string;
-    stock: Stock;
+    brand: string;
+    currentStock: number;
+    minStock: number;
+    maxStock: number;
   }
 
 const CardComponent:Component<{product:Product}> = props => {
     let [backgroundColor, setBackgroundColor] = createSignal("#888888");
     createEffect(() => {
-        if(props.product.stock.currentStock > props.product.stock.min){
+        if(props.product.currentStock > props.product.minStock){
             setBackgroundColor("#c8e6c9");
         }
-        else if (props.product.stock.currentStock <= props.product.stock.min){
+        else if (props.product.currentStock <= props.product.minStock){
             setBackgroundColor("#ff8a80")
         }
-    })    
+    })
 
     return (
     <Card style={{"background-color": backgroundColor()}}>
-        <CardHeader>
-        <CardTitle>{props.product.name}</CardTitle>
-        </CardHeader>
         <CardContent>
-        <p>Current: {props.product.stock.currentStock} - Min: {props.product.stock.min} - Max: {props.product.stock.max}</p>
+          <p>Name: {props.product.name} - Brand: {props.product.brand} - CurrentStock: {props.product.currentStock} - MinStock: {props.product.minStock} - MaxStock: {props.product.maxStock}</p>
         </CardContent>
     </Card>
     )

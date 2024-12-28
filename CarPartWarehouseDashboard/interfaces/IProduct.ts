@@ -1,6 +1,9 @@
 interface Product{
     id: number;
     name: string;
-    stock: Stock;
+    brand: string;
+    currentStock: number;
+    minStock: number;
+    maxStock: number;
     subcategory: Subcategory;
   }

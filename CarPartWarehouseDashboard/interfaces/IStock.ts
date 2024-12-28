@@ -1,6 +1,6 @@
-interface Stock{
-    id: number;
-    currentStock: number;
-    min: number;
-    max: number;
-  }
+// interface Stock{
+//     id: number;
+//     currentStock: number;
+//     min: number;
+//     max: number;
+//   }
