@@ -10,16 +10,12 @@
   <component name="ChangeListManager">
     <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarPartWarehouseAPI.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/CarPartWarehouseAPI.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL/DataModels/StockHistoryDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/StockHistoryDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logic/Services/ProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/ProductService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseDashboard/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseDashboard/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/pages/CategoryOverviewPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/pages/CategoryOverviewPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/src/CardComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/src/CardComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/src/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/src/Navbar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,21 +48,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.CarPartWarehouseAPI: http.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Dev",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.CarPartWarehouseAPI: http.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Dev&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.CarPartWarehouseAPI: http">
     <configuration name="CarPartWarehouseAPI: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Main/CarPartWarehouseAPI.csproj" />
@@ -119,6 +115,7 @@
       <workItem from="1734861269515" duration="13480000" />
       <workItem from="1734881658204" duration="7035000" />
       <workItem from="1735331686307" duration="4976000" />
+      <workItem from="1735403330480" duration="644000" />
     </task>
     <servers />
   </component>

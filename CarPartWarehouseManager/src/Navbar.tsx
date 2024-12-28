@@ -24,8 +24,6 @@ const Navbar: Component = () => {
   return (
     <div>
       <div class="flex">
-        <div>CarPartWarehouse</div>
-
         <div>
           <NavigationMenu>
             <NavigationMenuItem>

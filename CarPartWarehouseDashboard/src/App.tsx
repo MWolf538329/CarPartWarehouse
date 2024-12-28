@@ -11,7 +11,7 @@ import CardComponent from './CardComponent';
 
 const App: Component = () => {
   const [categories] = createResource<Category[] | undefined>(() => fetch("https://api.localhost/categories/subcategories/products").then(body=>body.json()))
-  createEffect(() => console.log(categories()))
+  //createEffect(() => console.log(categories()))
 
   return (
     <div>

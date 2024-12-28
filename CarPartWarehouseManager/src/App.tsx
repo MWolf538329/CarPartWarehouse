@@ -1,30 +1,31 @@
 import { createEffect, createResource, For, Show, type Component } from 'solid-js';
-//import type { Component } from 'solid-js';
 
-import logo from './logo.svg';
-import styles from './App.module.css';
-//import { createResource, createSignal, For } from 'solid-js';
-import { Flex } from './components/ui/flex';
-import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from './components/ui/switch';
-import { TextField, TextFieldInput, TextFieldLabel } from './components/ui/text-field';
+//import type { Component } from 'solid-js';
+// import logo from './logo.svg';
+// import styles from './App.module.css';
+// //import { createResource, createSignal, For } from 'solid-js';
+// import { Flex } from './components/ui/flex';
+// import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from './components/ui/switch';
+// import { TextField, TextFieldInput, TextFieldLabel } from './components/ui/text-field';
+
 import Navbar from './Navbar';
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from "~/components/ui/accordion"
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger
+// } from "~/components/ui/accordion"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "~/components/ui/card"
-import CardComponent from './CardComponent';
+// import {
+//   Card,
+//   CardContent,
+//   CardDescription,
+//   CardFooter,
+//   CardHeader,
+//   CardTitle
+// } from "~/components/ui/card"
+//import CardComponent from './CardComponent';
 
 
 
