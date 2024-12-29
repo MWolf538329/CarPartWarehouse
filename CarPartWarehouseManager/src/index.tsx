@@ -5,6 +5,7 @@ import {Router, Route} from '@solidjs/router';
 import './index.css';
 import App from './App';
 import CategoryOverviewPage from '../pages/CategoryOverviewPage';
+import { Toaster } from './components/ui/toast';
 
 const root = document.getElementById('root');
 

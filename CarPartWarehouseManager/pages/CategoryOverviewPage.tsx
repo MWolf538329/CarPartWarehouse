@@ -1,4 +1,4 @@
-import { $DEVCOMP, createEffect, createResource, createSignal, For, type Component } from 'solid-js';
+import { createEffect, createResource, createSignal, For, type Component } from 'solid-js';
 
 import Navbar from '../src/Navbar';
 
@@ -13,7 +13,6 @@ import {
 } from "~/components/ui/table"
 
 import { Button } from "~/components/ui/button"
-import { style } from 'solid-js/web';
 
 import {
   Dialog,
@@ -24,45 +23,78 @@ import {
   DialogTitle,
   DialogTrigger
 } from "~/components/ui/dialog"
+
 import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-field"
-import { reload, Route } from '@solidjs/router';
+
+import { showToast, Toaster } from '~/components/ui/toast';
 
 //import "../src/style.css";
 
 const [categories] = createResource<Category[] | undefined>(() => fetch("https://api.localhost/categories").then(body=>body.json()))
-  createEffect(() => console.log(categories()))
+createEffect(() => console.log(categories()))
 
-const [value, setValue] = createSignal<string>("")
+const [value, setValue] = createSignal("")
+const [responseCode, setResponseCode] = createSignal(0)
+const [isOpen, setIsOpen] = createSignal(false)
+let isClosed;
 
-  function CreateCategory(){
-    const categoryName = value()
-    createEffect(() => console.log(value()))
-    if(categoryName != ""){
-      fetch(`https://api.localhost/categories?name=${categoryName}`, {
-        method: "POST"
-      })
-      setTimeout(() => {
-        close()
-      }, 1000);
-    }
+const handleOpenChange = (open:boolean) => {
+  setIsOpen(open)
+  isClosed = !isOpen()
+  console.log(isClosed)
+  if (isClosed) {
+      // Only reload when the dialog is closed
+      location.reload();
   }
+}
 
-  function DeleteCategory(categoryID:Number){
-    if(confirm("Are you sure you want to delete this category?"))
-    {
-      fetch(`https://api.localhost/categories/${categoryID}`, {
-        method: "Delete"
-      })
-    }
+function CreateCategory(){
+  console.log(value())
+
+  if(value() !== ""){
+    fetch(`https://api.localhost/categories?name=${value()}`, {
+      method: "Post"
+    }).then((response) => {
+      //console.log("Response:", response);
+      const statusCode = Number.parseInt(response.status.toString());
+      setResponseCode(statusCode);
+      console.log("Updated responseCode:", responseCode());
+
+      switch(responseCode().toString().substring(0, 2)){
+        case "20":
+          showToast({ title: "Category Added", variant: "success" })
+          break;
+        
+        case "40":
+          showToast({ title: "Failed!", variant: "error" })
+          break;
+
+        case "0":
+          showToast({ title: "Debug", variant: "warning" })
+          break;
+      }
+    })
   }
+}
 
+function DeleteCategory(categoryID:Number){
+  if(confirm("Are you sure you want to delete this category?"))
+  {
+    fetch(`https://api.localhost/categories/${categoryID}`, {
+      method: "Delete"
+    })
+    setTimeout(() => {
+      location.reload()
+    }, 500);
+  }
+}
 
 const CategoryOverviewPage: Component = () => {
-return(
+  return(
     <div>
       <Navbar />
 
-      <Dialog>
+      <Dialog onOpenChange={handleOpenChange}>
         <DialogTrigger>Create Category</DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -72,17 +104,14 @@ return(
           <div>
             <TextField>
               <TextFieldLabel>Name: </TextFieldLabel>
-              <TextFieldInput 
-                value={value()}
-                oninput={(e) => {
-                  setValue(e.target.value)
-                }}
-               type='text'
-               required/>
+              <TextFieldInput
+                onChange={e => setValue(e.target.value) }
+                type='text'
+                required />
             </TextField>
           </div>
           <DialogFooter>
-            <Button type='submit' onclick={CreateCategory}>Create</Button>
+            <Button type='submit' onClick={() => CreateCategory()}>Create</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -103,7 +132,7 @@ return(
                 <TableRow>
                   <TableCell>{category.name}</TableCell>
                   <TableCell><a class="editButton" href='/CategoryEditPage'>Edit</a></TableCell>
-                  <TableCell><Button class="deleteButton" variant="destructive" onclick={() => DeleteCategory(0)}>Delete</Button></TableCell>
+                  <TableCell><Button class="deleteButton" variant="destructive" onClick={() => DeleteCategory(category.id)}>Delete</Button></TableCell>
                 </TableRow>
               }
             </For>
@@ -111,9 +140,9 @@ return(
         </Table>
       </div>
       
+      <Toaster />
     </div>
-)
-
+  )
 }
 
-export default CategoryOverviewPage;
+export default CategoryOverviewPage

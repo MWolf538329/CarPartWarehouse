@@ -17,7 +17,7 @@ import {
     maxStock: number;
   }
 
-const CardComponent:Component<{product:Product}> = props => {
+const ProductCard:Component<{product:Product}> = props => {
     let [backgroundColor, setBackgroundColor] = createSignal("#888888");
     createEffect(() => {
         if(props.product.currentStock > props.product.minStock){
@@ -37,4 +37,4 @@ const CardComponent:Component<{product:Product}> = props => {
     )
 }
 
-export default CardComponent
+export default ProductCard
