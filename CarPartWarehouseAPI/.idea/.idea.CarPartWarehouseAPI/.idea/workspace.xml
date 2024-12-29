@@ -9,13 +9,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseDashboard/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseDashboard/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/pages/CategoryOverviewPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/pages/CategoryOverviewPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/src/CardComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/src/CardComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/src/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/src/Navbar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +111,7 @@
       <workItem from="1734881658204" duration="7035000" />
       <workItem from="1735331686307" duration="4976000" />
       <workItem from="1735403330480" duration="644000" />
+      <workItem from="1735498613206" duration="689000" />
     </task>
     <servers />
   </component>

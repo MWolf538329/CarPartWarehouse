@@ -98,11 +98,12 @@ namespace CarPartWarehouseAPI.Controllers
         /// Update Category
         /// </summary>
         /// <param name="id">Category ID</param>
+        /// <param name="name">Name</param>
         /// <returns>HTTP response code</returns>
         /// <response code="201">Updated: Category was successfully Updated.</response>
         /// <response code="400">Bad Request: Category Name can not be empty.</response>
         [HttpPut("/categories/{id}")]
-        public ActionResult UpdateCategory(DatabaseContext databaseContext, int id, [FromBody] string name)
+        public ActionResult UpdateCategory(DatabaseContext databaseContext, int id, string name)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);
@@ -229,7 +230,7 @@ namespace CarPartWarehouseAPI.Controllers
         /// <param name="name">Subcategory Name</param>
         /// <returns></returns>
         [HttpPut("/categories/{categoryId}/subcategories/{subcategoryId}")]
-        public ActionResult UpdateSubcategory(DatabaseContext databaseContext, int categoryId, int subcategoryId, [FromBody] string name)
+        public ActionResult UpdateSubcategory(DatabaseContext databaseContext, int categoryId, int subcategoryId, string name)
         {
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             CategoryService categoryService = new(categoryDAL);

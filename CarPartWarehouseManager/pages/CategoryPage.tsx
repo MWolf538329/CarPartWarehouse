@@ -30,33 +30,25 @@ import {
   BreadcrumbSeparator
 } from "~/components/ui/breadcrumb"
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuDescription,
-  NavigationMenuIcon,
-  NavigationMenuItem,
-  NavigationMenuLabel,
-  NavigationMenuLink,
-  NavigationMenuTrigger
-} from "~/components/ui/navigation-menu"
-
-import { Navigate, Route, useNavigate } from '@solidjs/router';
-
 import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-field"
 
 import { showToast, Toaster } from '~/components/ui/toast';
 
 import "../src/style.css";
-import { useRoute } from '@solidjs/router/dist/routing';
 
-const [categories] = createResource<Category[] | undefined>(() => fetch(`https://api.localhost/categories`).then(body=>body.json()))
+import { useNavigate } from '@solidjs/router';
 
-const [newCategory, setNewCategory] = createSignal("")
-const [updatedCategory, setUpdatedCategory] = createSignal("")
+const CategoryID = Number(localStorage.getItem("CategoryID"))
+
+const [category] = createResource<Category | undefined>(() => fetch(`https://api.localhost/categories/${CategoryID}`).then(body=>body.json()))
+
+const [newSubcategory, setNewSubcategory] = createSignal("")
+const [updatedSubcategory, setUpdatedSubcategory] = createSignal("")
 const [responseCode, setResponseCode] = createSignal(0)
 const [isOpen, setIsOpen] = createSignal(false)
 let isClosed;
+
+//const navigate = useNavigate()
 
 const handleOpenChange = (open:boolean) => {
   setIsOpen(open)
@@ -67,9 +59,9 @@ const handleOpenChange = (open:boolean) => {
   }
 }
 
-function CreateCategory(){
-  if(newCategory() !== ""){
-    fetch(`https://api.localhost/categories?name=${newCategory()}`, {
+function CreateSubcategory(){
+  if(newSubcategory() !== ""){
+    fetch(`https://api.localhost/categories/${CategoryID}/subcategories?name=${newSubcategory()}`, {
       method: "POST"
     }).then((response) => {
       const statusCode = Number.parseInt(response.status.toString());
@@ -91,9 +83,9 @@ function CreateCategory(){
   }
 }
 
-function UpdateCategory(categoryID:Number){
-  if(updatedCategory() !== ""){
-    fetch(`https://api.localhost/categories/${categoryID}?name=${updatedCategory()}`, {
+function UpdateSubcategory(subcategoryID:Number){
+  if(updatedSubcategory() !== ""){
+    fetch(`https://api.localhost/categories/${category()?.id}/subcategories/${subcategoryID}?name=${updatedSubcategory()}`, {
       method: "PUT"
     }).then((response) => {
       const statusCode = Number.parseInt(response.status.toString());
@@ -115,10 +107,10 @@ function UpdateCategory(categoryID:Number){
   }
 }
 
-function DeleteCategory(categoryID:Number){
+function DeleteSubcategory(categoryID:Number){
   if(confirm("Are you sure you want to delete this category?"))
   {
-    fetch(`https://api.localhost/categories/${categoryID}`, {
+    fetch(`https://api.localhost/categories/${category()?.id}/subcategories/${categoryID}`, {
       method: "DELETE"
     })
     setTimeout(() => {
@@ -127,45 +119,48 @@ function DeleteCategory(categoryID:Number){
   }
 }
 
-function CategoryDetails(categoryID:Number){
+function SubcategoryDetails(categoryID:Number){
   localStorage.CategoryID = categoryID
   localStorage.setItem("CategoryID", categoryID.toPrecision())
   //setTimeout(() => navigate("/CategoryPage"), 400)
 }
 
-const CategoryOverviewPage: Component = () => {
+const CategoryPage: Component = () => {
   return(
     <div>
       {/* Breadcrumb Navigation */}
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/" current>Home</BreadcrumbLink>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink current>{category()?.name}</BreadcrumbLink>
+          </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       {/* --------------------- */}
 
       {/* Create new Category Dialog */}
       <Dialog onOpenChange={handleOpenChange}>
-        <DialogTrigger>Create Category</DialogTrigger>
+        <DialogTrigger>Create Subcategory</DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create Category</DialogTitle>
+            <DialogTitle>Create Subcategory</DialogTitle>
             <DialogDescription> Create a new category here </DialogDescription>
           </DialogHeader>
           <div>
             <TextField>
               <TextFieldLabel>Name: </TextFieldLabel>
               <TextFieldInput
-                onChange={e => setNewCategory(e.target.value)}
+                onChange={e => setNewSubcategory(e.target.value)}
                 type='text'
                 required />
             </TextField>
           </div>
           <DialogFooter>
-            <Button type='submit' onClick={() => CreateCategory()}>Create</Button>
+            <Button type='submit' onClick={() => CreateSubcategory()}>Create</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -182,15 +177,10 @@ const CategoryOverviewPage: Component = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <For each={categories()}>
-              {category => 
+            <For each={category()?.subcategories}>
+              {subcategory => 
                 <TableRow>
-                  <TableCell>
-                    {category.name}
-
-                    {/* <a href='/CategoryPage/{category.id}'>{category.name}</a>
-                    <Button variant={'link'} onclick={() => CategoryDetails(category.id)}></Button> */}
-                  </TableCell>
+                  <TableCell>{subcategory.name}</TableCell>
                   <TableCell>
 
                     {/* Edit Category Dialog */}
@@ -198,28 +188,28 @@ const CategoryOverviewPage: Component = () => {
                       <DialogTrigger class='editButton'>Edit</DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Update Category</DialogTitle>
-                          <DialogDescription> Update category: {category.name} here </DialogDescription>
+                          <DialogTitle>Update Subcategory</DialogTitle>
+                          <DialogDescription> Update subcategory: {subcategory.name} here </DialogDescription>
                         </DialogHeader>
                         <div>
                           <TextField>
                             <TextFieldLabel>Name: </TextFieldLabel>
                             <TextFieldInput
-                              value={category.name}
-                              onChange={e => setUpdatedCategory(e.target.value)}
+                              value={subcategory.name}
+                              onChange={e => setUpdatedSubcategory(e.target.value)}
                               type='text'
                               required />
                           </TextField>
                         </div>
                         <DialogFooter>
-                          <Button type='submit' onClick={() => UpdateCategory(category.id)}>Update</Button>
+                          <Button type='submit' onClick={() => UpdateSubcategory(subcategory.id)}>Update</Button>
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
                     {/* -------------------- */}
 
                   </TableCell>
-                  <TableCell><Button class="deleteButton" variant="destructive" onClick={() => DeleteCategory(category.id)}>Delete</Button></TableCell>
+                  <TableCell><Button class="deleteButton" variant="destructive" onClick={() => DeleteSubcategory(subcategory.id)}>Delete</Button></TableCell>
                 </TableRow>
               }
             </For>
@@ -233,4 +223,4 @@ const CategoryOverviewPage: Component = () => {
   )
 }
 
-export default CategoryOverviewPage
+export default CategoryPage
