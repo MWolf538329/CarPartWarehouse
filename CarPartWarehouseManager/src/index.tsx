@@ -1,11 +1,11 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import {Router, Route} from '@solidjs/router';
+import { Router, Route } from '@solidjs/router';
 
 import './index.css';
-import App from './App';
-import CategoryOverviewPage from '../pages/CategoryOverviewPage';
-import CategoryPage from '../pages/CategoryPage';
+import CategoryOverviewPage from './pages/CategoryOverviewPage';
+import CategoryPage from './pages/CategoryPage';
+import SubcategoryPage from './pages/SubcategoryPage';
 
 const root = document.getElementById('root');
 
@@ -19,7 +19,8 @@ render(
   () => (
     <Router>
       <Route path='/' component={CategoryOverviewPage} />
-      <Route path='/CategoryPage/:id' component={CategoryPage} />
+      <Route path='/categorypage/:id' component={CategoryPage} />
+      <Route path='/categorypage/:id/subcategorypage/:id' component={SubcategoryPage} />
     </Router>
   ),
   document.getElementById("root")!

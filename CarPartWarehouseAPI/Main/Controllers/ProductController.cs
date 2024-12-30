@@ -61,8 +61,9 @@ namespace CarPartWarehouseAPI.Controllers
             }
 
             Product product = productService.GetProduct(id)!;
-                
-            ProductWithLinkVM productVM = new(product);
+
+            ProductVM productVM = new(product);
+            //ProductWithLinkVM productVM = new(product);
             return productVM;
         }
 
@@ -75,7 +76,7 @@ namespace CarPartWarehouseAPI.Controllers
         /// <response code ="404">Not Found: The request was unsuccessful because the Subcategory ID does not exist.</response>
         [HttpPost("/products")]
         public ActionResult CreateProduct(DatabaseContext databaseContext, string name, string brand,
-            int subcategoryID, int currentStock, int minStock, int maxStock, List<string>? productLinks)
+            int subcategoryID, int currentStock, int minStock, int maxStock)
         {
             IProductDAL productDAL = new ProductDAL(databaseContext);
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
@@ -117,19 +118,7 @@ namespace CarPartWarehouseAPI.Controllers
                 return BadRequest("Max Stock can not be lower than 0!");
             }
 
-            //if (productLinks.Count != 0)
-            // {
-            //     foreach (ProductLinkVM productLinkVM in productLinkVMs)
-            //     {
-            //         productLinks.Add(new ProductLink()
-            //         {
-            //             ID = productLinkVM.ID,
-            //             Url = productLinkVM.Url
-            //         });
-            //     }
-            // }
-
-            productService.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
+            productService.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock);
             return Created();
         }
         
@@ -142,12 +131,11 @@ namespace CarPartWarehouseAPI.Controllers
         /// <response code ="404">Not Found: The request was unsuccessful because the Product or Subcategory ID does not exist.</response>
         [HttpPut("/products/{id}")]
         public ActionResult UpdateProduct(DatabaseContext databaseContext, int id, string name, string brand,
-            int currentStock, int minStock, int maxStock, List<string>? productLinks)
+            int currentStock, int minStock, int maxStock)
         {
             IProductDAL productDAL = new ProductDAL(databaseContext);
             ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
             ProductService productService = new(productDAL, categoryDAL);
-            CategoryService categoryService = new(categoryDAL);
 
             if (id == 0)
             {
@@ -184,19 +172,7 @@ namespace CarPartWarehouseAPI.Controllers
                 return BadRequest("Max Stock can not be lower than 0!");
             }
 
-            // if (productLinkVMs.Count != 0)
-            // {
-            //     foreach (ProductLinkVM productLinkVM in productLinkVMs)
-            //     {
-            //         productLinks.Add(new ProductLink()
-            //         {
-            //             ID = productLinkVM.ID,
-            //             Url = productLinkVM.Url
-            //         });
-            //     }
-            // }
-
-            productService.UpdateProduct(id, name, brand, currentStock, minStock, maxStock, productLinks);
+            productService.UpdateProduct(id, name, brand, currentStock, minStock, maxStock);
             return Created();
         }
 

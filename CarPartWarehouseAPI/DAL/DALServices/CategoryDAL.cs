@@ -133,13 +133,33 @@ namespace DAL.DALServices
                 return null;
             }
             
-            SubcategoryDTO subcategoryDTO = database.Subcategories.FirstOrDefault(sc => sc.ID == subcategoryID)!;
+            SubcategoryDTO subcategoryDTO = database.Subcategories.Include(subcategoryDto => subcategoryDto.Products)
+                .FirstOrDefault(sc => sc.ID == subcategoryID)!;
 
             Subcategory subcategory = new()
             {
                 ID = subcategoryDTO.ID,
-                Name = subcategoryDTO.Name
+                Name = subcategoryDTO.Name,
+                Products = []
             };
+
+            if (subcategoryDTO.Products.Count != 0)
+            {
+                foreach (ProductDTO productDTO in subcategoryDTO.Products)
+                {
+                    Product product = new()
+                    {
+                        ID = productDTO.ID,
+                        Name = productDTO.Name,
+                        Brand = productDTO.Brand,
+                        CurrentStock = productDTO.CurrentStock,
+                        MinStock = productDTO.MinStock,
+                        MaxStock = productDTO.MaxStock,
+                    };
+                                
+                    subcategory.Products.Add(product);
+                }
+            }
 
             return subcategory;
         }

@@ -186,6 +186,46 @@ namespace CarPartWarehouseAPI.Controllers
         }
 
         /// <summary>
+        /// Get a Subcategory
+        /// </summary>
+        /// <param name="categoryId">Category ID</param>
+        /// <param name="subcategoryId">Subcategory ID</param>
+        /// <returns></returns>
+        /// <response code="200"></response>
+        [HttpGet("/categories/{categoryId}/subcategories/{subcategoryId}")]
+        public ActionResult<SubcategoryWithProductVM> GetSubcategory(DatabaseContext databaseContext, int categoryId, int subcategoryId)
+        {
+            ICategoryDAL categoryDAL = new CategoryDAL(databaseContext);
+            CategoryService categoryService = new(categoryDAL);
+
+            if (categoryId == 0)
+            {
+                return BadRequest("Category ID can not be 0!");
+            }
+
+            if (!categoryService.DoesCategoryIDExist(categoryId))
+            {
+                return NotFound("Category ID does not exist!");
+            }
+            
+            if (subcategoryId == 0)
+            {
+                return BadRequest("Subcategory ID can not be 0!");
+            }
+
+            if (!categoryService.DoesSubcategoryIDExist(subcategoryId))
+            {
+                return NotFound("Subcategory ID does not exist!");
+            }
+            
+            Subcategory subcategory = categoryService.GetSubcategory(subcategoryId)!;
+
+            SubcategoryWithProductVM subcategoryVM = new(subcategory);
+            
+            return subcategoryVM;
+        }
+        
+        /// <summary>
         /// Create Subcategory
         /// </summary>
         /// <param name="categoryId">Category ID</param>

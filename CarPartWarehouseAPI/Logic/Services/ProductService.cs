@@ -16,8 +16,7 @@ namespace Logic.Services
             return productDal.GetProduct(id);
         }
 
-        public void CreateProduct(string name, string brand, int subcategoryID, int currentStock, int minStock, int maxStock,
-            List<string>? productLinks)
+        public void CreateProduct(string name, string brand, int subcategoryID, int currentStock, int minStock, int maxStock)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand) ||
                 DoesProductAlreadyExist(name, brand))
@@ -35,11 +34,10 @@ namespace Logic.Services
                 return;
             }
 
-            productDal.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock, productLinks);
+            productDal.CreateProduct(name, brand, subcategoryID, currentStock, minStock, maxStock);
         }
 
-        public void UpdateProduct(int id, string name, string brand, int currentStock, int minStock, int maxStock,
-            List<string>? productLinks)
+        public void UpdateProduct(int id, string name, string brand, int currentStock, int minStock, int maxStock)
         {
             if (id == 0 || !DoesProductIDExist(id))
             {
@@ -57,7 +55,7 @@ namespace Logic.Services
                 return;
             }
 
-            productDal.UpdateProduct(id, name, brand, currentStock, minStock, maxStock, productLinks);
+            productDal.UpdateProduct(id, name, brand, currentStock, minStock, maxStock);
         }
 
         public void DeleteProduct(int id)

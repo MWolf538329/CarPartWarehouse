@@ -8,10 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseManager/pages/CategoryOverviewPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseManager/pages/CategoryOverviewPage.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +108,7 @@
       <workItem from="1734881658204" duration="7035000" />
       <workItem from="1735331686307" duration="4976000" />
       <workItem from="1735403330480" duration="644000" />
-      <workItem from="1735498613206" duration="689000" />
+      <workItem from="1735498613206" duration="1284000" />
     </task>
     <servers />
   </component>

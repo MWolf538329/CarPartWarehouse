@@ -11,8 +11,7 @@ namespace DAL.DALServices
 
         public List<Product> GetProducts()
         {
-            List<ProductDTO> productDTOs = database.Products.Include(productDto => productDto.Subcategory!)
-                .Include(productDto => productDto.Links).ToList();
+            List<ProductDTO> productDTOs = database.Products.Include(productDto => productDto.Subcategory).ToList();
 
             List<Product> products = [];
 
@@ -31,16 +30,7 @@ namespace DAL.DALServices
                         ID = productDTO.Subcategory.ID,
                         Name = productDTO.Subcategory.Name,
                     },
-                };
-
-                foreach (ProductLinkDTO linkDTO in productDTO.Links)
-                {
-                    product.Links.Add(new ProductLink()
-                    {
-                        ID = linkDTO.ID,
-                        Url = linkDTO.Url
-                    });
-                }                
+                };               
 
                 products.Add(product);
             }
@@ -56,7 +46,7 @@ namespace DAL.DALServices
             }
             
             ProductDTO? productDTO = database.Products.Include(productDto => productDto.Subcategory)
-                .Include(productDto => productDto.Links).FirstOrDefault(p => p.ID == id);
+                .FirstOrDefault(p => p.ID == id);
 
             Product product = new()
             {
@@ -73,20 +63,11 @@ namespace DAL.DALServices
                 },
             };
 
-            foreach (ProductLinkDTO linkDTO in productDTO.Links)
-            {
-                product.Links.Add(new ProductLink()
-                {
-                    ID = linkDTO.ID,
-                    Url = linkDTO.Url
-                });
-            }
-
             return product;
         }
 
         public void CreateProduct(string name, string brand, int subcategoryID,
-            int currentStock, int minStock, int maxStock, List<string>? productLinks)
+            int currentStock, int minStock, int maxStock)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand))
             {
@@ -115,28 +96,13 @@ namespace DAL.DALServices
                 MinStock = minStock,
                 MaxStock = maxStock
             };
-
-            // Product Links still need to be figured out and implemented.
-            // if (productLinks.Count != 0)
-            // {
-            //     foreach (ProductLink productLink in productLinks)
-            //     {
-            //         ProductLinkDTO productLinkDTO = new()
-            //         {
-            //             ID = productLink.ID,
-            //             Url = productLink.Url,
-            //         };
-            //         
-            //         productDTO.Links.Add(productLinkDTO);
-            //     }
-            // }
             
             database.Products.Add(productDTO);
             database.SaveChanges();
         }
 
         public void UpdateProduct(int id, string name, string brand,
-            int currentStock, int minStock, int maxStock, List<string>? productLinks)
+            int currentStock, int minStock, int maxStock)
         {
             if (id == 0 || !DoesProductIDExist(id))
             {
@@ -153,16 +119,13 @@ namespace DAL.DALServices
                 return;
             }
             
-            ProductDTO productDTO = database.Products.Include(productDto => productDto.Links)
-                .FirstOrDefault(p => p.ID == id)!;
+            ProductDTO productDTO = database.Products.FirstOrDefault(p => p.ID == id)!;
             
             productDTO.Name = name;
             productDTO.Brand = brand;
             productDTO.CurrentStock = currentStock;
             productDTO.MinStock = minStock;
             productDTO.MaxStock = maxStock;
-            
-            // Product Links still need to be figured out and implemented.
 
             database.SaveChanges();
         }

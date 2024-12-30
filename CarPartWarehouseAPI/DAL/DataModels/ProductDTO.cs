@@ -31,6 +31,6 @@ namespace DAL.DataModels
         public int MaxStock { get; set; }
 
         public virtual SubcategoryDTO Subcategory { get; set; }
-        public virtual List<ProductLinkDTO> Links { get; set; } = [];
+        //public virtual List<ProductLinkDTO> Links { get; set; } = [];
     }
 }
