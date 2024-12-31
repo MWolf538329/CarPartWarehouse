@@ -3,7 +3,6 @@ import { createResource, createSignal, For, type Component } from 'solid-js';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -39,13 +38,20 @@ import { useNavigate } from '@solidjs/router';
 import { Flex } from '~/components/ui/flex';
 
 const CategoryPage: Component = () => {
+  const navigate = useNavigate()
+
+  const LoggedIn = Boolean(localStorage.getItem("LoggedIn"))
+  if (!LoggedIn) {
+    navigate("/LoginPage")
+  }
+
   const CategoryID = Number(localStorage.getItem("CategoryID"))
   const [category] = createResource<Category | undefined>(() => fetch(`https://api.localhost/categories/${CategoryID}`).then(body => body.json()))
   const [newSubcategory, setNewSubcategory] = createSignal("")
   const [updatedSubcategory, setUpdatedSubcategory] = createSignal("")
   const [responseCode, setResponseCode] = createSignal(0)
   const [isOpen, setIsOpen] = createSignal(false)
-  const navigate = useNavigate()
+
   let isClosed;
 
   const handleOpenChange = (open: boolean) => {
@@ -121,6 +127,11 @@ const CategoryPage: Component = () => {
     setTimeout(() => navigate(`/categorypage/${CategoryID}/subcategorypage/${subcategoryID}`), 400)
   }
 
+  function Logout() {
+    localStorage.clear();
+    location.reload();
+  }
+
   return (
     <div>
       <Flex class='p-3'>
@@ -162,6 +173,8 @@ const CategoryPage: Component = () => {
           </DialogContent>
         </Dialog>
         {/* ------------------ */}
+
+        <Button onClick={Logout}>Log out</Button>
       </Flex>
 
       {/* Subcategory Table */}

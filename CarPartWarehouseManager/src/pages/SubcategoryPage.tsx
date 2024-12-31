@@ -1,4 +1,4 @@
-import { createEffect, createResource, createSignal, For, type Component } from 'solid-js';
+import { createResource, createSignal, For, type Component } from 'solid-js';
 
 import {
     Table,
@@ -38,6 +38,13 @@ import { useNavigate } from '@solidjs/router';
 import { Flex } from '~/components/ui/flex';
 
 const SubcategoryPage: Component = () => {
+    const navigate = useNavigate()
+
+    const LoggedIn = Boolean(localStorage.getItem("LoggedIn"))
+    if (!LoggedIn) {
+        navigate("/LoginPage")
+    }
+
     const CategoryID = Number(localStorage.getItem("CategoryID"))
     const SubcategoryID = Number(localStorage.getItem("SubcategoryID"))
 
@@ -52,7 +59,7 @@ const SubcategoryPage: Component = () => {
 
     const [responseCode, setResponseCode] = createSignal(0)
     const [isOpen, setIsOpen] = createSignal(false)
-    const navigate = useNavigate()
+
     let isClosed;
 
     const handleOpenChange = (open: boolean) => {
@@ -131,6 +138,11 @@ const SubcategoryPage: Component = () => {
         setTimeout(() => navigate(`/categorypage/${CategoryID}/subcategorypage/${SubcategoryID}/products/${productID}`), 400)
     }
 
+    function Logout() {
+        localStorage.clear();
+        location.reload();
+    }
+
     return (
         <div>
             <Flex class='p-3'>
@@ -204,6 +216,8 @@ const SubcategoryPage: Component = () => {
                     </DialogContent>
                 </Dialog>
                 {/* ------------------ */}
+
+                <Button onClick={Logout}>Log out</Button>
             </Flex>
 
             {/* Product Table */}

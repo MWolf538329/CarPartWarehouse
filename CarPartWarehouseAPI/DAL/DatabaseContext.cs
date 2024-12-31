@@ -10,6 +10,7 @@ namespace DAL
         public DbSet<StockHistoryDTO> StockHistories { get; set; }
         public DbSet<SubcategoryDTO> Subcategories { get; set; }
         public DbSet<CategoryDTO> Categories { get; set; }
+        public DbSet<CredentialDTO> Credentials { get; set; }
 
         private const string connection = 
             $"data source=MSI;initial catalog=CarPartWarehouse;trusted_connection=true;TrustServerCertificate=True;";

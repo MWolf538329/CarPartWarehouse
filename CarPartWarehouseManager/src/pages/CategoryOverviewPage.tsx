@@ -40,12 +40,18 @@ import { Flex } from '~/components/ui/flex';
 
 
 const CategoryOverviewPage: Component = () => {
+  const navigate = useNavigate()
+
+  const LoggedIn = Boolean(localStorage.getItem("LoggedIn"))
+  if (!LoggedIn) {
+    navigate("/LoginPage")
+  }
+
   const [categories] = createResource<Category[] | undefined>(() => fetch(`https://api.localhost/categories`).then(body => body.json()))
   const [newCategory, setNewCategory] = createSignal("")
   const [updatedCategory, setUpdatedCategory] = createSignal("")
   const [responseCode, setResponseCode] = createSignal(0)
   const [isOpen, setIsOpen] = createSignal(false)
-  const navigate = useNavigate();
   let isClosed;
 
   const handleOpenChange = (open: boolean) => {
@@ -121,6 +127,11 @@ const CategoryOverviewPage: Component = () => {
     setTimeout(() => navigate(`/categorypage/${categoryID}`), 400)
   }
 
+  function Logout() {
+    localStorage.clear();
+    location.reload();
+  }
+
   return (
     <div>
       <Flex class='p-3'>
@@ -158,6 +169,8 @@ const CategoryOverviewPage: Component = () => {
           </DialogContent>
         </Dialog>
         {/* ------------------ */}
+
+        <Button onClick={Logout}>Log out</Button>
       </Flex>
 
       {/* Category Table */}
