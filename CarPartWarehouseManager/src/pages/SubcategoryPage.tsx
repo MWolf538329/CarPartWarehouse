@@ -69,9 +69,6 @@ const SubcategoryPage: Component = () => {
             // Only reload when the dialog is closed
             location.reload();
         }
-        else {
-
-        }
     }
 
     function CreateProduct() {
@@ -130,12 +127,6 @@ const SubcategoryPage: Component = () => {
                 location.reload()
             })
         }
-    }
-
-    function ProductDetails(productID: Number) {
-        localStorage.ProductID = productID
-        localStorage.setItem("ProductID", productID.toPrecision())
-        setTimeout(() => navigate(`/categorypage/${CategoryID}/subcategorypage/${SubcategoryID}/products/${productID}`), 400)
     }
 
     function Logout() {
