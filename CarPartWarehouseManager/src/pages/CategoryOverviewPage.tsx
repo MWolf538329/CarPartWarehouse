@@ -87,7 +87,7 @@ const CategoryOverviewPage: Component = () => {
     }
   }
 
-  function UpdateCategory(categoryID: Number) {
+  function UpdateCategory(categoryID: number) {
     if (updatedCategory() !== "") {
       fetch(`https://api.localhost/categories/${categoryID}?name=${updatedCategory()}`, {
         method: "PUT"
@@ -111,7 +111,7 @@ const CategoryOverviewPage: Component = () => {
     }
   }
 
-  function DeleteCategory(categoryID: Number) {
+  function DeleteCategory(categoryID: number) {
     if (confirm("Are you sure you want to delete this category?")) {
       fetch(`https://api.localhost/categories/${categoryID}`, {
         method: "DELETE"
@@ -121,7 +121,7 @@ const CategoryOverviewPage: Component = () => {
     }
   }
 
-  function CategoryDetails(categoryID: Number) {
+  function CategoryDetails(categoryID: number) {
     localStorage.CategoryID = Number(categoryID)
     localStorage.setItem("CategoryID", categoryID.toPrecision())
     setTimeout(() => navigate(`/categorypage/${categoryID}`), 400)

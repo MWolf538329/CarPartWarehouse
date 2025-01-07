@@ -1,6 +1,6 @@
-interface Category{
-    id: number;
-    name: string;
-  
-    subcategories: Subcategory[];
-  }
+interface Category {
+  id: number;
+  name: string;
+
+  subcategories: Subcategory[];
+}

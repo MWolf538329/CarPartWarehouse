@@ -9,28 +9,23 @@ import {
 import SubcategoryAccordion from './SubcategoryAccordion';
 
 const CategoryAccordion: Component<{ category: Category }> = props => {
-    const [backgroundColor, setBackgroundColor] = createSignal("#888888");
+    const [lowStock, setLowStock] = createSignal(false);
     createEffect(() => {
-        let lowStock = false;
+        let isLowStock = false;
 
         props.category.subcategories.forEach(subcategory => {
             subcategory.products.forEach(product => {
                 if (product.currentStock <= product.minStock) {
-                    lowStock = true
+                    isLowStock = true
                 }
             })
         })
 
-        if (lowStock) {
-            setBackgroundColor("#ff8a80")
-        }
-        else {
-            setBackgroundColor("#c8e6c9");
-        };
+        setLowStock(isLowStock)
     })
 
     return (
-        <Accordion multiple={false} collapsible style={{ "background-color": backgroundColor() }}>
+        <Accordion multiple={false} collapsible class={lowStock() ? "bg-red-300" : "bg-green-300"}>
             <AccordionItem value="item-1">
                 <AccordionTrigger> {props.category.name} - {props.category.subcategories.length} subcategories </AccordionTrigger>
                 <AccordionContent>

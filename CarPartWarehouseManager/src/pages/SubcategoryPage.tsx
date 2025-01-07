@@ -95,7 +95,7 @@ const SubcategoryPage: Component = () => {
         }
     }
 
-    function UpdateProduct(productID: Number) {
+    function UpdateProduct(productID: number) {
         if (productName() !== "" && productBrand() !== "") {
             fetch(`https://api.localhost/products/${productID}?name=${productName()}&brand=${productBrand()}&subcategoryID=${SubcategoryID}&currentStock=${productCurrentStock()}&minStock=${productMinStock()}&maxStock=${productMaxStock()}`, {
                 method: "PUT"
@@ -119,7 +119,7 @@ const SubcategoryPage: Component = () => {
         }
     }
 
-    function DeleteProduct(productID: Number) {
+    function DeleteProduct(productID: number) {
         if (confirm("Are you sure you want to delete this category?")) {
             fetch(`https://api.localhost/products/${productID}`, {
                 method: "DELETE"

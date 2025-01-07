@@ -14,18 +14,22 @@ interface Product {
 }
 
 const ProductCard: Component<{ product: Product }> = props => {
-  const [backgroundColor, setBackgroundColor] = createSignal("#888888");
+  const [lowStock, setLowStock] = createSignal(false);
   createEffect(() => {
-    if (props.product.currentStock > props.product.minStock) {
-      setBackgroundColor("#c8e6c9");
+    let isLowStock = false;
+
+    if (props.product.currentStock <= props.product.minStock) {
+      isLowStock = true
     }
-    else if (props.product.currentStock <= props.product.minStock) {
-      setBackgroundColor("#ff8a80")
+    else if (props.product.currentStock > props.product.minStock) {
+      isLowStock = false
     }
+
+    setLowStock(isLowStock)
   })
 
   return (
-    <Card style={{ "background-color": backgroundColor() }}>
+    <Card class={lowStock() ? "bg-red-300" : "bg-green-300"}>
       <CardContent>
         <p>Name: {props.product.name} - Brand: {props.product.brand} - CurrentStock: {props.product.currentStock} - MinStock: {props.product.minStock} - MaxStock: {props.product.maxStock}</p>
       </CardContent>
