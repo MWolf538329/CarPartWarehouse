@@ -1,10 +1,10 @@
-﻿namespace Logic.Models
-{
-    public class Category
-    {
-        public int ID { get; set; }
-        public string Name { get; set; } = string.Empty;
+﻿// ReSharper disable ClassWithVirtualMembersNeverInherited.Global
+namespace Logic.Models;
 
-        public virtual List<Subcategory>? Subcategories { get; init; }
-    }
+public class Category
+{
+    public int ID { get; init; }
+    public string Name { get; set; } = string.Empty;
+
+    public virtual List<Subcategory>? Subcategories { get; init; }
 }

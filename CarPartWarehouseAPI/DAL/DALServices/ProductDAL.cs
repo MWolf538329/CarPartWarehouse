@@ -2,152 +2,153 @@
 using Logic.Interfaces;
 using Logic.Models;
 using Microsoft.EntityFrameworkCore;
+// ReSharper disable ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 
-namespace DAL.DALServices
+namespace DAL.DALServices;
+
+public class ProductDAL(DatabaseContext databaseContext) : IProductDAL
 {
-    public class ProductDAL(DatabaseContext databaseContext) : IProductDAL
+    private DatabaseContext database { get; } = databaseContext;
+
+    public List<Product> GetProducts()
     {
-        private DatabaseContext database { get; set; } = databaseContext;
+        List<ProductDTO> productDTOs = database.Products.Include(productDto => productDto.Subcategory).ToList();
 
-        public List<Product> GetProducts()
+        List<Product> products = [];
+
+        foreach (ProductDTO productDTO in productDTOs)
         {
-            List<ProductDTO> productDTOs = database.Products.Include(productDto => productDto.Subcategory).ToList();
-
-            List<Product> products = [];
-
-            foreach (ProductDTO productDTO in productDTOs)
-            {
-                Product product = new()
-                {
-                    ID = productDTO.ID,
-                    Name = productDTO.Name,
-                    Brand = productDTO.Brand,
-                    CurrentStock = productDTO.CurrentStock,
-                    MinStock = productDTO.MinStock,
-                    MaxStock = productDTO.MaxStock,
-                    Subcategory = new Subcategory
-                    {
-                        ID = productDTO.Subcategory.ID,
-                        Name = productDTO.Subcategory.Name,
-                    },
-                };               
-
-                products.Add(product);
-            }
-            
-            return products;
-        }
-
-        public Product? GetProduct(int id)
-        {
-            if (!DoesProductIDExist(id))
-            {
-                return null;
-            }
-            
-            ProductDTO? productDTO = database.Products.Include(productDto => productDto.Subcategory)
-                .FirstOrDefault(p => p.ID == id);
-
             Product product = new()
             {
-                ID = productDTO!.ID,
+                ID = productDTO.ID,
                 Name = productDTO.Name,
                 Brand = productDTO.Brand,
                 CurrentStock = productDTO.CurrentStock,
                 MinStock = productDTO.MinStock,
                 MaxStock = productDTO.MaxStock,
-                Subcategory = new Subcategory()
+                Subcategory = new Subcategory
                 {
                     ID = productDTO.Subcategory.ID,
-                    Name = productDTO.Subcategory.Name,
-                },
-            };
+                    Name = productDTO.Subcategory.Name
+                }
+            };               
 
-            return product;
+            products.Add(product);
         }
-
-        public void CreateProduct(string name, string brand, int subcategoryID,
-            int currentStock, int minStock, int maxStock)
-        {
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand))
-            {
-                return;
-            }
-
-            if (currentStock < 0 || minStock < 0 || maxStock < 0)
-            {
-                return;
-            }
-
-            CategoryDAL categoryDAL = new(database);
-            if (!categoryDAL.DoesSubcategoryIDExist(subcategoryID))
-            {
-                return;
-            }
             
-            SubcategoryDTO? subcategory = database.Subcategories.FirstOrDefault(sc => sc.ID == subcategoryID);
+        return products;
+    }
 
-            ProductDTO productDTO = new()
-            {
-                Name = name,
-                Brand = brand,
-                Subcategory = subcategory!,
-                CurrentStock = currentStock,
-                MinStock = minStock,
-                MaxStock = maxStock
-            };
+    public Product? GetProduct(int id)
+    {
+        if (!DoesProductIDExist(id))
+        {
+            return null;
+        }
             
-            database.Products.Add(productDTO);
-            database.SaveChanges();
+        ProductDTO? productDTO = database.Products.Include(productDto => productDto.Subcategory)
+            .FirstOrDefault(p => p.ID == id);
+
+        Product product = new()
+        {
+            ID = productDTO!.ID,
+            Name = productDTO.Name,
+            Brand = productDTO.Brand,
+            CurrentStock = productDTO.CurrentStock,
+            MinStock = productDTO.MinStock,
+            MaxStock = productDTO.MaxStock,
+            Subcategory = new Subcategory
+            {
+                ID = productDTO.Subcategory.ID,
+                Name = productDTO.Subcategory.Name
+            }
+        };
+
+        return product;
+    }
+
+    public void CreateProduct(string name, string brand, int subcategoryID,
+        int currentStock, int minStock, int maxStock)
+    {
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand))
+        {
+            return;
         }
 
-        public void UpdateProduct(int id, string name, string brand,
-            int currentStock, int minStock, int maxStock)
+        if (currentStock < 0 || minStock < 0 || maxStock < 0)
         {
-            if (id == 0 || !DoesProductIDExist(id))
-            {
-                return;
-            }
+            return;
+        }
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand))
-            {
-                return;
-            }
-
-            if (currentStock < 0 || minStock < 0 || maxStock < 0)
-            {
-                return;
-            }
+        CategoryDAL categoryDAL = new(database);
+        if (!categoryDAL.DoesSubcategoryIDExist(subcategoryID))
+        {
+            return;
+        }
             
-            ProductDTO productDTO = database.Products.FirstOrDefault(p => p.ID == id)!;
+        SubcategoryDTO? subcategory = database.Subcategories.FirstOrDefault(sc => sc.ID == subcategoryID);
+
+        ProductDTO productDTO = new()
+        {
+            Name = name,
+            Brand = brand,
+            Subcategory = subcategory!,
+            CurrentStock = currentStock,
+            MinStock = minStock,
+            MaxStock = maxStock
+        };
             
-            productDTO.Name = name;
-            productDTO.Brand = brand;
-            productDTO.CurrentStock = currentStock;
-            productDTO.MinStock = minStock;
-            productDTO.MaxStock = maxStock;
+        database.Products.Add(productDTO);
+        database.SaveChanges();
+    }
 
-            database.SaveChanges();
-        }
-
-        public void DeleteProduct(int id)
+    public void UpdateProduct(int id, string name, string brand,
+        int currentStock, int minStock, int maxStock)
+    {
+        if (id == 0 || !DoesProductIDExist(id))
         {
-            if (id == 0 || !DoesProductIDExist(id))
-            {
-                return;
-            }
-
-            database.Products.Remove(database.Products.FirstOrDefault(p => p.ID == id)!);
-            database.SaveChanges();
+            return;
         }
 
-        public bool DoesProductAlreadyExist(string name, string brand)
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(brand))
         {
-            return database.Products.Any(p => p.Name == name && p.Brand == brand);
+            return;
         }
-        public bool DoesProductIDExist(int id)
+
+        if (currentStock < 0 || minStock < 0 || maxStock < 0)
         {
-            return database.Products.Any(p => p.ID == id);
+            return;
         }
+            
+        ProductDTO productDTO = database.Products.FirstOrDefault(p => p.ID == id)!;
+            
+        productDTO.Name = name;
+        productDTO.Brand = brand;
+        productDTO.CurrentStock = currentStock;
+        productDTO.MinStock = minStock;
+        productDTO.MaxStock = maxStock;
+
+        database.SaveChanges();
+    }
+
+    public void DeleteProduct(int id)
+    {
+        if (id == 0 || !DoesProductIDExist(id))
+        {
+            return;
+        }
+
+        database.Products.Remove(database.Products.FirstOrDefault(p => p.ID == id)!);
+        database.SaveChanges();
+    }
+
+    public bool DoesProductAlreadyExist(string name, string brand)
+    {
+        return database.Products.Any(p => p.Name == name && p.Brand == brand);
+    }
+    public bool DoesProductIDExist(int id)
+    {
+        return database.Products.Any(p => p.ID == id);
     }
 }

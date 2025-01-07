@@ -1,20 +1,20 @@
 ﻿using Logic.Models;
+// ReSharper disable UnusedMember.Global
 
-namespace CarPartWarehouseAPI.ViewModels
+namespace CarPartWarehouseAPI.ViewModels;
+
+/// <summary>
+/// Represents a Subcategory in the system
+/// </summary>
+public class SubcategoryVM(Subcategory subcategory)
 {
     /// <summary>
-    /// Represents a Subcategory in the system
+    /// Gets or sets the Subcategory ID
     /// </summary>
-    public class SubcategoryVM(Subcategory subcategory)
-    {
-        /// <summary>
-        /// Gets or sets the Subcategory ID
-        /// </summary>
-        public int ID { get; set; } = subcategory.ID;
+    public int ID { get; set; } = subcategory.ID;
         
-        /// <summary>
-        /// Gets or sets the Subcategory Name
-        /// </summary>
-        public string Name { get; set; } = subcategory.Name;
-    }
+    /// <summary>
+    /// Gets or sets the Subcategory Name
+    /// </summary>
+    public string Name { get; set; } = subcategory.Name;
 }

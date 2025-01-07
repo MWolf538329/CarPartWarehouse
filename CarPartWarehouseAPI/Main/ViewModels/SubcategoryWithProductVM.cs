@@ -1,30 +1,33 @@
 ﻿using System.Text.Json.Serialization;
 using Logic.Models;
 
-namespace CarPartWarehouseAPI.ViewModels
+namespace CarPartWarehouseAPI.ViewModels;
+
+/// <summary>
+/// Represents a Subcategory with Products
+/// </summary>
+public class SubcategoryWithProductVM : SubcategoryVM
 {
     /// <summary>
-    /// Represents a Subcategory with Products
+    /// Gets or sets the Products belonging to the Subcategory
     /// </summary>
-    public class SubcategoryWithProductVM : SubcategoryVM
-    {
-        /// <summary>
-        /// Gets or sets the Products belonging to the Subcategory
-        /// </summary>
-        [JsonInclude]
-        public List<ProductVM> Products { get; set; } = [];
+    [JsonInclude]
+    public List<ProductVM> Products { get; set; } = [];
 
-        public SubcategoryWithProductVM(Subcategory subcategory) : base(subcategory)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="subcategory"></param>
+    public SubcategoryWithProductVM(Subcategory subcategory) : base(subcategory)
+    {
+        if (subcategory.Products == null || subcategory.Products.Count == 0)
         {
-            if (subcategory.Products == null || subcategory.Products.Count == 0)
-            {
-                return;
-            }
+            return;
+        }
             
-            foreach (Product product in subcategory.Products)
-            {
-                Products.Add(new ProductVM(product));
-            }
+        foreach (Product product in subcategory.Products)
+        {
+            Products.Add(new ProductVM(product));
         }
     }
 }

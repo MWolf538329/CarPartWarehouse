@@ -5,7 +5,7 @@ namespace DAL.DALServices;
 
 public class LoginDAL(DatabaseContext db) : ILoginDAL
 {
-    private DatabaseContext database { get; set; } = db;
+    private DatabaseContext database { get; } = db;
     
     public bool Login(string username, string password)
     {

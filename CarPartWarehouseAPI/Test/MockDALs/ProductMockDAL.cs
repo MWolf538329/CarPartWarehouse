@@ -49,7 +49,7 @@ public class ProductMockDAL : IProductDAL
     {
         IsUsed = true;
         
-        Products.Add(new()
+        Products.Add(new Product
         {
             ID = 3,
             Name = "Remblokken",

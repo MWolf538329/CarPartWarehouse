@@ -9,9 +9,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseDashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseDashboard/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CarPartWarehouseDashboard/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../CarPartWarehouseDashboard/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/CategoryDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DALServices/LoginDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/LoginDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DALServices/ProductDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DataModels/CategoryDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/CategoryDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DataModels/CredentialDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/CredentialDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DataModels/ProductDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/ProductDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DataModels/ProductLinkDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/ProductLinkDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DataModels/StockHistoryDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/StockHistoryDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DataModels/SubcategoryDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DataModels/SubcategoryDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/DatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/DatabaseContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/ICategoryDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/IProductDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/IProductLinkDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/IProductLinkDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/IStockDAL.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/IStockHistoryDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Interfaces/IStockHistoryDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Interfaces/ISubcategoryDAL.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Models/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Models/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Models/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Models/Product.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Models/ProductLink.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Models/ProductLink.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Models/StockHistory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Models/StockHistory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Models/Subcategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Models/Subcategory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/CategoryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic/Services/ProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic/Services/ProductService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/CategoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Controllers/LoginController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/LoginController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/Controllers/ProductController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/CategoryVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/CategoryVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/CategoryWithSubcategoryVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/CategoryWithSubcategoryVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/ProductLinkVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/ProductLinkVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/ProductVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/ProductVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/SubcategoryVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/SubcategoryVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main/ViewModels/SubcategoryWithProductVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Main/ViewModels/SubcategoryWithProductVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/LogicTests/CategoryTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Test/LogicTests/CategoryTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/LogicTests/ProductTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Test/LogicTests/ProductTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/LogicTests/SubcategoryTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Test/LogicTests/SubcategoryTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/MockDALs/CategoryMockDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Test/MockDALs/CategoryMockDAL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/MockDALs/ProductMockDAL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Test/MockDALs/ProductMockDAL.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +71,9 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -122,6 +159,7 @@
       <workItem from="1735651058057" duration="4277000" />
       <workItem from="1735919304779" duration="14786000" />
       <workItem from="1736003468236" duration="3663000" />
+      <workItem from="1736261605010" duration="2243000" />
     </task>
     <servers />
   </component>
@@ -136,19 +174,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Main/ViewModels/CategoryWithSubcategoryVM.cs</url>
-          <line>17</line>
-          <properties documentPath="C:\Users\mikew\Documents\Fontys\Semester 3\Individueel project\CarPartWarehouse\CarPartWarehouseAPI\Main\ViewModels\CategoryWithSubcategoryVM.cs" containingFunctionPresentation="Constructor 'CategoryWithSubcategoryVM'">
-            <startOffsets>
-              <option value="572" />
-            </startOffsets>
-            <endOffsets>
-              <option value="573" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints">
           <properties exception="System.NullReferenceException" isInternal="false" displayValue="NullReferenceException" namespaceName="System">
             <option name="internal" value="false" />

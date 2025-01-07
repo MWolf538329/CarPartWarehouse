@@ -1,31 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DAL.DataModels;
 
-namespace DAL
+namespace DAL;
+
+public class DatabaseContext : DbContext
 {
-    public class DatabaseContext : DbContext
+    public DbSet<ProductDTO> Products { get; init; }
+    public DbSet<ProductLinkDTO> ProductLinks { get; init; }
+    public DbSet<StockHistoryDTO> StockHistories { get; init; }
+    public DbSet<SubcategoryDTO> Subcategories { get; init; }
+    public DbSet<CategoryDTO> Categories { get; init; }
+    public DbSet<CredentialDTO> Credentials { get; init; }
+
+    private const string connection = "data source=MSI;initial catalog=CarPartWarehouse;trusted_connection=true;TrustServerCertificate=True;";
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        public DbSet<ProductDTO> Products { get; set; }
-        public DbSet<ProductLinkDTO> ProductLinks { get; set; }
-        public DbSet<StockHistoryDTO> StockHistories { get; set; }
-        public DbSet<SubcategoryDTO> Subcategories { get; set; }
-        public DbSet<CategoryDTO> Categories { get; set; }
-        public DbSet<CredentialDTO> Credentials { get; set; }
+        var conn = Environment.GetEnvironmentVariable("ConnectionString") ?? connection;
 
-        private const string connection = 
-            $"data source=MSI;initial catalog=CarPartWarehouse;trusted_connection=true;TrustServerCertificate=True;";
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            var conn = Environment.GetEnvironmentVariable("ConnectionString");
-            
-            if (conn == null)
-            {
-                conn = connection;
-            }
-            
-            options.UseSqlServer(conn).UseLazyLoadingProxies();
-            options.EnableSensitiveDataLogging();
-        }
+        options.UseSqlServer(conn).UseLazyLoadingProxies();
+        options.EnableSensitiveDataLogging();
     }
 }

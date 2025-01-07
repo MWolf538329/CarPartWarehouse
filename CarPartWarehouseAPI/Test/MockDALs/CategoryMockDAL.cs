@@ -1,151 +1,150 @@
 ﻿using Logic.Interfaces;
 using Logic.Models;
 
-namespace Test.MockDALs
+namespace Test.MockDALs;
+
+internal class CategoryMockDAL : ICategoryDAL
 {
-    internal class CategoryMockDAL : ICategoryDAL
+    public bool IsUsed;
+    public bool IsCreated;
+    public bool IsUpdated;
+    public bool IsDeleted;
+        
+    public List<Category> Categories { get; } =
+    [
+        new() { ID = 1, Name = "Motor" },
+        new() { ID = 2, Name = "Transmissie" }
+    ];
+
+    public List<Subcategory> Subcategories { get; } =
+    [
+        new() { ID = 1, Name = "Cilinders", Category = new Category { ID = 1, Name = "Motor" } },
+        new() { ID = 2, Name = "Handgeschakelde Transmissie", Category = new Category { ID = 2, Name = "Transmissie" } },
+        new() { ID = 3, Name = "Automatische Transmissie", Category = new Category { ID = 2, Name = "Transmissie" } }
+    ];
+        
+    public List<Category> GetCategories()
     {
-        public bool IsUsed;
-        public bool IsCreated;
-        public bool IsUpdated;
-        public bool IsDeleted;
-        
-        public List<Category> Categories { get; } =
-        [
-            new() { ID = 1, Name = "Motor" },
-            new() { ID = 2, Name = "Transmissie" }
-        ];
+        IsUsed = true;
 
-        public List<Subcategory> Subcategories { get; } =
-        [
-            new() { ID = 1, Name = "Cilinders", Category = new Category { ID = 1, Name = "Motor" } },
-            new() { ID = 2, Name = "Handgeschakelde Transmissie", Category = new Category { ID = 2, Name = "Transmissie" } },
-            new() { ID = 3, Name = "Automatische Transmissie", Category = new Category { ID = 2, Name = "Transmissie" } }
-        ];
+        return Categories;
+    }
+
+    public Category GetCategory(int id)
+    {
+        IsUsed = true;
+
+        return Categories.FirstOrDefault(c => c.ID == id)!;
+    }
         
-        public List<Category> GetCategories()
+    public void CreateCategory(string name)
+    {
+        IsUsed = true;
+
+        Categories.Add(new Category { ID = 3, Name = name });
+
+        if (Categories.Count == 3)
         {
-            IsUsed = true;
-
-            return Categories;
+            IsCreated = true;
         }
-
-        public Category GetCategory(int id)
-        {
-            IsUsed = true;
-
-            return Categories.FirstOrDefault(c => c.ID == id)!;
-        }
+    }
         
-        public void CreateCategory(string name)
+    public void UpdateCategory(int id, string name)
+    {
+        IsUsed = true;
+
+        Categories[id].Name = name;
+
+        if (Categories[id].Name == name)
         {
-            IsUsed = true;
-
-            Categories.Add(new Category { ID = 3, Name = name });
-
-            if (Categories.Count == 3)
-            {
-                IsCreated = true;
-            }
+            IsUpdated = true;
         }
+    }
         
-        public void UpdateCategory(int id, string name)
-        {
-            IsUsed = true;
-
-            Categories[id].Name = name;
-
-            if (Categories[id].Name == name)
-            {
-                IsUpdated = true;
-            }
-        }
-        
-        public void DeleteCategory(int id)
-        {
-            IsUsed = true;
+    public void DeleteCategory(int id)
+    {
+        IsUsed = true;
             
-            Categories.RemoveAt(id);
+        Categories.RemoveAt(id);
 
-            if (Categories.Count == 1)
-            {
-                IsDeleted = true;
-            }
-        }
-
-        public bool DoesCategoryAlreadyExist(string name)
+        if (Categories.Count == 1)
         {
-            return Categories.Any(c => c.Name == name);
+            IsDeleted = true;
         }
+    }
 
-        public bool DoesCategoryIDExist(int categoryID)
-        {
-            return Categories.Any(c => c.ID == categoryID);
-        }
+    public bool DoesCategoryAlreadyExist(string name)
+    {
+        return Categories.Any(c => c.Name == name);
+    }
 
-        public List<Subcategory> GetSubcategories(int categoryID)
-        {
-            IsUsed = true;
+    public bool DoesCategoryIDExist(int categoryID)
+    {
+        return Categories.Any(c => c.ID == categoryID);
+    }
 
-            return Subcategories.Where(sc => sc.Category.ID == categoryID).ToList();
-        }
+    public List<Subcategory> GetSubcategories(int categoryID)
+    {
+        IsUsed = true;
 
-        public Subcategory? GetSubcategory(int subcategoryID)
-        {
-            IsUsed = true;
+        return Subcategories.Where(sc => sc.Category.ID == categoryID).ToList();
+    }
 
-            return Subcategories.FirstOrDefault(sc => sc.ID == subcategoryID);
-        }
+    public Subcategory? GetSubcategory(int subcategoryID)
+    {
+        IsUsed = true;
 
-        public void CreateSubcategory(int categoryID, string name)
-        {
-            IsUsed = true;
+        return Subcategories.FirstOrDefault(sc => sc.ID == subcategoryID);
+    }
+
+    public void CreateSubcategory(int categoryID, string name)
+    {
+        IsUsed = true;
             
-            Subcategories.Add(new Subcategory {ID = 4, Name = name, Category = new Category{ID = categoryID, Name = "Transmissie"}});
+        Subcategories.Add(new Subcategory {ID = 4, Name = name, Category = new Category{ID = categoryID, Name = "Transmissie"}});
 
-            if (Subcategories.Count == 4)
-            {
-                IsCreated = true;
-            }
-        }
-
-        public void UpdateSubcategory(int subcategoryID, string name)
+        if (Subcategories.Count == 4)
         {
-            IsUsed = true;
-
-            Subcategories[subcategoryID].Name = name;
-
-            if (Subcategories[subcategoryID].Name == name)
-            {
-                IsUpdated = true;
-            }
+            IsCreated = true;
         }
+    }
 
-        public void DeleteSubcategory(int subcategoryID)
+    public void UpdateSubcategory(int subcategoryID, string name)
+    {
+        IsUsed = true;
+
+        Subcategories[subcategoryID].Name = name;
+
+        if (Subcategories[subcategoryID].Name == name)
         {
-            IsUsed = true;
+            IsUpdated = true;
+        }
+    }
+
+    public void DeleteSubcategory(int subcategoryID)
+    {
+        IsUsed = true;
             
-            Subcategories.RemoveAt(subcategoryID);
+        Subcategories.RemoveAt(subcategoryID);
 
-            if (Subcategories.Count == 2)
-            {
-                IsDeleted = true;
-            }
-        }
-
-        public bool DoesSubcategoryAlreadyExist(string name)
+        if (Subcategories.Count == 2)
         {
-            return Subcategories.Any(sc => sc.Name == name);
+            IsDeleted = true;
         }
+    }
 
-        public bool DoesSubcategoryIDExist(int subcategoryID)
-        {
-            return Subcategories.Any(sc => sc.ID == subcategoryID);
-        }
+    public bool DoesSubcategoryAlreadyExist(string name)
+    {
+        return Subcategories.Any(sc => sc.Name == name);
+    }
 
-        public List<Category> GetCategoriesWithSubcategoriesWithProducts()
-        {
-            throw new NotImplementedException();
-        }
+    public bool DoesSubcategoryIDExist(int subcategoryID)
+    {
+        return Subcategories.Any(sc => sc.ID == subcategoryID);
+    }
+
+    public List<Category> GetCategoriesWithSubcategoriesWithProducts()
+    {
+        throw new NotImplementedException();
     }
 }
