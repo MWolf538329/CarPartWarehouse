@@ -14,5 +14,4 @@ describe('Visits Localhost and Retrieves Category, Subcategory and Product Data'
     cy.get('.cypressSubcategoryAccordion').contains("E2E Test Subcategory").click()
     cy.get('.cypressProductCard').last().should('have.class', 'bg-red-300')
   })
-
 })
