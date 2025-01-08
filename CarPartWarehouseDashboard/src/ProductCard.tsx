@@ -29,7 +29,7 @@ const ProductCard: Component<{ product: Product }> = props => {
   })
 
   return (
-    <Card class={lowStock() ? "bg-red-300" : "bg-green-300"}>
+    <Card class={`cypressProductCard ${+ lowStock() ? "bg-red-300" : "bg-green-300"}`}>
       <CardContent>
         <p>Name: {props.product.name} - Brand: {props.product.brand} - CurrentStock: {props.product.currentStock} - MinStock: {props.product.minStock} - MaxStock: {props.product.maxStock}</p>
       </CardContent>

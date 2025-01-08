@@ -23,9 +23,9 @@ const SubcategoryAccordion: Component<{ subcategory: Subcategory }> = props => {
     })
 
     return (
-        <Accordion multiple={false} collapsible class={lowStock() ? "bg-red-300" : "bg-green-300"} >
+        <Accordion multiple={false} collapsible class={`${lowStock() ? "bg-red-300" : "bg-green-300"}`} >
             <AccordionItem value="item-1">
-                <AccordionTrigger> {props.subcategory.name} - {props.subcategory.products.length} products </AccordionTrigger>
+                <AccordionTrigger class={"cypressSubcategoryAccordion"}> {props.subcategory.name} - {props.subcategory.products.length} products </AccordionTrigger>
                 <AccordionContent>
                     {/* Product Cards */}
                     <For each={props.subcategory.products}>
