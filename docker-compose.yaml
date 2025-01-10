@@ -23,14 +23,10 @@ services:
       - frontend-manager
       - backend
   frontend-dashboard:
-    ports:
-      - "3000:3000"
     build: ./CarPartWarehouseDashboard
     networks:
       - internal
   frontend-manager:
-    ports:
-      - "3000:3000"
     build: ./CarPartWarehouseManager
     networks:
       - internal
