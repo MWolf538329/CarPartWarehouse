@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-azurelinux3.0-amd64 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-azurelinux3.0 AS build
 WORKDIR /app
 
 COPY ./ ./
