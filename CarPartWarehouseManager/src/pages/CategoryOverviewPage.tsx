@@ -148,7 +148,7 @@ const CategoryOverviewPage: Component = () => {
 
         {/* Create new Category Dialog */}
         <Dialog onOpenChange={handleOpenChange}>
-          <DialogTrigger><Button>Create Category</Button></DialogTrigger>
+          <DialogTrigger><Button class={"cypressCreateCategoryButton"}>Create Category</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create Category</DialogTitle>
@@ -157,14 +157,14 @@ const CategoryOverviewPage: Component = () => {
             <div>
               <TextField>
                 <TextFieldLabel>Name: </TextFieldLabel>
-                <TextFieldInput
+                <TextFieldInput class={"cypressNameInput"}
                   onChange={e => setNewCategory(e.target.value)}
                   type='text'
                   required />
               </TextField>
             </div>
             <DialogFooter>
-              <Button type='submit' onClick={() => CreateCategory()}>Create</Button>
+              <Button class={"cypressSubmitButton"} type='submit' onClick={() => CreateCategory()}>Create</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -186,9 +186,9 @@ const CategoryOverviewPage: Component = () => {
           <TableBody>
             <For each={categories()}>
               {category =>
-                <TableRow>
+                <TableRow class={"cypressCategoryItems"}>
                   <TableCell>
-                    <Button variant={"link"} onClick={() => CategoryDetails(category.id)}>{category.name}</Button>
+                    <Button class={"cypressCategoryItem"} variant={"link"} onClick={() => CategoryDetails(category.id)}>{category.name}</Button>
                   </TableCell>
                   <TableCell>
 
