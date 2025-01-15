@@ -49,21 +49,21 @@ const LoginPage: Component = () => {
         <div>
             <TextField>
                 <TextFieldLabel>Username: </TextFieldLabel>
-                <TextFieldInput
+                <TextFieldInput class={"cypressUsernameInput"}
                     onChange={e => setUsername(e.target.value)}
                     type='text'
                     required />
             </TextField>
             <TextField>
                 <TextFieldLabel>Password: </TextFieldLabel>
-                <TextFieldInput
+                <TextFieldInput class={"cypressPasswordInput"}
                     onChange={e => setPassword(e.target.value)}
                     type='password'
                     required />
             </TextField>
-            <Button type='submit' onClick={() => TryLogginIn()}>Log in</Button>
+            <Button class={"cypressSubmitButton"} type='submit' onClick={() => TryLogginIn()}>Log in</Button>
 
-            <Toaster />
+            <Toaster class={"cypressLoginToaster"} />
         </div>
     )
 }

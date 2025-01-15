@@ -10,6 +10,7 @@
   <component name="ChangeListManager">
     <list default="true" id="35099732-95e8-4966-b6c2-857c1f6d0a19" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarPartWarehouseAPI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cypress/e2e/ManagerLoginTest.cy.js" beforeDir="false" afterPath="$PROJECT_DIR$/../cypress/e2e/ManagerLoginTest.cy.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,8 +125,8 @@
       <workItem from="1735919304779" duration="14786000" />
       <workItem from="1736003468236" duration="3663000" />
       <workItem from="1736261605010" duration="2243000" />
-      <workItem from="1736337075106" duration="145000" />
-      <workItem from="1736342603544" duration="1470000" />
+      <workItem from="1736775250318" duration="2219000" />
+      <workItem from="1736934284957" duration="768000" />
     </task>
     <servers />
   </component>
