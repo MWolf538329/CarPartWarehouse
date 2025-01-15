@@ -4,3 +4,7 @@ profile:
   name: qodana.recommended
 include:
   - name: CheckDependencyLicenses
+
+rules:
+  ignore:
+    - "UsePreferredVarStyles"
