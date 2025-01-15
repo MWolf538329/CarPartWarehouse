@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe('Visits Localhost and Retrieves Category, Subcategory and Product Data', () => {
+describe('Visits localhost/loginpage and tries loggin in', () => {
     it('Connects to localhost -> Opens login page -> Tries logging in with wrong credentials -> Fails to log in', () => {
         cy.visit('http://manager.localhost/loginpage')
         cy.get(".cypressUsernameInput").type("failed")
