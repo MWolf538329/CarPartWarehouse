@@ -26,8 +26,8 @@ const LoginPage: Component = () => {
                 switch (responseCode().toString().substring(0, 2)) {
                     case "20":
                         showToast({ title: "Login Successful", variant: "success" })
-                        localStorage.LoggedIn = true;
-                        localStorage.setItem("LoggedIn", "true")
+                        sessionStorage.LoggedIn = true;
+                        sessionStorage.setItem("LoggedIn", "true")
                         setTimeout(() => {
                             navigate("/")
                         }, 400);

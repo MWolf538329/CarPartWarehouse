@@ -40,12 +40,12 @@ import { Flex } from '~/components/ui/flex';
 const CategoryPage: Component = () => {
   const navigate = useNavigate()
 
-  const LoggedIn = Boolean(localStorage.getItem("LoggedIn"))
+  const LoggedIn = Boolean(sessionStorage.getItem("LoggedIn"))
   if (!LoggedIn) {
     navigate("/LoginPage")
   }
 
-  const CategoryID = Number(localStorage.getItem("CategoryID"))
+  const CategoryID = Number(sessionStorage.getItem("CategoryID"))
   const [category] = createResource<Category | undefined>(() => fetch(`https://api.localhost/categories/${CategoryID}`).then(body => body.json()))
   const [newSubcategory, setNewSubcategory] = createSignal("")
   const [updatedSubcategory, setUpdatedSubcategory] = createSignal("")
@@ -128,7 +128,7 @@ const CategoryPage: Component = () => {
   }
 
   function Logout() {
-    localStorage.clear();
+    sessionStorage.clear();
     location.reload();
   }
 

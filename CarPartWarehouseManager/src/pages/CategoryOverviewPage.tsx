@@ -42,7 +42,7 @@ import { Flex } from '~/components/ui/flex';
 const CategoryOverviewPage: Component = () => {
   const navigate = useNavigate()
 
-  const LoggedIn = Boolean(localStorage.getItem("LoggedIn"))
+  const LoggedIn = Boolean(sessionStorage.getItem("LoggedIn"))
   if (!LoggedIn) {
     navigate("/LoginPage")
   }
@@ -128,7 +128,7 @@ const CategoryOverviewPage: Component = () => {
   }
 
   function Logout() {
-    localStorage.clear();
+    sessionStorage.clear();
     location.reload();
   }
 
