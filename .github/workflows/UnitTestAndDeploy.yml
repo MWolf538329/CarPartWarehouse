@@ -10,7 +10,26 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  qodana:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
+          fetch-depth: 0  # a full history is required for pull request analysis
+      - name: 'Qodana Scan'
+        uses: JetBrains/qodana-action@v2024.2
+        with:
+          pr-mode: false
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_1325864070 }}
+          QODANA_ENDPOINT: 'https://qodana.cloud'
+          
+  UnitTests:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -29,7 +48,9 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs:
+      - UnitTests
+      - qodana
     steps:
         - name: Check out the repo
           uses: actions/checkout@v4

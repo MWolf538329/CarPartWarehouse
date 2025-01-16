@@ -1,0 +1,36 @@
+name: Simulate Database Migration Locally
+
+on:
+  push:
+    branches:
+      - DatabaseWorkflowTest
+
+jobs:
+  simulate-migration:
+    runs-on: self-hosted
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+          -  1433:1433
+        env:
+          SA_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
+          ACCEPT_EULA: "Y"
+        options: >-
+          --health-cmd 'echo "SELECT 1" | /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SQL_SA_PASSWORD'
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Wait for SQL Server to Start
+        run: |
+          until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${{ secrets.SQL_SA_PASSWORD }} -Q "SELECT 1" ; do
+            echo "Waiting for SQL Server to start..."
+            sleep 5
+          done
+
+      - name: Create Database
+        run: |
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${{ secrets.SQL_SA_PASSWORD }} -Q "CREATE DATABASE CarPartWarehouse2" || echo "Second database already exists."
