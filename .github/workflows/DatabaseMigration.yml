@@ -3,7 +3,7 @@ name: Simulate Database Migration Locally
 on:
   push:
     branches:
-      - main
+      - DatabaseWorkflowTest
 
 jobs:
   simulate-migration:
