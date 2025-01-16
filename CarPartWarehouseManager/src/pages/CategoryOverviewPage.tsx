@@ -122,8 +122,8 @@ const CategoryOverviewPage: Component = () => {
   }
 
   function CategoryDetails(categoryID: number) {
-    localStorage.CategoryID = Number(categoryID)
-    localStorage.setItem("CategoryID", categoryID.toPrecision())
+    sessionStorage.CategoryID = Number(categoryID)
+    sessionStorage.setItem("CategoryID", categoryID.toPrecision())
     setTimeout(() => navigate(`/categorypage/${categoryID}`), 400)
   }
 

@@ -122,8 +122,8 @@ const CategoryPage: Component = () => {
   }
 
   function SubcategoryDetails(subcategoryID: number) {
-    localStorage.SubcategoryID = subcategoryID
-    localStorage.setItem("SubcategoryID", subcategoryID.toPrecision())
+    sessionStorage.SubcategoryID = subcategoryID
+    sessionStorage.setItem("SubcategoryID", subcategoryID.toPrecision())
     setTimeout(() => navigate(`/categorypage/${CategoryID}/subcategorypage/${subcategoryID}`), 400)
   }
 
