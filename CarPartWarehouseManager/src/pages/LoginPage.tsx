@@ -7,6 +7,7 @@ import { useNavigate } from '@solidjs/router';
 import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-field"
 
 import { showToast, Toaster } from '~/components/ui/toast';
+import { link } from 'fs';
 
 const LoginPage: Component = () => {
     const navigate = useNavigate()
@@ -62,6 +63,8 @@ const LoginPage: Component = () => {
                     required />
             </TextField>
             <Button class={"cypressSubmitButton"} type='submit' onClick={() => TryLogginIn()}>Log in</Button>
+
+            <Button variant={"link"} onclick={() => navigate("/RegisterPage")}>Register Account</Button>
 
             <Toaster class={"cypressLoginToaster"} />
         </div>

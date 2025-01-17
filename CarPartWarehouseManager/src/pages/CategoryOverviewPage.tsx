@@ -29,7 +29,7 @@ import {
   BreadcrumbSeparator
 } from "~/components/ui/breadcrumb"
 
-import { useNavigate } from '@solidjs/router';
+import { useNavigate, reload } from '@solidjs/router';
 
 import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-field"
 
@@ -59,7 +59,7 @@ const CategoryOverviewPage: Component = () => {
     isClosed = !isOpen()
     if (isClosed) {
       // Only reload when the dialog is closed
-      location.reload();
+      reload();
     }
   }
 
@@ -116,7 +116,7 @@ const CategoryOverviewPage: Component = () => {
       fetch(`http://api.localhost/categories/${categoryID}`, {
         method: "DELETE"
       }).then(() => {
-        location.reload()
+        reload()
       })
     }
   }
@@ -129,7 +129,7 @@ const CategoryOverviewPage: Component = () => {
 
   function Logout() {
     sessionStorage.clear();
-    location.reload();
+    reload();
   }
 
   return (

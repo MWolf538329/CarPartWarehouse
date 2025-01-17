@@ -33,7 +33,7 @@ import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-
 
 import { showToast, Toaster } from '~/components/ui/toast';
 
-import { useNavigate } from '@solidjs/router';
+import { useNavigate, reload } from '@solidjs/router';
 
 import { Flex } from '~/components/ui/flex';
 
@@ -67,7 +67,7 @@ const SubcategoryPage: Component = () => {
         isClosed = !isOpen()
         if (isClosed) {
             // Only reload when the dialog is closed
-            location.reload();
+            reload();
         }
     }
 
@@ -124,14 +124,14 @@ const SubcategoryPage: Component = () => {
             fetch(`http://api.localhost/products/${productID}`, {
                 method: "DELETE"
             }).then(() => {
-                location.reload()
+                reload()
             })
         }
     }
 
     function Logout() {
         sessionStorage.clear();
-        location.reload();
+        reload();
     }
 
     return (
