@@ -18,7 +18,7 @@ const LoginPage: Component = () => {
 
     function TryLogginIn() {
         if (username() !== "" && password() !== "") {
-            fetch(`https://api.localhost/login/login?username=${username()}&password=${password()}`, {
+            fetch(`http://api.localhost/login/login?username=${username()}&password=${password()}`, {
                 method: "POST"
             }).then((response) => {
                 const statusCode = Number.parseInt(response.status.toString())

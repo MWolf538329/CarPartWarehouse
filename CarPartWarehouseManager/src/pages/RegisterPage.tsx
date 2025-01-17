@@ -17,7 +17,7 @@ const RegisterPage: Component = () => {
 
     function TryRegister() {
         if (username() !== "" && password() !== "") {
-            fetch(`https://api.localhost/login/register?username=${username()}&password=${password()}`, {
+            fetch(`http://api.localhost/login/register?username=${username()}&password=${password()}`, {
                 method: "POST"
             }).then((response) => {
                 const statusCode = Number.parseInt(response.status.toString())

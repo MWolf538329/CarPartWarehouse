@@ -46,7 +46,7 @@ const CategoryPage: Component = () => {
   }
 
   const CategoryID = Number(sessionStorage.getItem("CategoryID"))
-  const [category] = createResource<Category | undefined>(() => fetch(`https://api.localhost/categories/${CategoryID}`).then(body => body.json()))
+  const [category] = createResource<Category | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}`).then(body => body.json()))
   const [newSubcategory, setNewSubcategory] = createSignal("")
   const [updatedSubcategory, setUpdatedSubcategory] = createSignal("")
   const [responseCode, setResponseCode] = createSignal(0)
@@ -65,7 +65,7 @@ const CategoryPage: Component = () => {
 
   function CreateSubcategory() {
     if (newSubcategory() !== "") {
-      fetch(`https://api.localhost/categories/${category()?.id}/subcategories?name=${newSubcategory()}`, {
+      fetch(`http://api.localhost/categories/${category()?.id}/subcategories?name=${newSubcategory()}`, {
         method: "POST"
       }).then((response) => {
         const statusCode = Number.parseInt(response.status.toString());
@@ -89,7 +89,7 @@ const CategoryPage: Component = () => {
 
   function UpdateSubcategory(subcategoryID: number) {
     if (updatedSubcategory() !== "") {
-      fetch(`https://api.localhost/categories/${category()?.id}/subcategories/${subcategoryID}?name=${updatedSubcategory()}`, {
+      fetch(`http://api.localhost/categories/${category()?.id}/subcategories/${subcategoryID}?name=${updatedSubcategory()}`, {
         method: "PUT"
       }).then((response) => {
         const statusCode = Number.parseInt(response.status.toString());
@@ -113,7 +113,7 @@ const CategoryPage: Component = () => {
 
   function DeleteSubcategory(subcategoryID: number) {
     if (confirm("Are you sure you want to delete this subcategory?")) {
-      fetch(`https://api.localhost/categories/${category()?.id}/subcategories/${subcategoryID}`, {
+      fetch(`http://api.localhost/categories/${category()?.id}/subcategories/${subcategoryID}`, {
         method: "DELETE"
       }).then(() => {
         location.reload()

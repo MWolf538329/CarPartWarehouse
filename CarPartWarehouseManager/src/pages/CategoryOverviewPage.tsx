@@ -47,7 +47,7 @@ const CategoryOverviewPage: Component = () => {
     navigate("/LoginPage")
   }
 
-  const [categories] = createResource<Category[] | undefined>(() => fetch(`https://api.localhost/categories`).then(body => body.json()))
+  const [categories] = createResource<Category[] | undefined>(() => fetch(`http://api.localhost/categories`).then(body => body.json()))
   const [newCategory, setNewCategory] = createSignal("")
   const [updatedCategory, setUpdatedCategory] = createSignal("")
   const [responseCode, setResponseCode] = createSignal(0)
@@ -65,7 +65,7 @@ const CategoryOverviewPage: Component = () => {
 
   function CreateCategory() {
     if (newCategory() !== "") {
-      fetch(`https://api.localhost/categories?name=${newCategory()}`, {
+      fetch(`http://api.localhost/categories?name=${newCategory()}`, {
         method: "POST"
       }).then((response) => {
         const statusCode = Number.parseInt(response.status.toString());
@@ -89,7 +89,7 @@ const CategoryOverviewPage: Component = () => {
 
   function UpdateCategory(categoryID: number) {
     if (updatedCategory() !== "") {
-      fetch(`https://api.localhost/categories/${categoryID}?name=${updatedCategory()}`, {
+      fetch(`http://api.localhost/categories/${categoryID}?name=${updatedCategory()}`, {
         method: "PUT"
       }).then((response) => {
         const statusCode = Number.parseInt(response.status.toString());
@@ -113,7 +113,7 @@ const CategoryOverviewPage: Component = () => {
 
   function DeleteCategory(categoryID: number) {
     if (confirm("Are you sure you want to delete this category?")) {
-      fetch(`https://api.localhost/categories/${categoryID}`, {
+      fetch(`http://api.localhost/categories/${categoryID}`, {
         method: "DELETE"
       }).then(() => {
         location.reload()

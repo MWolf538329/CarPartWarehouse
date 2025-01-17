@@ -48,8 +48,8 @@ const SubcategoryPage: Component = () => {
     const CategoryID = Number(sessionStorage.getItem("CategoryID"))
     const SubcategoryID = Number(sessionStorage.getItem("SubcategoryID"))
 
-    const [category] = createResource<Category | undefined>(() => fetch(`https://api.localhost/categories/${CategoryID}`).then(body => body.json()))
-    const [subcategory] = createResource<Subcategory | undefined>(() => fetch(`https://api.localhost/categories/${CategoryID}/subcategories/${SubcategoryID}`).then(body => body.json()))
+    const [category] = createResource<Category | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}`).then(body => body.json()))
+    const [subcategory] = createResource<Subcategory | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}/subcategories/${SubcategoryID}`).then(body => body.json()))
 
     const [productName, setProductName] = createSignal("")
     const [productBrand, setProductBrand] = createSignal("")
@@ -73,7 +73,7 @@ const SubcategoryPage: Component = () => {
 
     function CreateProduct() {
         if (productName() !== "" && productBrand() !== "") {
-            fetch(`https://api.localhost/products?name=${productName()}&brand=${productBrand()}&subcategoryID=${SubcategoryID}&currentStock=${productCurrentStock()}&minStock=${productMinStock()}&maxStock=${productMaxStock()}`, {
+            fetch(`http://api.localhost/products?name=${productName()}&brand=${productBrand()}&subcategoryID=${SubcategoryID}&currentStock=${productCurrentStock()}&minStock=${productMinStock()}&maxStock=${productMaxStock()}`, {
                 method: "POST"
             }).then((response) => {
                 const statusCode = Number.parseInt(response.status.toString());
@@ -97,7 +97,7 @@ const SubcategoryPage: Component = () => {
 
     function UpdateProduct(productID: number) {
         if (productName() !== "" && productBrand() !== "") {
-            fetch(`https://api.localhost/products/${productID}?name=${productName()}&brand=${productBrand()}&subcategoryID=${SubcategoryID}&currentStock=${productCurrentStock()}&minStock=${productMinStock()}&maxStock=${productMaxStock()}`, {
+            fetch(`http://api.localhost/products/${productID}?name=${productName()}&brand=${productBrand()}&subcategoryID=${SubcategoryID}&currentStock=${productCurrentStock()}&minStock=${productMinStock()}&maxStock=${productMaxStock()}`, {
                 method: "PUT"
             }).then((response) => {
                 const statusCode = Number.parseInt(response.status.toString());
@@ -121,7 +121,7 @@ const SubcategoryPage: Component = () => {
 
     function DeleteProduct(productID: number) {
         if (confirm("Are you sure you want to delete this category?")) {
-            fetch(`https://api.localhost/products/${productID}`, {
+            fetch(`http://api.localhost/products/${productID}`, {
                 method: "DELETE"
             }).then(() => {
                 location.reload()
