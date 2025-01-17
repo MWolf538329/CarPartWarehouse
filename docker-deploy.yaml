@@ -1,0 +1,61 @@
+networks:
+  internal:
+    internal: true
+  external:
+    driver: bridge
+
+volumes:
+  carpartwarehouse-sql-storage:
+
+services:
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker.Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - external
+      - internal
+    depends_on:
+      - frontend-dashboard
+      - frontend-manager
+      - backend
+
+  frontend-dashboard:
+    image: mwolf538329/carpartwarehousedashboard
+    networks:
+      - internal
+
+  frontend-manager: mwolf538329/carpartwarehousemanager
+    image: 
+    networks:
+      - internal
+
+  backend:
+    image: mwolf538329/carpartwarehouseapi
+    networks:
+      - internal
+    depends_on:
+      - database
+    environment:
+      ConnectionString: |
+        Server=database;
+        Database=CarPartWarehouse;
+        User Id=sa;
+        Password=TheDatabasePasswordWeUseAndNoOneCanGuess12345;
+        Trusted_Connection=False;
+        TrustServerCertificate=True;
+        MultipleActiveResultSets=true;
+        
+  database:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    networks:
+      - internal
+    volumes:
+      - carpartwarehouse-sql-storage:/var/opt/mssql
+    environment:
+      ACCEPT_EULA: 1
+      MSSQL_SA_PASSWORD: "TheDatabasePasswordWeUseAndNoOneCanGuess12345"
+      MSSQL_PID: Developer
+      MSSQL_TELEMETRY_ENABLED: "FALSE"
