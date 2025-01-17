@@ -1,12 +1,16 @@
-api.localhost {
+{
+	admin off
+	auto_https off
+}
+
+http://api.localhost {
 	reverse_proxy :8080
 }
 
-
-manager.localhost {
+http://manager.localhost {
 	reverse_proxy :3001
 }
 
-localhost {
+http://localhost {
 	reverse_proxy :3000
 }

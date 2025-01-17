@@ -1,4 +1,4 @@
-echo -e '\x1b[1;5;97;43m Open the site at https://localhost \x1b[0m'
+echo -e '\x1b[1;5;97;43m Open the site at http://localhost \x1b[0m'
 
 (
     (cd CarPartWarehouseAPI/Main/ && dotnet watch --quiet) &

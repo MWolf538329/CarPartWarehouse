@@ -47,7 +47,7 @@ const CategoryOverviewPage: Component = () => {
     navigate("/LoginPage")
   }
 
-  const [categories] = createResource<Category[] | undefined>(() => fetch(`http://api.localhost/categories`).then(body => body.json()))
+  const [categories, { refetch }] = createResource<Category[] | undefined>(() => fetch(`http://api.localhost/categories`).then(body => body.json()))
   const [newCategory, setNewCategory] = createSignal("")
   const [updatedCategory, setUpdatedCategory] = createSignal("")
   const [responseCode, setResponseCode] = createSignal(0)
@@ -59,7 +59,7 @@ const CategoryOverviewPage: Component = () => {
     isClosed = !isOpen()
     if (isClosed) {
       // Only reload when the dialog is closed
-      reload();
+      refetch();
     }
   }
 
@@ -116,7 +116,7 @@ const CategoryOverviewPage: Component = () => {
       fetch(`http://api.localhost/categories/${categoryID}`, {
         method: "DELETE"
       }).then(() => {
-        reload()
+        refetch()
       })
     }
   }
@@ -129,7 +129,7 @@ const CategoryOverviewPage: Component = () => {
 
   function Logout() {
     sessionStorage.clear();
-    reload();
+    navigate("/loginpage");
   }
 
   return (
@@ -157,14 +157,14 @@ const CategoryOverviewPage: Component = () => {
             <div>
               <TextField>
                 <TextFieldLabel>Name: </TextFieldLabel>
-                <TextFieldInput class={"cypressNameInput"}
+                <TextFieldInput class={"cypressCategoryNameInput"}
                   onChange={e => setNewCategory(e.target.value)}
                   type='text'
                   required />
               </TextField>
             </div>
             <DialogFooter>
-              <Button class={"cypressSubmitButton"} type='submit' onClick={() => CreateCategory()}>Create</Button>
+              <Button class={"cypressCategorySubmitButton"} type='submit' onClick={() => CreateCategory()}>Create</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -218,7 +218,7 @@ const CategoryOverviewPage: Component = () => {
                     {/* -------------------- */}
 
                   </TableCell>
-                  <TableCell><Button variant="destructive" onClick={() => DeleteCategory(category.id)}>Delete</Button></TableCell>
+                  <TableCell><Button class={"cypressCategoryItemDelete"} variant="destructive" onClick={() => DeleteCategory(category.id)}>Delete</Button></TableCell>
                 </TableRow>
               }
             </For>
@@ -227,7 +227,7 @@ const CategoryOverviewPage: Component = () => {
       </div>
       {/* ----------- */}
 
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   )
 }

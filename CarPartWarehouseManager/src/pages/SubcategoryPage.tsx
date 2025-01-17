@@ -49,7 +49,7 @@ const SubcategoryPage: Component = () => {
     const SubcategoryID = Number(sessionStorage.getItem("SubcategoryID"))
 
     const [category] = createResource<Category | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}`).then(body => body.json()))
-    const [subcategory] = createResource<Subcategory | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}/subcategories/${SubcategoryID}`).then(body => body.json()))
+    const [subcategory, { refetch }] = createResource<Subcategory | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}/subcategories/${SubcategoryID}`).then(body => body.json()))
 
     const [productName, setProductName] = createSignal("")
     const [productBrand, setProductBrand] = createSignal("")
@@ -67,7 +67,7 @@ const SubcategoryPage: Component = () => {
         isClosed = !isOpen()
         if (isClosed) {
             // Only reload when the dialog is closed
-            reload();
+            refetch();
         }
     }
 
@@ -124,14 +124,14 @@ const SubcategoryPage: Component = () => {
             fetch(`http://api.localhost/products/${productID}`, {
                 method: "DELETE"
             }).then(() => {
-                reload()
+                refetch()
             })
         }
     }
 
     function Logout() {
         sessionStorage.clear();
-        reload();
+        navigate("/loginpage");
     }
 
     return (
@@ -158,7 +158,7 @@ const SubcategoryPage: Component = () => {
 
                 {/* Create new Product Dialog */}
                 <Dialog onOpenChange={handleOpenChange}>
-                    <DialogTrigger><Button>Create Product</Button></DialogTrigger>
+                    <DialogTrigger><Button class={"cypressCreateProductButton"}>Create Product</Button></DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
                             <DialogTitle>Create Product</DialogTitle>
@@ -167,42 +167,42 @@ const SubcategoryPage: Component = () => {
                         <div>
                             <TextField>
                                 <TextFieldLabel>Name: </TextFieldLabel>
-                                <TextFieldInput
+                                <TextFieldInput class={"cypressProductNameInput"}
                                     onChange={e => setProductName(e.target.value)}
                                     type='text'
                                     required />
                             </TextField>
                             <TextField>
                                 <TextFieldLabel>Brand: </TextFieldLabel>
-                                <TextFieldInput
+                                <TextFieldInput class={"cypressProductBrandInput"}
                                     onChange={e => setProductBrand(e.target.value)}
                                     type='text'
                                     required />
                             </TextField>
                             <TextField>
                                 <TextFieldLabel>Current Stock: </TextFieldLabel>
-                                <TextFieldInput
+                                <TextFieldInput class={"cypressProductCurrentStockInput"}
                                     value={0}
                                     onChange={e => setProductCurrentStock(Number(e.target.value))}
                                     type='number' />
                             </TextField>
                             <TextField>
                                 <TextFieldLabel>Min Stock: </TextFieldLabel>
-                                <TextFieldInput
+                                <TextFieldInput class={"cypressProductMinStockInput"}
                                     value={0}
                                     onChange={e => setProductMinStock(Number(e.target.value))}
                                     type='number' />
                             </TextField>
                             <TextField>
                                 <TextFieldLabel>Max Stock: </TextFieldLabel>
-                                <TextFieldInput
+                                <TextFieldInput class={"cypressProductMaxStockInput"}
                                     value={0}
                                     onChange={e => setProductMaxStock(Number(e.target.value))}
                                     type='number' />
                             </TextField>
                         </div>
                         <DialogFooter>
-                            <Button type='submit' onClick={() => CreateProduct()}>Create</Button>
+                            <Button class={"cypressProductSubmitButton"} type='submit' onClick={() => CreateProduct()}>Create</Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
@@ -228,7 +228,7 @@ const SubcategoryPage: Component = () => {
                     <TableBody>
                         <For each={subcategory()?.products}>
                             {product =>
-                                <TableRow>
+                                <TableRow class={"cypressProductItems"}>
                                     <TableCell>
                                         {product.name}
                                     </TableCell>
@@ -301,7 +301,7 @@ const SubcategoryPage: Component = () => {
                                         {/* -------------------- */}
 
                                     </TableCell>
-                                    <TableCell><Button variant="destructive" onClick={() => DeleteProduct(product.id)}>Delete</Button></TableCell>
+                                    <TableCell><Button class={"cypressProductItemDelete"} variant="destructive" onClick={() => DeleteProduct(product.id)}>Delete</Button></TableCell>
                                 </TableRow>
                             }
                         </For>

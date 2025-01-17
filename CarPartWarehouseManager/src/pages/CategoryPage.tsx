@@ -46,7 +46,7 @@ const CategoryPage: Component = () => {
   }
 
   const CategoryID = Number(sessionStorage.getItem("CategoryID"))
-  const [category] = createResource<Category | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}`).then(body => body.json()))
+  const [category, { refetch }] = createResource<Category | undefined>(() => fetch(`http://api.localhost/categories/${CategoryID}`).then(body => body.json()))
   const [newSubcategory, setNewSubcategory] = createSignal("")
   const [updatedSubcategory, setUpdatedSubcategory] = createSignal("")
   const [responseCode, setResponseCode] = createSignal(0)
@@ -59,7 +59,7 @@ const CategoryPage: Component = () => {
     isClosed = !isOpen()
     if (isClosed) {
       // Only reload when the dialog is closed
-      reload();
+      refetch();
     }
   }
 
@@ -116,7 +116,7 @@ const CategoryPage: Component = () => {
       fetch(`http://api.localhost/categories/${category()?.id}/subcategories/${subcategoryID}`, {
         method: "DELETE"
       }).then(() => {
-        reload()
+        refetch()
       })
     }
   }
@@ -129,7 +129,7 @@ const CategoryPage: Component = () => {
 
   function Logout() {
     sessionStorage.clear();
-    reload();
+    navigate("/loginpage");
   }
 
   return (
@@ -152,7 +152,7 @@ const CategoryPage: Component = () => {
 
         {/* Create new Category Dialog */}
         <Dialog onOpenChange={handleOpenChange}>
-          <DialogTrigger><Button>Create Subcategory</Button></DialogTrigger>
+          <DialogTrigger><Button class={"cypressCreateSubcategoryButton"}>Create Subcategory</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create Subcategory</DialogTitle>
@@ -161,14 +161,14 @@ const CategoryPage: Component = () => {
             <div>
               <TextField>
                 <TextFieldLabel>Name: </TextFieldLabel>
-                <TextFieldInput
+                <TextFieldInput class={"cypressSubcategoryNameInput"}
                   onChange={e => setNewSubcategory(e.target.value)}
                   type='text'
                   required />
               </TextField>
             </div>
             <DialogFooter>
-              <Button type='submit' onClick={() => CreateSubcategory()}>Create</Button>
+              <Button class={"cypressSubcategorySubmitButton"} type='submit' onClick={() => CreateSubcategory()}>Create</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -190,9 +190,9 @@ const CategoryPage: Component = () => {
           <TableBody>
             <For each={category()?.subcategories}>
               {subcategory =>
-                <TableRow>
+                <TableRow class={"cypressSubcategoryItems"}>
                   <TableCell>
-                    <Button variant={"link"} onClick={() => SubcategoryDetails(subcategory.id)}>{subcategory.name}</Button>
+                    <Button class={"cypressSubcategoryItem"} variant={"link"} onClick={() => SubcategoryDetails(subcategory.id)}>{subcategory.name}</Button>
                   </TableCell>
                   <TableCell>
 
@@ -222,7 +222,7 @@ const CategoryPage: Component = () => {
                     {/* -------------------- */}
 
                   </TableCell>
-                  <TableCell><Button variant="destructive" onClick={() => DeleteSubcategory(subcategory.id)}>Delete</Button></TableCell>
+                  <TableCell><Button class={"cypressSubcategoryItemDelete"} variant="destructive" onClick={() => DeleteSubcategory(subcategory.id)}>Delete</Button></TableCell>
                 </TableRow>
               }
             </For>
