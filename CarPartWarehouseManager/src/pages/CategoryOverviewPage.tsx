@@ -59,7 +59,7 @@ const CategoryOverviewPage: Component = () => {
     isClosed = !isOpen()
     if (isClosed) {
       // Only reload when the dialog is closed
-      reload();
+      location.reload();
     }
   }
 
@@ -116,7 +116,7 @@ const CategoryOverviewPage: Component = () => {
       fetch(`http://api.localhost/categories/${categoryID}`, {
         method: "DELETE"
       }).then(() => {
-        reload()
+        location.reload()
       })
     }
   }
@@ -129,7 +129,7 @@ const CategoryOverviewPage: Component = () => {
 
   function Logout() {
     sessionStorage.clear();
-    reload();
+    location.reload();
   }
 
   return (

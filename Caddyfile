@@ -1,12 +1,11 @@
-api.localhost {
+https://api.localhost {
 	reverse_proxy :8080
 }
 
-
-manager.localhost {
+https://manager.localhost {
 	reverse_proxy :3001
 }
 
-localhost {
+https://localhost {
 	reverse_proxy :3000
 }

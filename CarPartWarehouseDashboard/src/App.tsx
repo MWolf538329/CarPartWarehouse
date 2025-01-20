@@ -3,7 +3,7 @@ import { createResource, For, type Component } from 'solid-js';
 import CategoryAccordion from './CategoryAccordion';
 
 const App: Component = () => {
-  const [categories] = createResource<Category[] | undefined>(() => fetch("https://api.localhost/categories/subcategories/products").then(body => body.json()))
+  const [categories] = createResource<Category[] | undefined>(() => fetch("http://api.localhost/categories/subcategories/products").then(body => body.json()))
 
   return (
     <div>

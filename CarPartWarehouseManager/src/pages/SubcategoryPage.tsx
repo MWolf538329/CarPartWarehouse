@@ -67,7 +67,7 @@ const SubcategoryPage: Component = () => {
         isClosed = !isOpen()
         if (isClosed) {
             // Only reload when the dialog is closed
-            reload();
+            location.reload();
         }
     }
 
@@ -124,14 +124,14 @@ const SubcategoryPage: Component = () => {
             fetch(`http://api.localhost/products/${productID}`, {
                 method: "DELETE"
             }).then(() => {
-                reload()
+                location.reload()
             })
         }
     }
 
     function Logout() {
         sessionStorage.clear();
-        reload();
+        location.reload();
     }
 
     return (
