@@ -1,4 +1,5 @@
 ﻿using Logic.Interfaces;
+using Logic.Models;
 
 namespace Logic.Services;
 
@@ -19,5 +20,45 @@ public class LoginService(ILoginDAL loginDal)
         }
         
         return loginDal.Register(username, password);
+    }
+    
+    public int GetUserIDByUsernameAndPassword(string username, string password)
+    {
+        return loginDal.GetUserIDByUsernameAndPassword(username, password);
+    }
+    
+    public string GenerateAndStoreToken(int userID)
+    {
+        string sessionToken = GenerateSessionToken();
+        StoreSessionToken(userID, sessionToken);
+        
+        return sessionToken;
+    }
+    
+    public bool IsSessionValid(string sessionToken)
+    {
+        Session? session = loginDal.GetSession(sessionToken);
+
+        if (session == null) return false;
+        
+        if (session.ActivationDate.AddMinutes(15) < DateTime.Now)
+        {
+            loginDal.DeleteSession(session.ID);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    
+    private static string GenerateSessionToken()
+    {
+        return Guid.NewGuid().ToString();
+    }
+
+    private void StoreSessionToken(int userID, string sessionToken)
+    {
+        loginDal.StoreSessionToken(userID, DateTime.Now, sessionToken);
     }
 }

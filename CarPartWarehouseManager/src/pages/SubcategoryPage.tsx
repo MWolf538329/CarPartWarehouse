@@ -40,8 +40,8 @@ import { Flex } from '~/components/ui/flex';
 const SubcategoryPage: Component = () => {
     const navigate = useNavigate()
 
-    const LoggedIn = Boolean(sessionStorage.getItem("LoggedIn"))
-    if (!LoggedIn) {
+    const SessionToken = String(sessionStorage.getItem("SessionToken"))
+    if (SessionToken.length == 0) {
         navigate("/LoginPage")
     }
 

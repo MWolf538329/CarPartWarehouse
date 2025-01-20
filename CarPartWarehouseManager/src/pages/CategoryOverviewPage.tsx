@@ -38,12 +38,12 @@ import { showToast, Toaster } from '~/components/ui/toast';
 import { Flex } from '~/components/ui/flex';
 
 
-
 const CategoryOverviewPage: Component = () => {
   const navigate = useNavigate()
 
-  const LoggedIn = Boolean(sessionStorage.getItem("LoggedIn"))
-  if (!LoggedIn) {
+  const SessionToken = String(sessionStorage.getItem("SessionToken"))
+  console.log(SessionToken)
+  if (SessionToken.length == 0) {
     navigate("/LoginPage")
   }
 
@@ -129,7 +129,11 @@ const CategoryOverviewPage: Component = () => {
 
   function Logout() {
     sessionStorage.clear();
+<<<<<<< Updated upstream
     navigate("/loginpage");
+=======
+    location.reload();
+>>>>>>> Stashed changes
   }
 
   return (

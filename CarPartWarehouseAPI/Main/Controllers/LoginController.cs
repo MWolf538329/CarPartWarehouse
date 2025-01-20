@@ -40,16 +40,20 @@ public class LoginController : ControllerBase
         }
 
         bool success = loginService.Login(username, password);
+        
         if (success)
         {
-            return Created();
+            int userID = loginService.GetUserIDByUsernameAndPassword(username, password);
+            string sessionToken = loginService.GenerateAndStoreToken(userID);
+            
+            return Created("Created", sessionToken);
         }
 
         return NotFound();
     }
 
     /// <summary>
-    /// Login
+    /// Register
     /// </summary>
     /// <param name="databaseContext"></param>
     /// <param name="username">Username</param>

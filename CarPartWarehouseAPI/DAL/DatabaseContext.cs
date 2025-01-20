@@ -11,6 +11,7 @@ public class DatabaseContext : DbContext
     public DbSet<SubcategoryDTO> Subcategories { get; init; }
     public DbSet<CategoryDTO> Categories { get; init; }
     public DbSet<CredentialDTO> Credentials { get; init; }
+    public DbSet<SessionDTO> Sessions { get; init; }
 
     private const string connection = "data source=MSI;initial catalog=CarPartWarehouse;trusted_connection=true;TrustServerCertificate=True;";
 
